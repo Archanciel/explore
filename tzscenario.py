@@ -55,14 +55,16 @@ def browseOrders(orderDic, viewerTimezone):
         print("{} {} {}".format(key, value, localDateStr))
         
 
-def timestamp2localdate(timestamp, localTimeZone):
+def timestamp2localdate(strTimestamp, localTimeZone):
     # function converts a UTC timestamp into timezone Gregorian date
-    intTimeStamp = int(timestamp)
+    intTimeStamp = int(strTimestamp)
     intTimeStamp -= TIMESTAMP_TO_DATE_CORRECTION_FACTOR 
     datetimeUTC = datetime.fromtimestamp(intTimeStamp).replace(tzinfo=timezone('UTC'))
+    datetimeUnlocalized = datetime.fromtimestamp(intTimeStamp)
+    datetimeUTC = timezone(LA_TIMEZONE).localize(datetimeUnlocalized)
     datetimeLocal = datetimeUTC.astimezone(timezone(localTimeZone))
-    dst = str(datetimeLocal.timetuple()[8])
-    print('dst-->{}'.format(dst))
+    # dst = str(datetimeLocal.timetuple()[8])
+    # print('dst-->{}'.format(dst))
     return datetimeLocal.strftime(DATE_TIME_FORMAT_TZ)
 
 print("-- ICO start date/time --")
