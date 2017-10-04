@@ -1,6 +1,7 @@
-from datetime import datetime
-from pytz import timezone
 import time
+from datetime import datetime
+
+from pytz import timezone
 
 '''
 Indira in India places an
@@ -28,7 +29,7 @@ NY_TIMEZONE = 'US/Eastern'
 ZH_TIMEZONE = 'Europe/Zurich'
 IN_TIMEZONE = 'Asia/Calcutta'
 UTC_TIMEZONE = 'UTC'
-MONTH = '09'
+SUMMER_MONTH = '09'
 WINTER_MONTH = '11'
 TIMESTAMP_TO_DATE_CORRECTION_FACTOR = 3600
 WINTER_TIMESTAMP_TO_DATE_CORRECTION_FACTOR = 0
@@ -131,7 +132,7 @@ print("{} {} {} d-{}".format('NO', timeStampStrNO_UTC, localDateStr, dstNYStr))
 
 
 print("-- Summer ICO start date/time --")
-icoLocDateStr = '2017/' + MONTH + '/30 09:00:00'
+icoLocDateStr = '2017/' + SUMMER_MONTH + '/30 09:00:00'
 icoDatetimeObjUnlocalized = datetime.strptime(icoLocDateStr, DATE_TIME_FORMAT)
 icoDatetimeObjLA = timezone(LA_TIMEZONE).localize(icoDatetimeObjUnlocalized)
 printDate('LA', icoDatetimeObjLA)
@@ -218,19 +219,19 @@ print("{} {} {} d-{}".format('IN', timeStampStrIN_UTC, localDateStr, dstINStr))
 '''
 
 print("\n-- Placing summer order --")
-indiraOrderDateStr = '2017/' + MONTH + '/30 21:31:55'
+indiraOrderDateStr = '2017/' + SUMMER_MONTH + '/30 21:31:55'
 orderDatetimeObjUnlocalized = datetime.strptime(indiraOrderDateStr, DATE_TIME_FORMAT)
 orderDatetimeObjIN = timezone(IN_TIMEZONE).localize(orderDatetimeObjUnlocalized)
 datetimeObjUTC = orderDatetimeObjIN.astimezone(timezone(UTC_TIMEZONE))
 timeStampUTC = time.mktime(datetimeObjUTC.timetuple())
+print('IN:  ' + orderDatetimeObjIN.strftime(DATE_TIME_FORMAT_TZ))
 print('UTC: ' + datetimeObjUTC.strftime(DATE_TIME_FORMAT_TZ))
 print('     TS:  ' + str(timeStampUTC))
-print('IN:  ' + orderDatetimeObjIN.strftime(DATE_TIME_FORMAT_TZ))
 
 print("\n-- Browsing summer order --")
 datetimeUnlocalized = datetime.fromtimestamp(timeStampUTC)
 datetimeUTC = timezone(UTC_TIMEZONE).localize(datetimeUnlocalized)
-datetimeLocal = datetimeUTC.astimezone(timezone(IN_TIMEZONE))
+datetimeIN = datetimeUTC.astimezone(timezone(IN_TIMEZONE))
 print('{}: {}'.format('UTC', datetimeUTC.strftime(DATE_TIME_FORMAT_TZ)))
 print('     TS:  ' + str(timeStampUTC))
-print("{}:  {}".format('IN', datetimeLocal.strftime(DATE_TIME_FORMAT_TZ)))
+print("{}:  {}".format('IN', datetimeIN.strftime(DATE_TIME_FORMAT_TZ)))
