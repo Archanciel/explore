@@ -1,6 +1,7 @@
 import arrow
 from dateutil import tz
 
+class DateTimeConverter:
     @staticmethod
     def timestampToLocalDate(timestamp, timezoneStr):
         '''
@@ -28,6 +29,7 @@ print('TS:  ' + str(timeStamp))
 print("\n-- Browsing summer order --")
 orderArrowObjIN = arrow.get(timeStamp).replace(tzinfo='Asia/Calcutta') #not working !! Most firt convert to UTC !
 orderArrowObjIN = arrow.Arrow.utcfromtimestamp(timeStamp).to('Asia/Calcutta')
+orderArrowObjIN = DateTimeConverter.timestampToLocalDate(timeStamp, 'Asia/Calcutta')
 orderArrowObjUTC = orderArrowObjIN.to('UTC')
 print('TS:  ' + str(timeStamp))
 print('UTC: ' + orderArrowObjUTC.format(DATE_TIME_FORMAT_TZ_ARROW))
@@ -45,6 +47,7 @@ print('TS:  ' + str(timeStamp))
 print("\n-- Browsing winter order --")
 orderArrowObjIN = arrow.get(timeStamp).replace(tzinfo='Asia/Calcutta') #not working !! Most firt convert to UTC !
 orderArrowObjIN = arrow.Arrow.utcfromtimestamp(timeStamp).to('Asia/Calcutta')
+orderArrowObjIN = DateTimeConverter.timestampToLocalDate(timeStamp, 'Asia/Calcutta')
 orderArrowObjUTC = orderArrowObjIN.to('UTC')
 print('TS:  ' + str(timeStamp))
 print('UTC: ' + orderArrowObjUTC.format(DATE_TIME_FORMAT_TZ_ARROW))
