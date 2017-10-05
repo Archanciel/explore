@@ -19,26 +19,27 @@ print("\n-- Browsing summer order --")
 orderArrowObjUTC = arrow.get(timeStampUTC).replace(tzinfo='UTC')
 orderArrowObjIN = orderArrowObjUTC.to('Asia/Calcutta')
 #orderArrowObjIN = arrow.Arrow.utcfromtimestamp(timeStampUTC).to('Asia/Calcutta') works too !
+print('TS:  ' + str(timeStampUTC) + '-utc ' + str(orderArrowObjIN.timestamp) + '-in')
 print('UTC: ' + orderArrowObjUTC.format(DATE_TIME_FORMAT_TZ_ARROW))
 print('IN:  ' + orderArrowObjIN.format(DATE_TIME_FORMAT_TZ_ARROW))
-print('TS:  ' + str(timeStampUTC) + '-utc ' + str(orderArrowObjIN.timestamp) + '-in')
 
 indiraOrderDateStr = '2017/' + WINTER_MONTH + '/30 21:31:55'
 print("\n-- Placing winter order --")
 orderArrowObjIN = arrow.get(indiraOrderDateStr, DATE_TIME_FORMAT_ARROW).replace(tzinfo='Asia/Calcutta')
 orderArrowObjUTC = orderArrowObjIN.to(tz.gettz('UTC'))
 timeStampUTC = orderArrowObjUTC.timestamp
+timeStampIN = orderArrowObjIN.timestamp
 print('IN:  ' + orderArrowObjIN.format(DATE_TIME_FORMAT_TZ_ARROW))
 print('UTC: ' + orderArrowObjUTC.format(DATE_TIME_FORMAT_TZ_ARROW))
-print('TS:  ' + str(timeStampUTC) + '-utc ' + str(orderArrowObjIN.timestamp) + '-in')
+print('TS:  ' + str(timeStampUTC) + '-utc ' + str(timeStampIN) + '-in')
 
 print("\n-- Browsing winter order --")
 orderArrowObjUTC = arrow.get(timeStampUTC).replace(tzinfo='UTC')
 orderArrowObjIN = orderArrowObjUTC.to('Asia/Calcutta')
 #orderArrowObjIN = arrow.Arrow.utcfromtimestamp(timeStampUTC).to('Asia/Calcutta') works too !
+print('TS:  ' + str(timeStampUTC) + '-utc ' + str(timeStampIN) + '-in')
 print('UTC: ' + orderArrowObjUTC.format(DATE_TIME_FORMAT_TZ_ARROW))
 print('IN:  ' + orderArrowObjIN.format(DATE_TIME_FORMAT_TZ_ARROW))
-print('TS:  ' + str(timeStampUTC) + '-utc ' + str(orderArrowObjIN.timestamp) + '-in')
 
 if __name__ == '__main__':
     pass
