@@ -1,6 +1,16 @@
 import arrow
 from dateutil import tz
 
+    @staticmethod
+    def timestampToLocalDate(timestamp, timezoneStr):
+        '''
+        From timestamp, returns a localized arrow object
+        :param timestamp: UTC/GMT timezone independent timestamp
+        :param timezoneStr: like 'Europe/Zurich' or 'US/Pacific'
+        :return: arrow.Arrow instance
+        '''
+        return arrow.Arrow.utcfromtimestamp(timestamp).to(timezoneStr)
+
 DATE_TIME_FORMAT_ARROW = 'YYYY/MM/DD HH:mm:ss'
 DATE_TIME_FORMAT_TZ_ARROW = DATE_TIME_FORMAT_ARROW + ' ZZ'
 SUMMER_MONTH = '09'
