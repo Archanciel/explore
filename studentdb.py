@@ -22,6 +22,7 @@ class StudentDB(BoxLayout):
     first_name_text_input = ObjectProperty()
     last_name_text_input = ObjectProperty()
     student_list = ObjectProperty()
+    ro_log_text_input = ObjectProperty()
  
     def submit_student(self):
  
@@ -33,6 +34,8 @@ class StudentDB(BoxLayout):
  
         # Reset the ListView
         self.student_list._trigger_reset_populate()
+
+        self.ro_log_text_input.text = self.ro_log_text_input.text + '\nadded ' + student_name
         self.clearName()
         
     def clearName(self):
@@ -52,6 +55,7 @@ class StudentDB(BoxLayout):
  
             # Reset the ListView
             self.student_list._trigger_reset_populate()
+            self.ro_log_text_input.text = self.ro_log_text_input.text + '\ndeleted ' + selection
             self.clearName()
  
     def replace_student(self, *args):
@@ -73,6 +77,7 @@ class StudentDB(BoxLayout):
  
             # Reset the ListView
             self.student_list._trigger_reset_populate()
+            self.ro_log_text_input.text = self.ro_log_text_input.text + '\nrelaced ' + selection + ' with ' + student_name
             self.clearName()
 
 

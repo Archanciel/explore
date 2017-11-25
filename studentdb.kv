@@ -12,6 +12,7 @@ StudentDB:
     first_name_text_input: first_name
     last_name_text_input: last_name
     student_list: students_list_view
+    ro_log_text_input: ro_log
     padding: 10
     spacing: 10
  
@@ -50,3 +51,21 @@ StudentDB:
         id: students_list_view
         adapter:
             ListAdapter(data=["Doug Smith"], cls=main.StudentListButton, args_converter=lambda row_index,rec: {'text':rec, 'on_press':root.studentSelected})
+        ScrollView:
+            pos: root.pos
+            on_scroll_y: root._scroll(args[1])
+            do_scroll_y: True
+            do_scroll_x: False
+            GridLayout:
+                cols: 1
+                id: container
+                size_hint_y: None
+
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_y: None
+        height: "300dp"
+
+        TextInput:
+            id: ro_log
+            readonly: True
