@@ -1,12 +1,12 @@
-# ---------- studentdb.kv  ----------
- 
+    # ---------- studentdb.kv  ----------
+
 # Reference studentdb.py
 #: import main studentdb
 #: import ListAdapter kivy.adapters.listadapter.ListAdapter
 #: import ListItemButton kivy.uix.listview.ListItemButton
- 
+
 StudentDB:
- 
+
 <StudentDB>:
     orientation: "vertical"
     first_name_text_input: first_name
@@ -15,11 +15,11 @@ StudentDB:
     ro_log_text_input: ro_log
     padding: 10
     spacing: 10
- 
+
     BoxLayout:
         size_hint_y: None
-        height: "40dp"
- 
+        height: "25dp"
+
         Label:
             text: "First Name"
         TextInput:
@@ -28,10 +28,10 @@ StudentDB:
             text: "Last Name"
         TextInput:
             id: last_name
- 
+
     BoxLayout:
         size_hint_y: None
-        height: "40dp"
+        height: "25dp"
         Button:
             text: "Submit"
             size_hint_x: 15
@@ -44,28 +44,17 @@ StudentDB:
             text: "Replace"
             size_hint_x: 15
             on_press: root.replace_student()
- 
+
     # Define starting data and point to the ListItemButton
     # in the Python code
     ListView:
         id: students_list_view
-        adapter:
-            ListAdapter(data=["Doug Smith"], cls=main.StudentListButton, args_converter=lambda row_index,rec: {'text':rec, 'on_press':root.studentSelected})
-        ScrollView:
-            pos: root.pos
-            on_scroll_y: root._scroll(args[1])
-            do_scroll_y: True
-            do_scroll_x: False
-            GridLayout:
-                cols: 1
-                id: container
-                size_hint_y: None
+        size_hint_y: 0.5
+        adapter: ListAdapter(data=["Carla Monthy", "Root Abby", "Zig Allien", "Sam Pink", "Doug Smith", "Solo Learn", "Randy Neal", "Pim Walsh", "Greg Ono", "Alice Smith"], cls=main.StudentListButton, args_converter=lambda row_index,rec: {'text':rec, 'on_press':root.studentSelected})
 
-    BoxLayout:
-        orientation: "vertical"
-        size_hint_y: None
-        height: "300dp"
-
-        TextInput:
-            id: ro_log
-            readonly: True
+    TextInput:
+        id: ro_log
+        size_hint_y: 1
+        readonly: True
+        background_color: 0,0,0,0
+        foreground_color: 1,1,1,1
