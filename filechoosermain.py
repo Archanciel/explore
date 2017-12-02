@@ -51,8 +51,15 @@ class Root(FloatLayout):
 
         self.dismiss_popup()
 
+    def on_pause(self):
+        # Here you can save data if needed
+        return True
 
-class Editor(App):
+    def on_resume(self):
+        # Here you can check if any data needs replacing (usually nothing)
+        pass
+
+class FileChooserEditorApp(App):
     pass
 
 Factory.register('Root', cls=Root)
@@ -61,4 +68,4 @@ Factory.register('SaveDialog', cls=SaveDialog)
 
 
 if __name__ == '__main__':
-    Editor().run()
+    FileChooserEditorApp().run()
