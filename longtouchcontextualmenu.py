@@ -35,7 +35,7 @@ class Test(App):
     def build(self):
         self.root = FloatLayout()
         textI = TextInput()
-        textI.use_handles = False
+        textI.use_bubble = False
         self.root.add_widget(textI)
         self.root.bind(
             on_touch_down=self.create_clock,
