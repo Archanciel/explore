@@ -1,6 +1,10 @@
 from kivy.app import App
 from kivy.core.window import Window
 
+import os
+os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
+from kivy import Config
+Config.set('graphics', 'multisamples', '0')
 
 class WindowFileDropExampleApp(App):
     def build(self):
