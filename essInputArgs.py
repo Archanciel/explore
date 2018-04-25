@@ -18,7 +18,7 @@ def enterLoop():
             stop = True
         else:
             try:
-                inputList = inputStr.split()
+                inputList = inputStr.split() # ArgumentParser accepts a list of arguments
                 args = parser.parse_args(inputList)
                 answer = args.val ** args.power
 
@@ -29,7 +29,8 @@ def enterLoop():
                 else:
                     print(answer)
             except SystemExit:
-                # exception thrown by the ArgumentParser.exit method called on error or on help request
+                # exception thrown by the ArgumentParser.exit method called on error or on help request.
+                # ArgumentParser prints its help and then the loop continues.
                 continue
 
 
