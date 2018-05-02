@@ -1,5 +1,9 @@
 from kivy.app import App
 from kivy.core.window import Window
+'''
+Requires pip install docutils pygments pypiwin32 kivy.deps.sdl2 kivy.deps.glew as additional 
+dependancies
+'''
 
 class WindowFileDropExampleApp(App):
     def build(self):

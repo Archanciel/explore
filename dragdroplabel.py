@@ -2,7 +2,10 @@ from kivy.uix.label import Label
 from kivy.app import App
 from kivy.uix.behaviors import DragBehavior
 from kivy.lang import Builder
-
+'''
+Requires pip install docutils pygments pypiwin32 kivy.deps.sdl2 kivy.deps.glew as additional 
+dependancies
+'''
 # You could also put the following in your kv file...
 kv = '''
 <DragLabel>:
