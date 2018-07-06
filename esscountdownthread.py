@@ -10,7 +10,7 @@ class ThreadedCountdown(Thread):
 
     def run(self):
         while not self.stopped.wait(1):
-            print(self.duration)
+            print('\r' + str(self.duration), end='')
             self.duration -= 1
             
             if self.duration < 0:
