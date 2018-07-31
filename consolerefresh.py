@@ -3,7 +3,9 @@ import time
 
 for i in range(6):
     sys.stdout.write("\rDoing thing %i" % i)
-    #sys.stdout.flush()
+#    sys.stdout.flush()  # not required !
+    sys.stdout.write(" times")
+    sys.stdout.flush()
     time.sleep(1)
 
 #Not working !

@@ -9,11 +9,10 @@ done = False
 Black=0,0,0
 White=255,255,255
 
-Time = 0
-Second = 0
-Minute = 0
-Hour = 0
-Day = 0
+second = 0
+minute = 0
+hour = 0
+day = 0
 
 
 Clock = pygame.time.Clock()
@@ -28,19 +27,19 @@ while not done:
     Font = pygame.font.SysFont("Trebuchet MS", 25)
 
     # Day
-    DayFont = Font.render("Days:" + str(Day).zfill(2), 1, Black)
+    DayFont = Font.render("Days:" + str(day).zfill(2), 1, Black)
     DayFontR = DayFont.get_rect()
     DayFontR.center = (975, 20)
     # Hour
-    HourFont = Font.render("Hours:" + str(Hour).zfill(2), 1, Black)
+    HourFont = Font.render("Hours:" + str(hour).zfill(2), 1, Black)
     HourFontR = HourFont.get_rect()
     HourFontR.center = (1075, 20)
     # Minute
-    MinuteFont = Font.render("Minutes:" + str(Minute).zfill(2), 1, Black)
+    MinuteFont = Font.render("Minutes:" + str(minute).zfill(2), 1, Black)
     MinuteFontR = MinuteFont.get_rect()
     MinuteFontR.center = (1190, 20)
     # Second
-    SecondFont = Font.render("Seconds:" + (str(Second).zfill(2)), 1, Black)
+    SecondFont = Font.render("Seconds:" + (str(second).zfill(2)), 1, Black)
     SecondFontR = SecondFont.get_rect()
     SecondFontR.center = (1317, 20)
 
@@ -49,24 +48,24 @@ while not done:
     #Timer
 #    while Time==0: this caused the crash !
     time.sleep(1)
-    Second += 1
+    second += 1
     screen.blit(SecondFont, SecondFontR)
     screen.blit(MinuteFont, MinuteFontR)
     screen.blit(HourFont, HourFontR)
     screen.blit(DayFont, DayFontR)
 
-    if Second == 60:
-        Second = 0
-        Minute=Minute+1
-    if Minute == 60:
-        Minute = 0
-        Second = 0
-        Hour=Hour+1
-    if Hour==24:
-        Hour=0
-        Second = 0
+    if second == 60:
+        second = 0
+        minute= minute + 1
+    if minute == 60:
+        minute = 0
+        second = 0
+        hour= hour + 1
+    if hour==24:
+        hour=0
+        second = 0
         Minutes=0
-        Day=Day+1
+        day= day + 1
 
     pygame.display.flip()
 
