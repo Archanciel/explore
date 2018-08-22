@@ -1,17 +1,17 @@
 import matplotlib as mpl
 import matplotlib.pyplot as plt
  
-plt.style.use('ggplot')
 import pandas as pd
 import numpy as np
 from datetime import datetime
  
+plt.style.use('ggplot')
 n = 1000
 
 #setting index as second ticks
 idx = pd.date_range(start=datetime.now(), freq='S', periods=n)
 
-#generating data, placing them in a Pandas frame indexed by the seconds ticks
+#generating data, placing them in a Pandas frame indexed by the second ticks
 data = pd.DataFrame(data={'price': np.cumsum([0.0001] * n + np.random.random(n)),
                           'volume': np.random.randint(low=10, high=1000, size=n)}, index=idx)
 
