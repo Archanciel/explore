@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 import pandas as pd
 
-data = pd.read_csv('secondary-2018-08-12-21-32-56.csv', index_col=0, sep='\t')
+data = pd.read_csv('secondary-2018-08-19-22-44-28.csv', index_col=0, sep='\t')
 print(data.head(50))
 fig, ax = plt.subplots(nrows=2, sharex=True, figsize=(10,5))
 
