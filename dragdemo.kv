@@ -1,0 +1,39 @@
+# DragDemo.kv
+
+<Horse>:
+    size: 100,74
+    #drag_rectangle: self.x, self.y, 100, 74
+    drag_rectangle: self.x+36, self.y+28, 16, 25
+    drag_timeout: 10000000
+    drag_distance: 0
+    on_touch_up: self.horse_state = 'Not Dragging'
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'horse.png'
+
+<DragDemo>:
+    canvas:
+        Color:
+            rgb: 0,0,1
+        Rectangle:
+            size: root.width,root.height
+            pos: 0,0
+    Label:
+        pos: 300,root.top-100
+        text:
+            ('[size=32][color=CC8811]'
+            'Drag horse saddle to move horse'
+            '[/color][/size]')
+        markup: True
+    Horse:
+        id: horse_id
+        pos: root.width/2.5,root.height/2
+    Label:
+        pos: 300,100
+        text:
+            ('[size=32][color=CC8811]'+
+            horse_id.horse_state+
+            '[/color][/size]')
+        markup: True
