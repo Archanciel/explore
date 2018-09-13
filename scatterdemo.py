@@ -1,4 +1,4 @@
-# ScatterDemo.py
+# ScatterDemo.py https://pythonmobile.blogspot.com/2014/07/42-scatter.html
 
 from kivy.uix.scatter import Scatter
 from kivy.uix.widget import Widget
