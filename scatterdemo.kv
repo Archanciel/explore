@@ -1,0 +1,32 @@
+# scatter_demo.kv
+
+<SquareWidget>:
+    size: 250,250
+    canvas:
+        Color:
+            rgb: [1,1,0]
+        Rectangle:
+            size: self.size
+            pos: self.pos
+<ScatterDemo>:
+    canvas:
+        Color:
+            rgb: .5,.5,.5
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    ScatterWidget:
+        id: square_widget_id
+        SquareWidget:
+    Label:
+        text: 'Rotation: ' + str(square_widget_id.rotation)
+        size_hint: .1,.1
+        pos: 500,100
+    Label:
+        text: 'Scale: ' + str(square_widget_id.scale)
+        size_hint: .1,.1
+        pos: 500,200
+    Label:
+        text: 'Position: ' + str(square_widget_id.pos)
+        size_hint: .1,.1
+        pos: 500,300
