@@ -9,7 +9,7 @@ x1 = 0.987654321
 x2 = 0.987654322
 cols = ['x=' + str(x1), 'x=' + str(x2)]
 k = 2
-t = 50
+t = 70
 idx = [x + 1 for x in range(t)]
 
 data = []
@@ -20,5 +20,6 @@ for i in range(t):
     data.append([x1, x2])
 
 nldf = pd.DataFrame(data, index=idx, columns=cols)
+plt.rcParams['figure.figsize'] = [15, 10] # making default Jupyter matplotlib chart size bigger
 nldf.plot()
 plt.show()
