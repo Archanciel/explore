@@ -1,0 +1,73 @@
+<Patient>:
+    manage_prescription:manage_prescription
+
+    BoxLayout:
+
+        GridLayout :
+            cols:1
+            BoxLayout:
+                id:manage_prescription
+                orientation:'vertical'
+
+                BoxLayout:
+                    size_hint_y:None
+                    height:40
+
+                    Button:
+                        text:"NO."
+                        font_size: 25
+
+                    Button:
+                        text:"Date"
+                        font_size: 25
+
+
+                    Button:
+                        text:"Patient"
+                        font_size: 25
+
+
+                    Button:
+                        text:"Doctor"
+                        font_size: 25
+                        on_press: root.change_dynamic_Layout()
+
+
+                BoxLayout:
+
+                    RecycleView:
+                        bar_width: 10
+                        bar_color: 1, 0, 0, 1   # red
+                        bar_inactive_color: 0, 0, 1, 1   # blue
+                        #effect_cls: "ScrollEffect"
+                        scroll_type: ['bars']
+                        viewclass: 'SelectableButton'
+                        data:[{'text': str(x)} for x in range(20)]
+                        SelectableRecycleGridLayout:
+                            cols:4
+                            default_size: None, dp(56)
+                            default_size_hint:1, None
+                            size_hint_y: None
+                            height: self.minimum_height
+                            orientation: 'vertical'
+                            multiselect: True
+                            touch_multiselect: True
+
+
+
+
+
+<victor>:
+    Label:
+        text:" Switched to specific page for patient's details"
+
+
+<SelectableButton>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (.0, 0.9, .1, .3) if self.selected else (1, 1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    on_press: root.on_enter()
