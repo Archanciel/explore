@@ -16,7 +16,7 @@ def parse(text, pattern):
 
 def printList(list):
     print('list: ', end='')
-    
+
     for line in list:
         print(line, end='')
 
