@@ -6,9 +6,11 @@ def parse(text, pattern):
 
     for match in re.finditer(pattern, text):
         print('groups: ', match.groups())
-        print('\tsub groups:')
+        print('\tsub groups ({}):'.format(len(match.groups())))
+        i = 1
         for subGroup in match.groups():
-            print('\t\t', subGroup)
+            print('\t\t{}/ '.format(i), subGroup)
+            i += 1
             listOfParagraphs.append(subGroup)
 
     return listOfParagraphs
