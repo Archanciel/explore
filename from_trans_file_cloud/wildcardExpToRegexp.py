@@ -16,7 +16,7 @@ def tryWCExp(wildcardExp):
 	print('wildcardExp ', wildcardExp)
 	print('patternStr ', patternStr)
 	pattern = re.compile(patternStr)
-	l = ['testclass.py', 'testobj.pyc', '/excldir/subdir/*.*', '/excldir/subdir/testConvert.py', '/excldir/subdir/testConvert.pyc', 'd:\\excldir\\subdir\\test_Co21.py', 'd:\\excldir\\subdir\\test_Co21.pyc', 'd:\excldir\subdir\Test_Co22.py', 'd:\excldir\subdir\Test_Co22.pyc', 'd:\excldir\test_ALWAYS_USE_DOUBLE_BACKSLASH.py']
+	l = ['Marie_Solemne_conférence.mp3', 'testclass.py', 'testobj.pyc', '/excldir/subdir/*.*', '/excldir/subdir/testConvert.py', '/excldir/subdir/testConvert.pyc', 'd:\\excldir\\subdir\\test_Co21.py', 'd:\\excldir\\subdir\\test_Co21.pyc', 'd:\excldir\subdir\Test_Co22.py', 'd:\excldir\subdir\Test_Co22.pyc', 'd:\excldir\test_ALWAYS_USE_DOUBLE_BACKSLASH.py']
 
 	print('\ntest strings:\n')
 	
@@ -40,4 +40,7 @@ wildcardExp = "d:\\excldir\\subdir\\*.py"
 tryWCExp(wildcardExp)
 
 wildcardExp = "d:\\excldir\\subdir\\*.*"
+tryWCExp(wildcardExp)
+
+wildcardExp = "*Solemne*.mp3"
 tryWCExp(wildcardExp)
