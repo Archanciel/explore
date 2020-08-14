@@ -22,7 +22,7 @@ print('oneArgSortFunc: ', sorted(l, key=oneArgSortFunc))
 print()
 print('twoArgsSortFunc: ', sorted(l, key=functools.cmp_to_key(twoArgsSortFunc)))
 
-filePatternDirDic = {'test*.py': '/test', '*.py': '/', '*.rd': '/', '*.docx': '/doc', '*.jpg': '/images'}
+filePatternDirDic = {'test*.py': '/test', '*.py': '/', '*.mp3': '/notexist', '*.rd': '/', '*.docx': '/doc', '*.jpg': '/images', '*Rimsky-Korsakov*.mp3': '/mp3/Rimsky Korsakov'}
 filePatternDirTupleLst = [item for item in filePatternDirDic.items()]
 
 #with open('temp.txt', 'w') as f:
@@ -54,4 +54,9 @@ def computeMoveOrder(typeTupleOne, typeTupleTwo):
 
 #filePatternDirTupleLst = [('*.py', '/'), ('test*.py', '/test'), ('*.rd', '/'), ('*.docx', '/doc'), ('*.jpg', '/images')]
 print(filePatternDirTupleLst)
+print('Using computeMoveOrder() func')
 print(sorted(filePatternDirTupleLst, key=functools.cmp_to_key(computeMoveOrder)))
+print('Using lambda tuple 1')
+print(sorted(filePatternDirTupleLst, key=lambda tup: tup[1], reverse=True))
+print('Using lambda tuple 1 split')
+print(sorted(filePatternDirTupleLst, key=lambda tup: len(tup[1].split('/')), reverse=True))
