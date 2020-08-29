@@ -1,0 +1,107 @@
+# ---------- cryptopricergui.kv  ----------
+
+#: import main mygui1101
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import ListItemButton kivy.uix.listview.ListItemButton
+#: import ScrollEffect kivy.effects.scroll.ScrollEffect
+#: import CheckBox kivy.uix.checkbox.CheckBox
+
+
+MyGUI1101: #root
+
+<MyGUI1101>:
+    orientation: "vertical"
+    size_hint: 1, .56
+    pos_hint: {'x' : 0, 'y' : .44}
+    requestInput: request_TextInput
+    requestList: request_ListView
+    resultOutput: ro_output_TextInput
+    toggleHistoButton: toggle_history_list_Button
+    deleteButton: delete_Button
+    replayAllButton: replay_all_Button
+
+    padding: 10
+    spacing: 10
+    canvas.before:
+        Color:
+            rgb: [0.22,0.22,0.22]
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        size_hint_y: None
+        height: "28dp"
+        canvas.before:
+            Color:
+                rgb: [0,0,0]
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        GridLayout:
+            cols: 2
+            TextInput:
+                id: request_TextInput
+                background_color: 0,0,0,0
+                foreground_color: 1,1,1,1
+                focus: True
+                multiline: False
+                #ENTER triggers root.submitRequest()
+                on_text_validate: root.submitRequest()
+
+    BoxLayout:
+        size_hint_y: None
+        height: "28dp"
+        ToggleButton:
+            id: toggle_history_list_Button
+            text: "History"
+            size_hint_x: 15
+            disabled:True
+            on_press: root.toggleRequestList()
+        Button:
+            id: delete_Button
+            text: "Delete"
+            size_hint_x: 15
+            disabled: True
+            on_press: root.deleteRequest()
+        Button:
+            id: replay_all_Button
+            text: "Replay History"
+            size_hint_x: 15
+            disabled: True
+            on_press: root.replayAllRequests()
+
+
+    # Define starting data and point to the ListItemButton
+    # in the Python code
+    ListView:
+        id: request_ListView
+        adapter: ListAdapter(data=[], cls=main.RequestListButton, args_converter=lambda row_index,rec: {'text':rec, 'on_press':root.historyItemSelected,'size_hint_y': None,'height': root.histoListItemHeight})
+        height: '0dp'
+        size_hint_y: None
+        on_parent: self.container.parent.effect_cls = ScrollEffect #prevents overscrolling
+        canvas.before:
+            Color:
+                rgb: [0,0,0]
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+    ScrollView:
+        id: scrlv_out
+        size_hint: (1, 1)
+        canvas.before:
+            Color:
+                rgb: [0,0,0]
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        effect_cls: ScrollEffect #prevents overscrolling
+        TextInput:
+            id: ro_output_TextInput
+            size_hint: (1, None)
+            height: max(self.minimum_height, scrlv_out.height) #required to enable scrolling when output starts to grow
+            readonly: True
+            background_color: 0,0,0,0
+            foreground_color: 1,1,1,1

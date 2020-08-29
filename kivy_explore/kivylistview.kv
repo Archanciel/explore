@@ -1,0 +1,70 @@
+# ---------- cryptopricergui.kv  ----------
+
+#: import main kivylistview
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import ListItemButton kivy.uix.listview.ListItemButton
+#: import ScrollEffect kivy.effects.scroll.ScrollEffect
+
+<KivyListView>:
+    orientation: "vertical"
+    requestInput: request_TextInput
+    requestList: request_ListView
+    resultOutput: ro_output_TextInput
+    toggleHistoButton: toggle_history_list_Button
+    deleteButton: delete_Button
+
+    BoxLayout:
+        size_hint_y: None
+        height: "28dp"
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        TextInput:
+            id: request_TextInput
+            focus: True
+            multiline: False
+            #ENTER triggers root.submitRequest()
+            on_text_validate: root.submitRequest()
+
+    BoxLayout:
+        size_hint_y: None
+        height: "28dp"
+        ToggleButton:
+            id: toggle_history_list_Button
+            text: "History"
+            size_hint_x: 15
+            disabled:True
+            on_press: root.toggleRequestList()
+        Button:
+            id: delete_Button
+            text: "Delete"
+            size_hint_x: 15
+            disabled: True
+            on_press: root.deleteRequest()
+
+    ListView:
+        id: request_ListView
+        adapter: ListAdapter(data=[], cls=main.RequestListButton, args_converter=lambda row_index,rec: {'text':rec, 'on_press':root.historyItemSelected,'size_hint_y': None,'height': root.histoListItemHeight})
+        height: '0dp'
+        size_hint_y: None
+        on_parent: self.container.parent.effect_cls = ScrollEffect #required for scrollin. Prevents overscrolling
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+    ScrollView:
+        id: scrlv_out
+        size_hint_y: 6
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        effect_cls: ScrollEffect #prevents overscrolling
+        scroll_y: 0 # forces scrolling to bottom after adding text
+        TextInput:
+            id: ro_output_TextInput
+            size_hint: (1, None) #y == None required to enable scrolling when output starts to grow
+            readonly: True
+            height: max(self.minimum_height, scrlv_out.height) #required to enable scrolling when output starts to grow

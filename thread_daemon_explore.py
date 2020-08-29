@@ -17,11 +17,11 @@ if __name__ == "__main__":
                         datefmt="%H:%M:%S")
 
     logging.info("Main    : before creating thread")
-    x = threading.Thread(target=thread_function, args=(1,))
+    t = threading.Thread(target=thread_function, args=(1,))
     logging.info("Main    : before running thread")
-    x.daemon = True
-    x.start()
+    t.daemon = True
+    t.start()
     logging.info("Main    : wait 2 seconds before closing the daemon thread")
     time.sleep(2)
-    # x.join()
+    # t.join()
     logging.info("Main    : all done")

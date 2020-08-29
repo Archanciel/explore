@@ -1,0 +1,52 @@
+<TextInputScrolling>:
+    textInput: txt_input
+    textOutput: txt_output
+    scroller: scroll_view
+
+    orientation: 'vertical'
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: "56dp"
+            canvas.before:
+                Color:
+                    rgb: [0,0,0]
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            TextInput:
+                id: txt_input
+                focus: True
+                multiline: False
+                on_text_validate: root.submitRequest() # ENTER triggers root.submitRequest()
+
+            GridLayout:
+                cols: 2
+                ScrollView:
+                    id: scroll_view
+                    do_scroll_y: False # limiting to horizontal scrolling
+                    effect_cls: "ScrollEffect" # prevents overscrolling
+                    size_hint_x: 3
+                    TextInput:
+                        id: txt_output
+                        size_hint: (None, None) # warning: if not there, scrolling not working !
+                        width: scroll_view.width
+                        cursor_color: [255,255,255,1]
+                        background_color: (.17, .18, .17, 1)
+                        foreground_color:[255,255,255,1]
+                        selection_color: (1,1,1,0.125)
+                        multiline: False
+                        read_only: True
+                        on_text: root.text_changed()
+                Button:
+                    id: clear_output_Button
+                    text: 'Clear'
+                    size_hint_x: 1
+                    width: 130
+                    on_press: root.clearAll()

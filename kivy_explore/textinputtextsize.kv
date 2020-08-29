@@ -1,0 +1,23 @@
+<TextInputTextSize>:
+    orientation: "vertical"
+    textInput: txt_input
+    textOutput: txt_output
+
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_y: None
+        height: "56dp"
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        TextInput:
+            id: txt_input
+            focus: True
+            multiline: False
+            on_text_validate: root.submitRequest() # ENTER triggers root.submitRequest()
+        TextInput:
+            id: txt_output
+            readonly: True
+            multiline: False
+            on_text: root.outputTextChanged(txt_output, txt_output.text) # ENTER triggers root.submitRequest()

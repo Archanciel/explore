@@ -1,0 +1,109 @@
+# ---------- cryptopricergui.kv  ----------
+
+#: import main kivyrecycleview
+#: import ScrollEffect kivy.effects.scroll.ScrollEffect
+
+
+<KivyRecycleView>:
+    orientation: "vertical"
+    requestInput: request_TextInput
+    requestListRV: request_RecycleView_list
+    resultOutput: ro_output_TextInput
+    toggleHistoButton: toggle_history_list_Button
+    deleteButton: delete_Button
+    moveUpButton: moveUp_Button
+    moveDownButton: moveDown_Button
+    boxLayoutContainingRV: boxlayout_recycleview
+    requestListRVSelBoxLayout: selectable_recyclebox_layout
+
+    BoxLayout:
+        size_hint_y: None
+        height: "28dp"
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        TextInput:
+            id: request_TextInput
+            focus: True
+            multiline: False
+            #ENTER triggers root.submitRequest()
+            on_text_validate: root.submitRequest()
+
+    BoxLayout:
+        size_hint_y: None
+        height: "28dp"
+        ToggleButton:
+            id: toggle_history_list_Button
+            text: "History"
+            size_hint_x: 15
+            disabled:True
+            on_press: root.toggleRequestList()
+        Button:
+            id: delete_Button
+            text: "Delete"
+            size_hint_x: 15
+            disabled: True
+            on_press: root.deleteRequest()
+        Button:
+            id: moveUp_Button
+            text: "^"
+            size_hint_x: 5
+            disabled: True
+            on_press: root.moveUpRequest()
+        Button:
+            id: moveDown_Button
+            text: "v"
+            size_hint_x: 5
+            disabled: True
+            on_press: root.moveDownRequest()
+
+    BoxLayout:
+        id: boxlayout_recycleview
+        size_hint_y: None
+        height: "0dp"
+        RecycleView:
+            id: request_RecycleView_list
+            scroll_y: 0 # forces scrolling to list bottom after adding an entry
+            effect_cls: "ScrollEffect" # prevents overscrolling
+            viewclass: 'SelectableLabel'
+
+            SelectableRecycleBoxLayout:
+                id: selectable_recyclebox_layout
+                default_size: None, dp(15) # height of list line
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 0.5
+                orientation: 'vertical'
+                multiselect: False
+                touch_multiselect: False
+
+    ScrollView:
+        id: scrlv_out
+        size_hint_y: 6
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        effect_cls: ScrollEffect #prevents overscrolling
+        scroll_y: 0 # forces scrolling to bottom after adding text
+        TextInput:
+            id: ro_output_TextInput
+            size_hint: (1, None) #y == None required to enable scrolling when output starts to grow
+            readonly: True
+            height: max(self.minimum_height, scrlv_out.height) #required to enable scrolling when output starts to grow
+
+<SelectableLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (1, 0, 0, 1) if self.selected else (.0, 0.9, .1, .3)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: (0, 0.9, .1, .3)
+        Rectangle:
+            pos: self.pos
+            size: self.size
