@@ -1,0 +1,62 @@
+# ---------- cryptopricergui.kv  ----------
+
+#: import main kivyrecycleview
+#: import ScrollEffect kivy.effects.scroll.ScrollEffect
+
+
+<KivyRecycleView>:
+    orientation: "vertical"
+    requestListRV: request_RecycleView_list
+    moveUpButton: moveUp_Button
+    moveDownButton: moveDown_Button
+    boxLayoutContainingRV: boxlayout_recycleview
+    requestListRVSelBoxLayout: selectable_recyclebox_layout
+
+    BoxLayout:
+        size_hint_y: None
+        height: "28dp"
+        Button:
+            id: moveUp_Button
+            text: "^"
+            size_hint_x: 15
+            on_press: root.moveUpRequest()
+        Button:
+            id: moveDown_Button
+            text: "v"
+            size_hint_x: 15
+            on_press: root.moveDownRequest()
+
+    BoxLayout:
+        id: boxlayout_recycleview
+        size_hint_y: None
+        height: "60dp"
+        RecycleView:
+            id: request_RecycleView_list
+            scroll_y: 0 # forces scrolling to list bottom after adding an entry
+            effect_cls: "ScrollEffect" # prevents overscrolling
+            viewclass: 'SelectableLabel'
+
+            SelectableRecycleBoxLayout:
+                id: selectable_recyclebox_layout
+                default_size: None, dp(15) # height of list line
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 0.5
+                orientation: 'vertical'
+                multiselect: False
+                touch_multiselect: False
+
+<SelectableLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (1, 0, 0, 1) if self.selected else (.0, 0.9, .1, .3)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: (0, 0.9, .1, .3)
+        Rectangle:
+            pos: self.pos
+            size: self.size
