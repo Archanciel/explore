@@ -6,11 +6,10 @@
 
 <KivyRecycleView>:
     orientation: "vertical"
-    requestListRV: request_RecycleView_list
+    recycleViewList: recycleView_list
     moveUpButton: moveUp_Button
     moveDownButton: moveDown_Button
     boxLayoutContainingRV: boxlayout_recycleview
-    requestListRVSelBoxLayout: selectable_recyclebox_layout
 
     BoxLayout:
         size_hint_y: None
@@ -19,25 +18,24 @@
             id: moveUp_Button
             text: "^"
             size_hint_x: 15
-            on_press: root.moveUpRequest()
+            on_press: root.moveUpSelItem()
         Button:
             id: moveDown_Button
             text: "v"
             size_hint_x: 15
-            on_press: root.moveDownRequest()
+            on_press: root.moveDownSelItem()
 
     BoxLayout:
         id: boxlayout_recycleview
         size_hint_y: None
         height: "60dp"
         RecycleView:
-            id: request_RecycleView_list
+            id: recycleView_list
             scroll_y: 0 # forces scrolling to list bottom after adding an entry
             effect_cls: "ScrollEffect" # prevents overscrolling
             viewclass: 'SelectableLabel'
 
             SelectableRecycleBoxLayout:
-                id: selectable_recyclebox_layout
                 default_size: None, dp(15) # height of list line
                 default_size_hint: 1, None
                 size_hint_y: None
