@@ -1,60 +1,55 @@
-# ---------- cryptopricergui.kv  ----------
-
-#: import main kivyrecycleview
-#: import ScrollEffect kivy.effects.scroll.ScrollEffect
-
-
 <KivyRecycleView>:
-    orientation: "vertical"
-    recycleViewList: recycleView_list
-    moveUpButton: moveUp_Button
-    moveDownButton: moveDown_Button
-    boxLayoutContainingRV: boxlayout_recycleview
+	orientation: "vertical"
+	recycleViewList: recycleView_list
+	moveUpButton: moveUp_Button
+	moveDownButton: moveDown_Button
+	boxLayoutContainingRV: boxlayout_recycleview
 
-    BoxLayout:
-        size_hint_y: None
-        height: "28dp"
-        Button:
-            id: moveUp_Button
-            text: "^"
-            size_hint_x: 15
-            on_press: root.moveUpSelItem()
-        Button:
-            id: moveDown_Button
-            text: "v"
-            size_hint_x: 15
-            on_press: root.moveDownSelItem()
+	BoxLayout:
+	    pos_hint: {'top': 1}
+	    size_hint_y: 0.2
+		height: "28dp"
+		Button:
+			id: moveUp_Button
+			text: "^"
+			size_hint_x: 1
+			on_press: root.moveUpSelItem()
+		Button:
+			id: moveDown_Button
+			text: "v"
+			size_hint_x: 1
+			on_press: root.moveDownSelItem()
 
-    BoxLayout:
-        id: boxlayout_recycleview
-        size_hint_y: None
-        height: "60dp"
-        RecycleView:
-            id: recycleView_list
-            scroll_y: 0 # forces scrolling to list bottom after adding an entry
-            effect_cls: "ScrollEffect" # prevents overscrolling
-            viewclass: 'SelectableLabel'
+	BoxLayout:
+		id: boxlayout_recycleview
+	    size_hint_y: 0.8
+		height: "60dp"
+		RecycleView:
+			id: recycleView_list
+			scroll_y: 0 # forces scrolling to list bottom after adding an entry
+			effect_cls: "ScrollEffect" # prevents overscrolling
+			viewclass: 'SelectableLabel'
 
-            SelectableRecycleBoxLayout:
-                default_size: None, dp(15) # height of list line
-                default_size_hint: 1, None
-                size_hint_y: None
-                height: self.minimum_height
-                spacing: 0.5
-                orientation: 'vertical'
-                multiselect: False
-                touch_multiselect: False
+			SelectableRecycleBoxLayout:
+				default_size: None, dp(15) # height of list line
+				default_size_hint: 1, None
+				size_hint_y: None
+				height: self.minimum_height
+				spacing: 0.5
+				orientation: 'vertical'
+				multiselect: False
+				touch_multiselect: False
 
 <SelectableLabel>:
-    # Draw a background to indicate selection
-    canvas.before:
-        Color:
-            rgba: (1, 0, 0, 1) if self.selected else (.0, 0.9, .1, .3)
-        Rectangle:
-            pos: self.pos
-            size: self.size
-        Color:
-            rgba: (0, 0.9, .1, .3)
-        Rectangle:
-            pos: self.pos
-            size: self.size
+	# Draw a background to indicate selection
+	canvas.before:
+		Color:
+			rgba: (1, 0, 0, 1) if self.selected else (.0, 0.9, .1, .3)
+		Rectangle:
+			pos: self.pos
+			size: self.size
+		Color:
+			rgba: (0, 0.9, .1, .3)
+		Rectangle:
+			pos: self.pos
+			size: self.size

@@ -1,5 +1,4 @@
 from kivy.app import App
-from kivy.config import Config
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 
@@ -96,10 +95,6 @@ class KivyRecycleView(BoxLayout):
 class KivyRecycleView_moveButtonsApp(App):
     def build(self): # implicitely looks for a kv file of name kivyrecycleview.kv which is
                      # class name without App, in lowercases
-
-        Config.set('graphics', 'width', '250')
-        Config.set('graphics', 'height', '90')
-        Config.write()
 
         return KivyRecycleView()
 
