@@ -11,7 +11,7 @@ from kivy.uix.recycleview.views import RecycleDataViewBehavior
 
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
-                                 RecycleBoxLayout):
+								 RecycleBoxLayout):
 	''' Adds selection and focus behaviour to the view. '''
 	
 	# required to authorise unselecting a selected item
