@@ -33,10 +33,14 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
  
 	def on_touch_down(self, touch):
 		''' Add selection on touch down '''
+		if self.selected:
+			self.rv.parent.parent.recycleViewCurrentSelIndex = -1
+		else:
+			self.rv.parent.parent.recycleViewCurrentSelIndex = self.index
+
 		if super(SelectableLabel, self).on_touch_down(touch):
 			return True
 		if self.collide_point(*touch.pos) and self.selectable:
-			self.rv.parent.parent.recycleViewCurrentSelIndex = self.index
 			return self.parent.select_with_touch(self.index, touch)
  
 	def apply_selection(self, rv, index, is_selected):
