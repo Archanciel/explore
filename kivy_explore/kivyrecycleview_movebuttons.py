@@ -23,7 +23,6 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 	index = None
 	selected = BooleanProperty(False)
 	selectable = BooleanProperty(True)
-	rv = None
 	
 	def refresh_view_attrs(self, rv, index, data):
 		''' Catch and handle the view changes '''
@@ -104,7 +103,7 @@ class KivyRecycleView(BoxLayout):
 		itemTotalNumber = len(self.recycleViewList.data)
 		
 		if newIndex == itemTotalNumber:
-			# if first line request is moved down, it is moved at the beginning of the
+			# if last line request is moved down, it is moved at the beginning of the
 			# request history list
 			newIndex = 0
 		
