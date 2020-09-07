@@ -40,7 +40,9 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 				self.rv.parent.parent.recycleViewCurrentSelIndex = -1          #<<------
 			else:                                                              #<<------
 				self.rv.parent.parent.recycleViewCurrentSelIndex = self.index  #<<------
-			
+
+			self.rv.parent.parent.manageStateOfMoveButtons()
+
 			return self.parent.select_with_touch(self.index, touch)
 
 
@@ -114,6 +116,14 @@ class KivyRecycleView(BoxLayout):
 
 	def moveItemInList(self, list, oldIndex, newIndex):
 		list.insert(newIndex, list.pop(oldIndex))
+
+	def manageStateOfMoveButtons(self):
+		if self.recycleViewCurrentSelIndex == -1:
+			self.moveUpButton.disabled = True
+			self.moveDownButton.disabled = True
+		else:
+			self.moveUpButton.disabled = False
+			self.moveDownButton.disabled = False
 
 class KivyRecycleView_moveButtonsApp(App):
 	def build(self): # implicitely looks for a kv file of name kivyrecycleview.kv which is
