@@ -26,8 +26,8 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
     def refresh_view_attrs(self, rv, index, data):
         ''' Catch and handle the view changes '''
         
-        # storing reference on the recycle view list
-        self.recycleViewList = rv.parent.parent.recycleViewList
+        # storing reference on the recycle view
+        self.rv = rv
         
         self.index = index
 
@@ -37,38 +37,41 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
     def on_touch_down(self, touch):
         ''' Add selection on touch down '''
         if super(SelectableLabel, self).on_touch_down(touch):
-            self.recycleViewList.data[self.index]['selected'] = self.selected
+            self.rv.parent.parent.recycleViewList.data[self.index]['selected'] = self.selected
             return True
         if self.collide_point(*touch.pos) and self.selectable:
+            self.rv.parent.parent.wasMoveButtonPressed = False
             result = self.parent.select_with_touch(self.index, touch)
-            self.recycleViewList.data[self.index]['selected'] = self.selected
+            self.rv.parent.parent.recycleViewList.data[self.index]['selected'] = self.selected
             return result
 
     def apply_selection(self, rv, index, is_selected):
         ''' Respond to the selection of items in the view. '''
-        if rv.parent.parent.getSelectedItem() == index:  # <<------
-            is_selected = True  # <<------
-            self.selected = False  # <<------
-        elif not rv.parent.parent.getSelectedItem() == -1:  # <<------
-            is_selected = False  # <<------
-            self.selected = True  # <<------
+        if rv.parent.parent.wasMoveButtonPressed:
+            if rv.parent.parent.getSelectedItem() == index:  # <<------
+                is_selected = True  # <<------
+                self.selected = False  # <<------
+            elif not rv.parent.parent.getSelectedItem() == -1:  # <<------
+                is_selected = False  # <<------
+                self.selected = True  # <<------
 
         if not self.selected and not is_selected:
             # case when adding a new list item
-            self.recycleViewList.data[index]['selected'] = self.selected
+            self.rv.parent.parent.recycleViewList.data[index]['selected'] = self.selected
             return
         elif self.selected and not is_selected:
             # toggling from selected to unselected
             self.selected = False
-            self.recycleViewList.data[index]['selected'] = self.selected
+            self.rv.parent.parent.recycleViewList.data[index]['selected'] = self.selected
         else:
             # toggling from unselected to selected
             self.selected = not self.selected
-            self.recycleViewList.data[index]['selected'] = self.selected
+            self.rv.parent.parent.recycleViewList.data[index]['selected'] = self.selected
 
 class KivyRecycleView(BoxLayout):
     def __init__(self, **kwargs):
         super(KivyRecycleView, self).__init__(**kwargs)
+        self.wasMoveButtonPressed = False
 
         # setting RecycleView list item height from config
         self.populateList()
@@ -79,6 +82,7 @@ class KivyRecycleView(BoxLayout):
             self.recycleViewList.data.append(listEntry)
 
     def moveUpSelItem(self):
+        self.wasMoveButtonPressed = True
         oldIndex = self.getSelectedItem()
         if oldIndex == -1:
             # the case when no item is selected
@@ -94,6 +98,7 @@ class KivyRecycleView(BoxLayout):
         self.moveItemInList(list=self.recycleViewList.data, oldIndex=oldIndex, newIndex=newIndex)
 
     def moveDownSelItem(self):
+        self.wasMoveButtonPressed = True
         oldIndex = self.getSelectedItem()
         if oldIndex == -1:
             # the case when no item is selected
