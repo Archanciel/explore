@@ -11,7 +11,7 @@ class Shark:
 
 	# Method with instance variable followers
 	def set_followers(self, followers):
-		print("This user has " + str(followers) + " followers")
+		print("This user has " + str(followers) + " followers (type " + self.animal_type + ')')
 
 
 def main():
