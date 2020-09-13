@@ -12,7 +12,7 @@ class Shark:
 	# Method with instance variable followers
 	def set_followers(self, followers):
 		print("This user has " + str(followers) + " followers (type " + self.animal_type + ')')
-
+		print('class animal type ', Shark.animal_type)
 
 def main():
 	# First object, set up instance variables of constructor method
@@ -42,6 +42,7 @@ def main():
 	# Print out class variable animal_type
 	print('stevie type ', stevie.animal_type)
 	print('sammy type ', sammy.animal_type)
+	sammy.set_followers(12)
 
 if __name__ == "__main__":
 	main()
