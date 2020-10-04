@@ -1,26 +1,39 @@
 import re
 
-playlistNamePattern = r'([a-zaA-Z_]+)([\(se\d:\- \)]*)'
-timeGroupPattern = r'(\([se\d:\- ]*\) ?)'
-timeInfoPattern = r'([\dsSeE:-]*)'
-
-text = 'The_playlist (s01:05:52-01:07:23 e01:15:52-01:17:23 e01:15:52-01:17:23) (s1:05:52-1:07:23)'
-
-
-def extractTimeInfo(pattern, subPattern, text):
-	i = 1
-	for match in re.finditer(pattern, text):
-		for subGroup in match.groups():
-			print('subgroup {} '.format(i), subGroup)
-			for mat in re.finditer(subPattern, subGroup):
-				for subGro in mat.groups():
-					print(subGro)
-		i += 1
-					
+class TimeFrameParser:
+	def splitPlayListTitle(self, playlistTitle):
+		playlistNamePattern = r'([a-zaA-Z_]+) ([\(se\d:\- \)]*)'
+		
+		match = re.match(playlistNamePattern, playlistTitle)
+		playlistName = match.group(1)
+		videoTimeFramesInfo = match.group(2)
+		
+		videoTimeFramesDic = self.extractTimeInfo(videoTimeFramesInfo)
+		
+		return videoTimeFramesDic
 
 
-match = re.match(playlistNamePattern, text)
+	def extractTimeInfo(self, playlistName):
+		videoTimeFramesPattern = r'(\([se\d:\- ]*\) ?)'
+		startEndTimeFramePattern = r'([\dsSeE:-]*)'
+		videoTimeFramesDic = {}
+		videoIndex = 1
+		
+		for videoTimeFrameGroup in re.finditer(videoTimeFramesPattern, playlistName):			
+			for startEndTimeFrame in videoTimeFrameGroup.groups():
+				videoTimeFramesList = []
+				videoTimeFramesDic[videoIndex] = videoTimeFramesList
+				print('video {} timeFrames'.format(videoIndex), startEndTimeFrame)
+				for startEndTimeFrame in re.finditer(startEndTimeFramePattern, startEndTimeFrame):
+					for subGro in startEndTimeFrame.groups():
+						videoTimeFramesList.append(subGro)
+						print(subGro)
+			videoIndex += 1
+			
+		return videoTimeFramesDic			
 
-print(match.group(1), '\n')
-#print(match.group(2))
-extractTimeInfo(timeGroupPattern, timeInfoPattern, match.group(2))
+playlistTitle = 'The_playlist (s01:05:52-01:07:23 e01:15:52-01:17:23 e01:15:52-01:17:23) (s1:05:52-1:07:23)'
+
+tp = TimeFrameParser()
+videoTimeFramesDic = tp.splitPlayListTitle(playlistTitle)
+print(videoTimeFramesDic)
