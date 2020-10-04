@@ -2,14 +2,13 @@ import glob, shutil, time, os
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 import moviepy.editor
 
-
 AUDIO_DIR = 'D:\\Users\\Jean-Pierre\\Downloads\\Audiobooks'
 DIR_SEP = '\\'
 
 playListName = 'moviepy_explore'
 targetAudioDir = AUDIO_DIR + DIR_SEP + playListName
 
-# deleting files in downloadDir
+# deleting files in audio dir
 files = glob.glob(targetAudioDir + DIR_SEP + '*')
 
 for f in files:
