@@ -5,23 +5,6 @@ from kivy.uix.popup import Popup
 from kivy.properties import StringProperty
 from kivy.utils import platform
 
-Builder.load_string('''
-<ConfirmPopup>:
-    cols:1
-	Label:
-		text: root.text
-	GridLayout:
-		cols: 2
-		size_hint_y: None
-		height: '28dp'
-		Button:
-			text: 'Yes'
-			on_release: root.dispatch('on_answer','yes')
-		Button:
-			text: 'No'
-			on_release: root.dispatch('on_answer', 'no')
-''')
-
 
 class ConfirmPopup(GridLayout):
 	text = StringProperty()
@@ -36,7 +19,7 @@ class ConfirmPopup(GridLayout):
 
 class PopupTest(App):
 	def build(self):
-		content = ConfirmPopup(text='Do You Love Kivy?')
+		content = ConfirmPopup(text='Do You Love Kivy long line long line line\nSecond line\nThird line')
 		content.bind(on_answer=self._on_answer)
 		
 		if platform == 'android':
