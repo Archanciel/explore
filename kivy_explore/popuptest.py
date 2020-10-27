@@ -1,10 +1,8 @@
 from kivy.app import App
-from kivy.lang import Builder
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
 from kivy.properties import StringProperty
 from kivy.utils import platform
-
 
 class ConfirmPopup(GridLayout):
 	text = StringProperty()
@@ -15,7 +13,6 @@ class ConfirmPopup(GridLayout):
 	
 	def on_answer(self, *args):
 		pass
-
 
 class PopupTest(App):
 	def build(self):

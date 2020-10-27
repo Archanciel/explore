@@ -6,7 +6,7 @@ class TimeFrameParser:
 		
 		match = re.match(playlistNamePattern, playlistTitle)
 		playlistName = match.group(1)
-		videoTimeFramesInfo = match.group(2)
+		videoTimeFramesInfo = playlistTitle.replace(playlistName, '')
 		
 		videoTimeFramesDic = self.extractTimeInfo(videoTimeFramesInfo)
 		videoTimeFramesDic['playlist name'] = playlistName.strip()

@@ -2,14 +2,14 @@ import logging
 import threading
 import time
 
-def thread_function(name):
-    logging.info("Thread %s: starting", name)
+def thread_function():
+    logging.info("Thread starting")
     
     for i in range(4):
-    	logging.info("Thread {} working".format(name))
+    	logging.info("Thread working")
     	time.sleep(1)
 
-    logging.info("Thread %s: finishing", name)
+    logging.info("Thread finishing")
 
 if __name__ == "__main__":
     format = "%(asctime)s: %(message)s"
@@ -17,11 +17,11 @@ if __name__ == "__main__":
                         datefmt="%H:%M:%S")
 
     logging.info("Main    : before creating thread")
-    t = threading.Thread(target=thread_function, args=(1,))
+    t = threading.Thread(target=thread_function, args=())
     logging.info("Main    : before running thread")
     t.daemon = True
     t.start()
     logging.info("Main    : wait 2 seconds before closing the daemon thread")
-    time.sleep(2)
+    time.sleep(5)
     # t.join()
     logging.info("Main    : all done")
