@@ -15,6 +15,8 @@ class AsynchWorker:
 		for i in range(1, 11):
 			time.sleep(1)
 			self.textInOutGUI.ids.input.text = '{} seconds'.format(i)
+			
+		self.textInOutGUI.createAndOpenConfirmPopup('Please answer', 'Restart AsynchWorker ?', self.doWork)
 
 class ConfirmPopup(GridLayout):
 	text = StringProperty()
@@ -26,22 +28,24 @@ class ConfirmPopup(GridLayout):
 	def on_answer(self, *args):
 		pass
 
-class TextInOutGUI(BoxLayout):
+class KivyGUI(BoxLayout):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 	
 	def createConfirmPopup(self,
 	                       confirmPopupTitle,
 	                       confirmPopupMsg,
-	                       confirmPopupCallbackFunction):
+	                       newThreadAsynchCallbackFunction):
 		"""
 
 		:param confirmPopupTitle:
 		:param confirmPopupMsg:
-		:param confirmPopupCallbackFunction: function called when the user click on
+		:param newThreadAsynchCallbackFunction: function called when the user click on
 											 yes or no button
 		:return:
 		"""
+		self.newThreadAsynchCallbackFunction = newThreadAsynchCallbackFunction
+		
 		popupSize = None
 		
 		if platform == 'android':
@@ -50,7 +54,7 @@ class TextInOutGUI(BoxLayout):
 			popupSize = (200, 150)
 		
 		confirmPopup = ConfirmPopup(text=confirmPopupMsg)
-		confirmPopup.bind(on_answer=confirmPopupCallbackFunction)
+		confirmPopup.bind(on_answer=self._on_answer)
 		popup = Popup(title=confirmPopupTitle,
 		              content=confirmPopup,
 		              size_hint=(None, None),
@@ -70,26 +74,24 @@ class TextInOutGUI(BoxLayout):
 		self.popup.dismiss()
 		
 		if answer == 'Yes':
-			worker = AsynchWorker(self)
-			t = threading.Thread(target=worker.doWork, args=())
+			t = threading.Thread(target=self.newThreadAsynchCallbackFunction, args=())
 			t.daemon = True
 			t.start()
 	
-	# Arranging that what you write will be shown to you
-	# in IDLE
 	def processInputText(self):
 		text = self.ids.input.text
 		print(text)
 	
 	def openConfirmPopup(self):
-		self.createAndOpenConfirmPopup('Starting thread', "Click on Yes to\nlaunch AsynchWorker", self._on_answer)
+		worker = AsynchWorker(self)
+		self.createAndOpenConfirmPopup('Starting thread choice', "Click on Yes to\nlaunch AsynchWorker", worker.doWork)
 
 # Create the app class
 class PopupThreadTest(App):
 	# Building text input
 	def build(self):
-		return TextInOutGUI()
+		return KivyGUI()
 		
-# Run the App
+# Run the App which will create the Kivy GUI
 if __name__ == "__main__":
 	PopupThreadTest().run()
