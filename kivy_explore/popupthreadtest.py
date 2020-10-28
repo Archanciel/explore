@@ -16,7 +16,10 @@ class AsynchWorker:
 			time.sleep(1)
 			self.textInOutGUI.ids.input.text = '{} seconds'.format(i)
 			
-		self.textInOutGUI.createAndOpenConfirmPopup('Please answer', 'Restart AsynchWorker ?')
+		title = 'Please answer'
+		msg = 'Restart AsynchWorker ?'
+		popup = self.textInOutGUI.createConfirmPopup(title, msg)
+		popup.open()
 
 class ConfirmPopup(GridLayout):
 	text = StringProperty()
@@ -51,18 +54,14 @@ class KivyGUI(BoxLayout):
 		
 		confirmPopup = ConfirmPopup(text=confirmPopupMsg)
 		confirmPopup.bind(on_answer=self._on_answer)
-		popup = Popup(title=confirmPopupTitle,
+		self.popup = Popup(title=confirmPopupTitle,
 		              content=confirmPopup,
 		              size_hint=(None, None),
 		              pos_hint={'top': 0.8},
 		              size=popupSize,
 		              auto_dismiss=False)
 		
-		return popup
-	
-	def createAndOpenConfirmPopup(self, title, msg):
-		self.popup = self.createConfirmPopup(title, msg)
-		self.popup.open()
+		return self.popup
 	
 	def _on_answer(self, instance, answer):
 		"""
@@ -88,7 +87,10 @@ class KivyGUI(BoxLayout):
 		print(text)
 	
 	def openConfirmPopup(self):
-		self.createAndOpenConfirmPopup('Starting thread choice', "Click on Yes to\nlaunch AsynchWorker")
+		title = 'Starting thread choice'
+		msg = "Click on Yes to\nlaunch AsynchWorker"
+		self.popup = self.createConfirmPopup(title, msg)
+		self.popup.open()
 
 # Create the app class
 class PopupThreadTest(App):
