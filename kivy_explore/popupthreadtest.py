@@ -55,11 +55,11 @@ class KivyGUI(BoxLayout):
 		confirmPopup = ConfirmPopup(text=confirmPopupMsg)
 		confirmPopup.bind(on_answer=self._on_answer)
 		self.popup = Popup(title=confirmPopupTitle,
-		              content=confirmPopup,
-		              size_hint=(None, None),
-		              pos_hint={'top': 0.8},
-		              size=popupSize,
-		              auto_dismiss=False)
+		                   content=confirmPopup,
+		                   size_hint=(None, None),
+		                   pos_hint={'top': 0.8},
+		                   size=popupSize,
+		                   auto_dismiss=False)
 		
 		return self.popup
 	
