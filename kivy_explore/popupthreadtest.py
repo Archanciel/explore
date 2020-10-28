@@ -12,7 +12,7 @@ class AsynchWorker:
 		self.textInOutGUI = textInOutGUI
 		
 	def doWork(self):
-		for i in range(1, 11):
+		for i in range(1, 6):
 			time.sleep(1)
 			self.textInOutGUI.ids.input.text = '{} seconds'.format(i)
 			
