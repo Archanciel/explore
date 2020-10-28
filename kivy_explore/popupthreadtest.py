@@ -16,7 +16,7 @@ class AsynchWorker:
 			time.sleep(1)
 			self.textInOutGUI.ids.input.text = '{} seconds'.format(i)
 			
-		self.textInOutGUI.createAndOpenConfirmPopup('Please answer', 'Restart AsynchWorker ?', self.doWork)
+		self.textInOutGUI.createAndOpenConfirmPopup('Please answer', 'Restart AsynchWorker ?')
 
 class ConfirmPopup(GridLayout):
 	text = StringProperty()
@@ -34,18 +34,14 @@ class KivyGUI(BoxLayout):
 	
 	def createConfirmPopup(self,
 	                       confirmPopupTitle,
-	                       confirmPopupMsg,
-	                       newThreadAsynchCallbackFunction):
+	                       confirmPopupMsg):
 		"""
 
 		:param confirmPopupTitle:
 		:param confirmPopupMsg:
-		:param newThreadAsynchCallbackFunction: function called when the user click on
-											 yes or no button
+
 		:return:
 		"""
-		self.newThreadAsynchCallbackFunction = newThreadAsynchCallbackFunction
-		
 		popupSize = None
 		
 		if platform == 'android':
@@ -64,17 +60,26 @@ class KivyGUI(BoxLayout):
 		
 		return popup
 	
-	def createAndOpenConfirmPopup(self, title, msg, callback):
-		self.popup = self.createConfirmPopup(title, msg, callback)
+	def createAndOpenConfirmPopup(self, title, msg):
+		self.popup = self.createConfirmPopup(title, msg)
 		self.popup.open()
 	
 	def _on_answer(self, instance, answer):
-		print("USER ANSWER: ", repr(answer))
+		"""
+		This function is called when the user clicks on the Yes or No button
+		of the ConfirmPop.
 		
+		:param instance:
+		:param answer: 'Yes' or 'No' string
+		
+		:return:
+		"""
 		self.popup.dismiss()
 		
 		if answer == 'Yes':
-			t = threading.Thread(target=self.newThreadAsynchCallbackFunction, args=())
+			worker = AsynchWorker(self)
+			
+			t = threading.Thread(target=worker.doWork, args=())
 			t.daemon = True
 			t.start()
 	
@@ -83,8 +88,7 @@ class KivyGUI(BoxLayout):
 		print(text)
 	
 	def openConfirmPopup(self):
-		worker = AsynchWorker(self)
-		self.createAndOpenConfirmPopup('Starting thread choice', "Click on Yes to\nlaunch AsynchWorker", worker.doWork)
+		self.createAndOpenConfirmPopup('Starting thread choice', "Click on Yes to\nlaunch AsynchWorker")
 
 # Create the app class
 class PopupThreadTest(App):
