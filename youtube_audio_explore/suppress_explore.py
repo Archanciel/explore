@@ -23,7 +23,7 @@ class AudioExtractor:
 				
 if __name__ == "__main__":
 	ae = AudioExtractor()
-	suppressFrameList = [[4, 8],
+	suppressFrameList = [[4, 7],
 						 [11, 13],
 						 [15, 17]]
 						 

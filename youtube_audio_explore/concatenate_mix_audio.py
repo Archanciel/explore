@@ -4,7 +4,7 @@ from moviepy.editor import *
 AUDIO_DIR = 'D:\\Users\\Jean-Pierre\\Downloads\\Audiobooks'
 DIR_SEP = '\\'
 
-playListName = 'moviepy_explore'
+playListName = 'moviepy_expl'
 targetAudioDir = AUDIO_DIR + DIR_SEP + playListName
 
 # deleting files in audio dir
