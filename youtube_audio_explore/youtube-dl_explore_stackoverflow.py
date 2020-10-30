@@ -29,7 +29,7 @@ playlistObject._video_regex = re.compile(r"\"url\":\"(/watch\?v=[\w-]*)")
 
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 	for videoUrl in playlistObject.video_urls:
-		meta = ydl.extract_info(videoUrl)
+		meta = ydl.extract_info(videoUrl, download=False)
 		videoTitle = meta['title']
 		print('Video title: ' + videoTitle)
 		ydl.download([videoUrl])
