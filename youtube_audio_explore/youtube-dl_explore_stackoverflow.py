@@ -31,4 +31,5 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 	for videoUrl in playlistObject.video_urls:
 		meta = ydl.extract_info(videoUrl)
 		videoTitle = meta['title']
+		print('Video title: ' + videoTitle)
 		ydl.download([videoUrl])
