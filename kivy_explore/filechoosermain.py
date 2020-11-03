@@ -53,6 +53,18 @@ class LoadDialog(FloatLayout):
 	text_path_load = ObjectProperty(None)
 	load = ObjectProperty(None)
 	cancel = ObjectProperty(None)
+	
+	def __init__(self, **kwargs):
+		super().__init__(**kwargs)
+		
+		import os, string
+		available_drives = ['%s:' % d for d in string.ascii_uppercase if os.path.exists('%s:' % d)]
+
+		self.drivesListRV.data.append({'text': available_drives[0]})
+		self.drivesListRV.data.append({'text': available_drives[1]})
+		self.drivesListRV.data.append({'text': available_drives[0]})
+		self.drivesListRV.data.append({'text': available_drives[1]})
+		#self.drivesListRV.data = [{'text': str(x)} for x in range(20)]
 
 class Root(FloatLayout):
 	def __init__(self, **kwargs):
@@ -66,16 +78,6 @@ class Root(FloatLayout):
 
 	def show_load(self):
 		content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
-		
-		import os, string
-		available_drives = ['%s:' % d for d in string.ascii_uppercase if os.path.exists('%s:' % d)]
-
-		content.drivesListRV.data.append({'text': available_drives[0]})
-		content.drivesListRV.data.append({'text': available_drives[1]})
-		content.drivesListRV.data.append({'text': available_drives[0]})
-		content.drivesListRV.data.append({'text': available_drives[1]})
-#		content.drivesListRV.data = [{'text': str(x)} for x in available_drives]
-
 		self._popup = Popup(title="Load file", content=content,
 							size_hint=(0.9, 0.9))
 		self._popup.open()
@@ -106,7 +108,7 @@ class Root(FloatLayout):
 		# Here you can check if any data needs replacing (usually nothing)
 		pass
 
-class FileChooserEditorApp(App):
+class FileChooserApp(App):
 	def build(self):  # implicitely looks for a kv file of name audiodownloadergui.kv which is
 					  # class name without App, in lowercases
 
@@ -119,4 +121,4 @@ class FileChooserEditorApp(App):
 
 
 if __name__ == '__main__':
-	FileChooserEditorApp().run()
+	FileChooserApp().run()
