@@ -11,7 +11,7 @@ class KivyAudio(BoxLayout):
 		if os.name == 'posix':
 			mp3PathFileName = '/storage/emulated/0/Download/Audiobooks/Malika/ess4.mp3'
 		else:
-			mp3PathFileName = 'D:\\Users\\Jean-Pierre\\Downloads\\Audiobooks\\Malika\\ess6.mp3'
+			mp3PathFileName = 'D:\\Users\\Jean-Pierre\\Downloads\\Audiobooks\\Malika\\ess7.mp3'
 		sound = SoundLoader.load(mp3PathFileName)
 		if sound:
 			sound.play()
