@@ -7,8 +7,19 @@ from kivy.app import App
 from kivy.uix.recycleview import RecycleView 
 
 from kivy.uix.label import Label
-from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.properties import BooleanProperty
+from kivy.uix.behaviors import FocusBehavior
+from kivy.uix.recycleboxlayout import RecycleBoxLayout
+from kivy.uix.recycleview.layout import LayoutSelectionBehavior
+from kivy.uix.recycleview.views import RecycleDataViewBehavior
+
+
+class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
+								 RecycleBoxLayout):
+	''' Adds selection and focus behaviour to the view. '''
+
+	# required to authorise unselecting a selected item
+	touch_deselect_last = BooleanProperty(True)
 
 class SelectableLabel(RecycleDataViewBehavior, Label):
 	''' Add selection support to the Label '''
