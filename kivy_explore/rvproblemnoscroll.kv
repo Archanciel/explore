@@ -1,16 +1,40 @@
-Root:
+<Root>:
+    rvMain: recycleView_main_drives_list
     BoxLayout:
         orientation: 'vertical'
         BoxLayout:
             size_hint_y: 0.06
             Button:
-                id: load_btn
                 text: 'Load'
                 on_release: root.show_load()
+        BoxLayout:
+            size: root.size
+            pos: root.pos
+            orientation: "vertical"
+
+            BoxLayout:
+                id: boxlayout__main_recycleview
+                size_hint_y: 0.05
+#            height: "520dp"
+
+
+                RecycleView:
+                    id: recycleView_main_drives_list
+                    #scroll_y: 0 # forces scrolling to list bottom after adding an entry
+                    #effect_cls: "ScrollEffect" # prevents overscrolling
+                    viewclass: 'SelectableLabel'
+
+                    SelectableRecycleBoxLayout:
+                        default_size: None, dp(35) # height of list line
+                        default_size_hint: 1, None
+                        size_hint_y: None
+                        spacing: 0.5
+                        orientation: 'vertical'
+                        multiselect: False
+                        touch_multiselect: False
 
 <LoadDialog>:
     drivesListRV: recycleView_drives_list
-    text_path_load: text_path_load
     BoxLayout:
         size: root.size
         pos: root.pos
@@ -36,28 +60,6 @@ Root:
                     orientation: 'vertical'
                     multiselect: False
                     touch_multiselect: False
-
-        FileChooserListView:
-            id: filechooser
-            dirselect: True
-            on_selection: text_path_load.text = self.selection and self.selection[0] or ''
-            #on_selection: text_path_load.text = filechooser.path
-          
-        TextInput:
-            id: text_path_load
-            size_hint_y: 0.06
-            multiline: False
-            readonly: True
-
-        BoxLayout:
-            size_hint_y: 0.06
-            Button:
-                text: "Cancel"
-                on_release: root.cancel()
-
-            Button:
-                text: "Load"
-                on_release: root.load(filechooser.path, filechooser.selection)
 
 
 <SelectableLabel>:

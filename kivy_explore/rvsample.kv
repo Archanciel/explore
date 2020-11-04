@@ -1,0 +1,33 @@
+<ExampleViewer>: 
+    #viewclass: 'Button'  # defines the viewtype for the data items. 
+    viewclass: 'SelectableLabel'
+    orientation: "vertical"
+    spacing: 40
+    padding:10, 10
+    space_x: self.size[0]/3
+  
+    RecycleBoxLayout: 
+        color:(0, 0.7, 0.4, 0.8) 
+        default_size: None, dp(35) 
+        scroll_y: 0 # forces scrolling to list bottom after adding an entry
+        effect_cls: "ScrollEffect" # prevents overscrolling
+ 
+        # defines the size of the widget in reference to width and height 
+        default_size_hint: 0.4, None 
+        size_hint_y: None
+        height: self.minimum_height 
+        orientation: 'vertical' # defines the orientation of data items 
+        
+<SelectableLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (1, 0, 0, 1) if self.selected else (.0, 0.9, .1, .3)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: (0, 0.9, .1, .3)
+        Rectangle:
+            pos: self.pos
+            size: self.size

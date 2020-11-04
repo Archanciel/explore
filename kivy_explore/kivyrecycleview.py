@@ -1,3 +1,4 @@
+import os
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.config import Config
@@ -67,8 +68,12 @@ class KivyRecycleView(BoxLayout):
 
     def __init__(self, **kwargs):
         super(KivyRecycleView, self).__init__(**kwargs)
-
-        self.histoListItemHeight = 15
+        
+        if os.name == 'posix':
+            self.histoListItemHeight = 35
+        else:
+            self.histoListItemHeight = 15  
+        	      	
         self.histoListMaxVisibleItems = 4
         self.maxHistoListHeight = self.histoListMaxVisibleItems * self.histoListItemHeight
         # setting RecycleView list item height from config

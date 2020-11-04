@@ -50,7 +50,6 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 			print("selection removed for {0}".format(rv.data[index]))
 
 class LoadDialog(FloatLayout):
-	text_path_load = ObjectProperty(None)
 	load = ObjectProperty(None)
 	cancel = ObjectProperty(None)
 	#drivesListRV = ObjectProperty(None)
@@ -66,10 +65,8 @@ class LoadDialog(FloatLayout):
 			for drive in available_drives:
 				self.drivesListRV.data.append({'text': drive})
 		else:
-			self.drivesListRV.data.append({'text': 'main'})	
-			self.drivesListRV.data.append({'text': 'sd card'})
-			#for i in range(4):
-			#	self.drivesListRV.data.append({'text': str(i)})		
+			for i in range(14):
+				self.drivesListRV.data.append({'text': str(i)})		
 		#self.drivesListRV.data = [{'text': str(x)} for x in range(20)]
 
 class Root(FloatLayout):
@@ -77,7 +74,11 @@ class Root(FloatLayout):
 		super().__init__(**kwargs)
 		
 		self.loadfile = ObjectProperty(None)
-		self.text_input = ObjectProperty(None)
+		#self.rvMain = ObjectProperty(None)
+		#self.rvMain.data.append({'text': 'hello'})
+		#for i in range(4):
+		#	self.rvMain.data.append({'text': str(i)})		
+		self.rvMain.data = [{'text': str(x)} for x in range(20)] 
 		
 	def dismiss_popup(self):
 		self._popup.dismiss()
@@ -89,8 +90,6 @@ class Root(FloatLayout):
 		self._popup.open()
 
 	def load(self, path, filename):
-		with open(os.path.join(path, filename[0])) as stream:
-			self.text_input.text = stream.read()
 
 		self.dismiss_popup()
 
@@ -102,7 +101,7 @@ class Root(FloatLayout):
 		# Here you can check if any data needs replacing (usually nothing)
 		pass
 
-class FileChooserApp(App):
+class RVProblemNoScrollApp(App):
 	def build(self):  # implicitely looks for a kv file of name audiodownloadergui.kv which is
 					  # class name without App, in lowercases
 
@@ -113,6 +112,7 @@ class FileChooserApp(App):
 			Config.set('graphics', 'height', '500')
 			Config.write()
 
-
+		return Root()
+		
 if __name__ == '__main__':
-	FileChooserApp().run()
+	RVProblemNoScrollApp().run()
