@@ -13,7 +13,11 @@
         default_size_hint: 0.2, None 
         size_hint_y: None
         height: self.minimum_height 
-        orientation: 'vertical' # defines the orientation of data items 
+        orientation: 'vertical' # defines the orientation of data items
+        
+        # enabling or disabling multi selection 
+        multiselect: True
+        touch_multiselect: True
         
 <SelectableLabel>:
     # Draw a background to indicate selection

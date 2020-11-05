@@ -40,6 +40,11 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 		if super(SelectableLabel, self).on_touch_down(touch):
 			return True
 		if self.collide_point(*touch.pos) and self.selectable:
+			# the parent is the containing SelectableRecycleBoxLayout.
+			# If the container is simply a RecycleBoxLayout,
+			# an error will occur since the RecycleBoxLayout has
+			# no method select_with_touch(), method which was
+			# added by the class LayoutSelectionBehavior
 			return self.parent.select_with_touch(self.index, touch)
 
 	def apply_selection(self, rv, index, is_selected):
