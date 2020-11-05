@@ -1,16 +1,19 @@
 # Program to explain how to use recycleview in kivy 
 
-import logging
+import logging, os
   
 # import the kivy module 
 from kivy.app import App 
   
 # The ScrollView widget provides a scrollable view  
 from kivy.uix.recycleview import RecycleView 
+from kivy.uix.popup import Popup
 
 from kivy.uix.label import Label
+from kivy.properties import ObjectProperty
 from kivy.properties import BooleanProperty
 from kivy.uix.behaviors import FocusBehavior
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
@@ -62,19 +65,55 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 			# toggling from unselected to selected
 			self.selected = not self.selected
 			logging.info('handling selection {}'.format(index))
-  
-# Define the Recycleview class which is created in .kv file 
-class AppGUIRecycleView(RecycleView): 
+			
+class RecycleViewForPopup(RecycleView):
+	load = ObjectProperty(None)
+	cancel = ObjectProperty(None)
+	
 	def __init__(self, **kwargs):
-		super(AppGUIRecycleView, self).__init__(**kwargs)
-		#self.data = [{'text': str(x)} for x in range(50)]
-		for i in range(50):
-			self.data.append({'text': str(i)})
+		super(RecycleViewForPopup, self).__init__(**kwargs)
+		
+		if os.name != 'posix':
+			import string
+			available_drives = ['%s:' % d for d in string.ascii_uppercase if os.path.exists('%s:' % d)]
+
+
+			for drive in available_drives:
+				self.data.append({'text': drive})
+		else:
+			for i in range(50):
+				self.data.append({'text': str(i)})		
+		#self.drivesListRV.data = [{'text': str(x)} for x in range(20)]
+  
+class AppGUI(FloatLayout): 
+	def __init__(self, **kwargs):
+		super(AppGUI, self).__init__(**kwargs)
+		
+	def dismiss_popup(self):
+		self._popup.dismiss()
+
+	def show_load(self):
+		content = RecycleViewForPopup(load=self.load, cancel=self.dismiss_popup)
+		self._popup = Popup(title="RecycleView in Popup", content=content,
+							size_hint=(0.9, 0.9))
+		self._popup.open()
+		
+	def load(self, path, filename):
+
+		self.dismiss_popup()
+
+	def on_pause(self):
+		# Here you can save data if needed
+		return True
+
+	def on_resume(self):
+		# Here you can check if any data needs replacing (usually nothing)
+		pass
   
 # Create the App class with name of your app. 
-class RVSampleApp(App): 
+class RVSamplePopupApp(App): 
 	def build(self):
-		return AppGUIRecycleView()
+		return AppGUI()
   
 # run the App 
-RVSampleApp().run() 
+RVSamplePopupApp().run() 
