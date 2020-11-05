@@ -10,13 +10,13 @@ class ScrollablePopup(Popup):
 
     def updateScrollablePopupContentScrollToBottom(self):
         content = "Hello World\n"
-        self.contentBox.content.text = content * 30
+        self.contentBox.content.text = content * 50
         self.scrollView.scroll_y = 0 # force scrolling to bottom
 
 
     def updateScrollablePopupContentScrollToTop(self):
         content = "Hello World\n"
-        self.contentBox.content.text = content * 30
+        self.contentBox.content.text = content * 50
         self.scrollView.scroll_y = 1 # force scrolling to top
 
 class ScrollPopup(BoxLayout):
