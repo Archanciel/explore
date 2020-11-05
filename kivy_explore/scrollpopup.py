@@ -35,16 +35,13 @@ class ScrollPopupApp(App):
 
         return ScrollPopup()
 
-
     def on_pause(self):
         # Here you can save data if needed
         return True
 
-
     def on_resume(self):
         # Here you can check if any data needs replacing (usually nothing)
         pass
-
 
 if __name__ == '__main__':
     ScrollPopupApp().run()
