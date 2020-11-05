@@ -76,9 +76,10 @@ class RecycleViewForPopup(RecycleView):
 			import string
 			available_drives = ['%s:' % d for d in string.ascii_uppercase if os.path.exists('%s:' % d)]
 
-
 			for drive in available_drives:
 				self.data.append({'text': drive})
+			for i in range(50):
+				self.data.append({'text': str(i)})
 		else:
 			for i in range(50):
 				self.data.append({'text': str(i)})		

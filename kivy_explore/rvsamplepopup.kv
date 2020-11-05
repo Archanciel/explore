@@ -8,15 +8,13 @@
                 on_release: root.show_load()
 
 <RecycleViewForPopup>: # sub-class of RecycleView
-	selRB: sel_recyclebox_layout
     viewclass: 'SelectableLabel'
     orientation: "vertical"
     spacing: 40
     padding:10, 10
     #space_x: self.size[0]/3 # no effect on Android !
-    SelectableRecycleBoxLayout: 
-    	id: sel_recyclebox_layout
-        color:(0, 0.7, 0.4, 0.8) 
+    SelectableRecycleBoxLayout:
+        color:(0, 0.7, 0.4, 0.8)
         default_size: None, dp(56) # set size of each list line
  
         # defines the size of the widget in reference to width and height 
@@ -28,7 +26,7 @@
         # enabling or disabling multi selection 
         multiselect: False
         touch_multiselect: False
-        
+
 <SelectableLabel>:
     # Draw a background to indicate selection
     canvas.before:
