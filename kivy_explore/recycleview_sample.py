@@ -1,4 +1,6 @@
 # Program to explain how to use recycleview in kivy 
+
+import logging
   
 # import the kivy module 
 from kivy.app import App 
@@ -44,25 +46,25 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 		''' Respond to the selection of items in the view. '''
 		if not self.selected and not is_selected:
 			# case when adding a new list item
-			print(index, 'simply return')
+			logging.info('simply return {}'.format(index))
 			return
 		elif self.selected and not is_selected:
 			# toggling from selected to unselected
-			print(index, 'handling deselection')
+			logging.info('handling deselection {}'.format(index))
 			self.selected = False
-			rv.parent.parent.recycleViewSelectItem(index, is_selected)
+			#rv.parent.parent.recycleViewSelectItem(index, is_selected)
 		else:
 			# toggling from unselected to selected
 			self.selected = not self.selected
-			print(index, 'handling selection')
-			rv.parent.parent.recycleViewSelectItem(index, is_selected)
-			rv.parent.parent.recycleViewCurrentSelIndex = index
+			logging.info('handling selection {}'.format(index))
   
 # Define the Recycleview class which is created in .kv file 
 class ExampleViewer(RecycleView): 
 	def __init__(self, **kwargs):
 		super(ExampleViewer, self).__init__(**kwargs)
-		self.data = [{'text': str(x)} for x in range(50)]
+		#self.data = [{'text': str(x)} for x in range(50)]
+		for i in range(50):
+			self.data.append({'text': str(i)})
   
 # Create the App class with name of your app. 
 class RVSampleApp(App): 
