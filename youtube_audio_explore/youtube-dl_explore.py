@@ -26,7 +26,7 @@ else:
 
 playlistUrl = 'https://www.youtube.com/playlist?list=PLzwWSJNcZTMSFWGrRGKOypqN29MlyuQvn'
 playlistObject = Playlist(playlistUrl)
-playlistObject._video_regex = re.compile(r"\"url\":\"(/watch\?v=[\w-]*)")
+playlistObject._video_regex = re.compile(r"\"singleVideoUrl\":\"(/watch\?v=[\w-]*)")
 singlevideoUrl = 'https://youtu.be/Eqy6M6qLWGw'
 downloadPlaylist = False
 
