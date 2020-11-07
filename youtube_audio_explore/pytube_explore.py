@@ -5,11 +5,11 @@ if os.name == 'posix':
 else:
 	AUDIO_DIR = 'D:\\Users\\Jean-Pierre\\Downloads\\Audiobooks\\pytube_explore\\'
 
-singleVideoUrl = 'https://youtu.be/vU1NEZ9sTOM'
+singlevideoUrl = 'https://youtu.be/Eqy6M6qLWGw'
 
-youtube = pytube.YouTube(singleVideoUrl)
+youtube = pytube.YouTube(singlevideoUrl)
 video = youtube.streams.first()
 videoTitle = video.title
 print(videoTitle)
 t=youtube.streams.filter(only_audio=True)
-t[0].download(AUDIO_DIR + videoTitle)
+t[0].download(AUDIO_DIR) # not playable by kivy SoundLoader
