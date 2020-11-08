@@ -1,63 +1,71 @@
 Root:
-    BoxLayout:
-        orientation: 'vertical'
-        BoxLayout:
-            size_hint_y: 0.06
-            Button:
-                id: load_btn
-                text: 'Load'
-                on_release: root.show_load()
+	BoxLayout:
+		orientation: 'vertical'
+		BoxLayout:
+			size_hint_y: 0.06
+			Button:
+				id: load_btn
+				text: 'Load'
+				on_release: root.show_load()
 
 <LoadDialog>:
-    drivesListRV: recycleView_drives_list
-    text_path_load: text_path_load
-    BoxLayout:
-        size: root.size
-        pos: root.pos
-        orientation: "vertical"
+	drivesListRV: recycleView_drives_list
+	text_path_load: text_path_load
+	BoxLayout:
+		size: root.size
+		pos: root.pos
+		orientation: "vertical"
 
-        BoxLayout:
-            id: boxlayout_recycleview
-            size_hint_y: 0.05
-#            height: "520dp"
+		BoxLayout:
+			id: boxlayout_recycleview
+			size_hint_y: 0.29 # value for Windows 10
+			#size_hint_y: 0.05 # value for Android
+			RecycleView:
+				id: recycleView_drives_list
+				scroll_y: 0 # value for Windows 10.
+				            # 0 forces scrolling to list bottom after adding
+							# an item, 1 forces scrolling to list top
+				#scroll_y: 1 # value for Android
+				effect_cls: "ScrollEffect" # prevents overscrolling
+				viewclass: 'SelectableLabel'
 
+				SelectableRecycleBoxLayout:
+					default_size: None, dp(25) # value for Windows 10
+					                           # Height of list line. There's
+											   # a dependency between this value
+											   # and the number of items that
+											   # can be added to the list !!!!
+					#default_size: None, dp(15) # value for Android
+					default_size_hint: 1, None
+					size_hint_y: None
+					spacing: 0.5
+					orientation: 'vertical'
+					multiselect: False
+					touch_multiselect: False
 
-            RecycleView:
-                id: recycleView_drives_list
-                scroll_y: 0 # forces scrolling to list bottom after adding an entry
-                effect_cls: "ScrollEffect" # prevents overscrolling
-                viewclass: 'SelectableLabel'
+		FileChooserListView:
+			id: filechooser
+			dirselect: True
+			on_selection: text_path_load.text = self.selection and self.selection[0] or ''
+			#on_selection: text_path_load.text = filechooser.path
 
-                SelectableRecycleBoxLayout:
-                    default_size: None, dp(15) # height of list line
-                    default_size_hint: 1, None
-                    size_hint_y: None
-                    spacing: 0.5
-                    orientation: 'vertical'
-                    multiselect: False
-                    touch_multiselect: False
+		TextInput:
+			id: text_path_load
+			size_hint_y: 0.1 # value for Windows 10
+			#size_hint_y: 0.06 # value for Android
+			multiline: False
+			readonly: True
 
-        FileChooserListView:
-            id: filechooser
-            dirselect: True
-            on_selection: text_path_load.text = self.selection and self.selection[0] or ''
-            #on_selection: text_path_load.text = filechooser.path
-          
-        TextInput:
-            id: text_path_load
-            size_hint_y: 0.06
-            multiline: False
-            readonly: True
+		BoxLayout:
+			size_hint_y: 0.1 # value for Windows 10
+			#size_hint_y: 0.06 # value for Android
+			Button:
+				text: "Cancel"
+				on_release: root.cancel()
 
-        BoxLayout:
-            size_hint_y: 0.06
-            Button:
-                text: "Cancel"
-                on_release: root.cancel()
-
-            Button:
-                text: "Load"
-                on_release: root.load(filechooser.path, filechooser.selection)
+			Button:
+				text: "Load"
+				on_release: root.load(filechooser.path, filechooser.selection)
 
 
 <SelectableLabel>:
