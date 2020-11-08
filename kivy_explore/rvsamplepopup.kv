@@ -8,19 +8,24 @@
                 on_release: root.show_load()
 
 <RecycleViewForPopup>: # sub-class of RecycleView
-	selRB: sel_recyclebox_layout
     viewclass: 'SelectableLabel'
     orientation: "vertical"
     spacing: 40
     padding:10, 10
+    scroll_y: 0 # 0 forces scrolling to list bottom after adding
+                # an item, 1 forces scrolling to list top
+    effect_cls: "ScrollEffect" # prevents overscrolling
     #space_x: self.size[0]/3 # no effect on Android !
-    SelectableRecycleBoxLayout: 
-    	id: sel_recyclebox_layout
-        color:(0, 0.7, 0.4, 0.8) 
+    SelectableRecycleBoxLayout:
+        color:(0, 0.7, 0.4, 0.8)
         default_size: None, dp(56) # set size of each list line
  
         # defines the size of the widget in reference to width and height 
-        default_size_hint: 0.2, None 
+        default_size_hint: 1, None # y value MUST be None, otherwise the list
+        						   # is not visible !
+        						   #
+        						   # Can be 0.2, None so that the scrollable
+        						   # list only occupy 1/5 of the popup width
         size_hint_y: None
         height: self.minimum_height 
         orientation: 'vertical' # defines the orientation of data items
@@ -28,7 +33,7 @@
         # enabling or disabling multi selection 
         multiselect: False
         touch_multiselect: False
-        
+
 <SelectableLabel>:
     # Draw a background to indicate selection
     canvas.before:
