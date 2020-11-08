@@ -18,24 +18,24 @@ Root:
 
 		BoxLayout:
 			id: boxlayout_recycleview
-			size_hint_y: 0.29 # value for Windows 10
-			#size_hint_y: 0.05 # value for Android
+			#size_hint_y: 0.29 # value for Windows 10
+			size_hint_y: 0.06 # value for Android
 			RecycleView:
 				id: recycleView_drives_list
-				scroll_y: 0 # value for Windows 10.
+				fscroll_y: 0 # value for Windows 10.
 				            # 0 forces scrolling to list bottom after adding
 							# an item, 1 forces scrolling to list top
-				#scroll_y: 1 # value for Android
+				scroll_y: 1 # value for Android
 				effect_cls: "ScrollEffect" # prevents overscrolling
 				viewclass: 'SelectableLabel'
 
 				SelectableRecycleBoxLayout:
-					default_size: None, dp(25) # value for Windows 10
+					#default_size: None, dp(25) # value for Windows 10
 					                           # Height of list line. There's
 											   # a dependency between this value
 											   # and the number of items that
 											   # can be added to the list !!!!
-					#default_size: None, dp(15) # value for Android
+					default_size: None, dp(20) # value for Android
 					default_size_hint: 1, None
 					size_hint_y: None
 					spacing: 0.5
@@ -51,14 +51,14 @@ Root:
 
 		TextInput:
 			id: text_path_load
-			size_hint_y: 0.1 # value for Windows 10
-			#size_hint_y: 0.06 # value for Android
+			#size_hint_y: 0.1 # value for Windows 10
+			size_hint_y: 0.03 # value for Android
 			multiline: False
 			readonly: True
 
 		BoxLayout:
-			size_hint_y: 0.1 # value for Windows 10
-			#size_hint_y: 0.06 # value for Android
+			#size_hint_y: 0.1 # value for Windows 10
+			size_hint_y: 0.06 # value for Android
 			Button:
 				text: "Cancel"
 				on_release: root.cancel()
