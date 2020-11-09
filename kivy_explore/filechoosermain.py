@@ -19,8 +19,18 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 								 RecycleBoxLayout):
 	''' Adds selection and focus behaviour to the view. '''
 
-	# required to authorise unselecting a selected item
-	touch_deselect_last = BooleanProperty(True)
+	# required to forbid unselecting a selected item. An item can be unselected
+	# only by selecting another item
+	touch_deselect_last = BooleanProperty(False)
+	
+	def selectItem(self, index):
+		nodes = self.get_selectable_nodes()
+
+		if not nodes:
+			return
+
+		self.select_node(nodes[index])
+
 
 """
 class SelectableLabel(RecycleDataViewBehavior, Label):
@@ -77,6 +87,7 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 
 	def apply_selection(self, rv, index, is_selected):
 		''' Respond to the selection of items in the view. '''
+		
 		if not self.selected and not is_selected:
 			# case when adding a new list item
 			logging.info('simply return {}'.format(index))
@@ -95,7 +106,7 @@ class LoadDialog(FloatLayout):
 	text_path_load = ObjectProperty(None)
 	load = ObjectProperty(None)
 	cancel = ObjectProperty(None)
-	#drivesListRV = ObjectProperty(None)
+	drivesListRV = ObjectProperty(None)
 	
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
@@ -104,18 +115,18 @@ class LoadDialog(FloatLayout):
 			import string
 			available_drives = ['%s:' % d for d in string.ascii_uppercase if os.path.exists('%s:' % d)]
 
-
 			for drive in available_drives:
-				self.drivesListRV.data.append({'text': drive})
-#			self.drivesListRV.data.append({'text': 'E:'})
+				self.drivesListRV.data.append({'text': drive, 'selectable': True})
 		else:
-			self.drivesListRV.data.append({'text': 'main'})
-			self.drivesListRV.data.append({'text': 'sd card'})
+			self.drivesListRV.data.append({'text': 'main', 'selectable': True})
+			self.drivesListRV.data.append({'text': 'sd card', 'selectable': True})
 			
 			# There's a dependency between the range size value and the height
 			# of list line !!!!
 			# for i in range(3):
 			# 	self.drivesListRV.data.append({'text': str(i)})
+		
+		# not working self.ids.controller.selectItem(0)
 
 class Root(FloatLayout):
 	def __init__(self, **kwargs):
@@ -132,6 +143,7 @@ class Root(FloatLayout):
 		self._popup = Popup(title="Load file", content=content,
 							size_hint=(0.9, 0.9))
 		self._popup.open()
+		# not working content.ids.controller.selectItem(0)
 
 	def load(self, path, filename):
 		with open(os.path.join(path, filename[0])) as stream:

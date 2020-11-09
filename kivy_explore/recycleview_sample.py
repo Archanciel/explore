@@ -20,8 +20,36 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 								 RecycleBoxLayout):
 	''' Adds selection and focus behaviour to the view. '''
 
-	# required to authorise unselecting a selected item
-	touch_deselect_last = BooleanProperty(True)
+	# required to forbid unselecting a selected item. An item can be unselected
+	# only by selecting another item
+	touch_deselect_last = BooleanProperty(False)
+	
+	def get_nodes(self):
+		nodes = self.get_selectable_nodes()
+		if self.nodes_order_reversed:
+			nodes = nodes[::-1]
+		if not nodes:
+			return None, None
+		
+		selected = self.selected_nodes
+		if not selected:  # nothing selected, select the first
+			self.select_node(nodes[0])
+			return None, None
+		
+		if len(nodes) == 1:  # the only selectable node is selected already
+			return None, None
+		
+		last = nodes.index(selected[-1])
+		self.clear_selection()
+		return last, nodes
+	
+	def selectItem(self, index):
+		_, nodes = self.get_nodes()
+		
+		if not nodes:
+			return
+		
+		self.select_node(nodes[index])
 
 class SelectableLabel(RecycleDataViewBehavior, Label):
 	''' Add selection support to the Label '''
@@ -67,9 +95,10 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 class AppGUIRecycleView(RecycleView): 
 	def __init__(self, **kwargs):
 		super(AppGUIRecycleView, self).__init__(**kwargs)
-		#self.data = [{'text': str(x)} for x in range(50)]
-		for i in range(50):
-			self.data.append({'text': str(i)})
+
+		self.data = [{'text': str(x), 'selectable': True} for x in range(100)]
+			
+		self.selRBLayout.selectItem(0)
   
 # Create the App class with name of your app. 
 class RVSampleApp(App): 
@@ -77,4 +106,4 @@ class RVSampleApp(App):
 		return AppGUIRecycleView()
   
 # run the App 
-RVSampleApp().run() 
+RVSampleApp().run()

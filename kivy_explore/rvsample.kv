@@ -1,23 +1,25 @@
 <AppGUIRecycleView>: # sub-class of RecycleView
+    selRBLayout: sel_rb_layout
     viewclass: 'SelectableLabel'
     orientation: "vertical"
     spacing: 40
     padding:10, 10
     #space_x: self.size[0]/3 # no effect on Android !
   
-    SelectableRecycleBoxLayout: 
+    SelectableRecycleBoxLayout:
+        id: sel_rb_layout
         color:(0, 0.7, 0.4, 0.8) 
         default_size: None, dp(56) # set size of each list line
  
         # defines the size of the widget in reference to width and height 
-        default_size_hint: 0.2, None 
+        default_size_hint: 0.5, None # 1 for full horizontal size
         size_hint_y: None
         height: self.minimum_height 
         orientation: 'vertical' # defines the orientation of data items
         
         # enabling or disabling multi selection 
-        multiselect: True
-        touch_multiselect: True
+        multiselect: False
+        touch_multiselect: False
         
 <SelectableLabel>:
     # Draw a background to indicate selection
