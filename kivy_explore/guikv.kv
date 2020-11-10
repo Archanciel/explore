@@ -1,0 +1,17 @@
+<GuiKv>:
+	canvas:
+		Color:
+			rgba: 0.3, 0.3, 0.3, 1
+		Rectangle:
+			size: self.size
+			pos: self.pos
+	orientation: 'vertical'
+	BoxLayout:
+		orientation: 'vertical'
+		BoxLayout:
+			Button:
+				id: next_track
+				text: "Next Track"
+			Button:
+				id: previous_track
+				text: "Previous Track"
