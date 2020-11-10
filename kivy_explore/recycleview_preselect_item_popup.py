@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 import logging
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.config import Config
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.recycleview import RecycleView
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
@@ -10,64 +10,25 @@ from kivy.properties import BooleanProperty, StringProperty, NumericProperty
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.popup import Popup
+from kivy.utils import platform
 
-
-kv = """
-
-<SelectableLabel>:
-	# Draw a background to indicate selection
-	canvas.before:
-		Color:
-			rgba: (0.4, 0.4, 0.4, 1) if self.selected else (0.5, 0.5, 0.5, 1)
-		Rectangle:
-			pos: self.pos
-			size: self.size
-
-<KivyPlayer>:
-	canvas:
-		Color:
-			rgba: 0.3, 0.3, 0.3, 1
-		Rectangle:
-			size: self.size
-			pos: self.pos
-	orientation: 'vertical'
-	BoxLayout:
-		orientation: 'vertical'
-		BoxLayout:
-			size_hint_y: 0.3
-			Button:
-				id: next_track
-				text: "Next Track"
-				on_release: controller.select_next()
-			Button:
-				id: previous_track
-				text: "Previous Track"
-				on_release: controller.select_previous()
-		BoxLayout:
-			RecycleView:
-				id: media_list
-				viewclass: 'SelectableLabel'
-				scroll_type: ['bars', 'content']
-				scroll_wheel_distance: dp(114)
-				bar_width: dp(10)
-				SelectableRecycleBoxLayout:
-					id: controller
-					key_selection: 'selectable' # required so that 'selectable'
-												# key/value can be added to 
-												# RecycleView data items
-					default_size: None, dp(36)
-					default_size_hint: 1, None
-					size_hint_y: None
-					height: self.minimum_height
-					orientation: 'vertical'
-					# multiselect: True
-					# touch_multiselect: True
-					spacing: dp(2)
-
-
-"""
-
-Builder.load_string(kv)
+class ConfirmPopup(BoxLayout):
+	text = StringProperty()
+	
+	def __init__(self, **kwargs):
+		self.register_event_type('on_answer')
+		super(ConfirmPopup, self).__init__(**kwargs)
+		
+		# Set media_list data
+		self.medList.data = [{'text': str(x), 'selectable': True} for x in range(100)]
+		
+		# specify pre-selected node by its index in the data
+		self.ctr.selected_nodes = [0]
+	
+	def on_answer(self, *args):
+		pass
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 								 RecycleBoxLayout):
@@ -118,7 +79,6 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 		else:
 			self.select_node(nodes[last - 1])
 
-
 class SelectableLabel(RecycleDataViewBehavior, Label):
 	''' Add selection support to the Label '''
 	index = None
@@ -147,20 +107,25 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 			logging.info("selection removed for {0}".format(rv.data[index]))
 
 
-class KivyPlayer(BoxLayout):
-	''' Main Kivy class for creating the initial BoxLayout '''
-
-	def __init__(self, **kwargs):
-		super(KivyPlayer, self).__init__(**kwargs)
-
-		# Set media_list data
-		self.ids.media_list.data = [{'text': str(x), 'selectable': True} for x in range(100)]
-		
-		# specify pre-selected node by its index in the data
-		self.ids.controller.selected_nodes = [0]
-
-class KivyApp(App):
+class RVPreselItemPopupApp(App):
 	def build(self):
-		return KivyPlayer()
+		content = ConfirmPopup(text='Do You Love Kivy ?')
+		content.bind(on_answer=self._on_answer)
+		
+		if platform == 'android':
+			popupSize = (1280, 1450)
+		elif platform == 'win':
+			popupSize = (500, 450)
+		
+		self.popup = Popup(title="Answer Question",
+		                   content=content,
+		                   size_hint=(None, None),
+		                   size=popupSize,
+		                   auto_dismiss=False)
+		self.popup.open()
 	
-KivyApp().run()
+	def _on_answer(self, instance, answer):
+		logging.info("USER ANSWER: {}".format(repr(answer)))
+		self.popup.dismiss()
+	
+RVPreselItemPopupApp().run()
