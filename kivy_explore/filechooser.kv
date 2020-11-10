@@ -11,6 +11,7 @@ Root:
 <LoadDialog>:
 	drivesListRV: recycleView_drives_list
 	text_path_load: text_path_load
+	selRbLayout: sel_rb_layout
 	BoxLayout:
 		size: root.size
 		pos: root.pos
@@ -30,7 +31,7 @@ Root:
 				viewclass: 'SelectableLabel'
 
 				SelectableRecycleBoxLayout:
-				    id: controller
+				    id: sel_rb_layout
 					default_size: None, dp(25) # value for Windows 10
 					                           # Height of list line. There's
 											   # a dependency between this value
@@ -68,11 +69,6 @@ Root:
 			Button:
 				text: "Load"
 				on_release: root.load(filechooser.path, filechooser.selection)
-
-			Button:
-				text: "Temp"
-				on_release: controller.selectItem(0)
-
 
 <SelectableLabel>:
 	# Draw a background to indicate selection
