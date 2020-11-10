@@ -1,3 +1,4 @@
+import logging
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
@@ -14,7 +15,7 @@ class ConfirmPopup(GridLayout):
 	def on_answer(self, *args):
 		pass
 
-class PopupTest(App):
+class PopupTestApp(App):
 	def build(self):
 		content = ConfirmPopup(text='Do You Love Kivy long line long line line\nSecond line\nThird line')
 		content.bind(on_answer=self._on_answer)
@@ -32,9 +33,9 @@ class PopupTest(App):
 		self.popup.open()
 	
 	def _on_answer(self, instance, answer):
-		print("USER ANSWER: ", repr(answer))
+		logging.info("USER ANSWER: {}".format(repr(answer)))
 		self.popup.dismiss()
 
 
 if __name__ == '__main__':
-	PopupTest().run()
+	PopupTestApp().run()
