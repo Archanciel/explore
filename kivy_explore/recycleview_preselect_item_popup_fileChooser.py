@@ -18,8 +18,15 @@ class ConfirmPopup(BoxLayout):
 		self.register_event_type('on_answer')
 		super(ConfirmPopup, self).__init__(**kwargs)
 		
-		# Set media_list data
-		self.medList.data = [{'text': str(x), 'selectable': True} for x in range(100)]
+		if os.name != 'posix':
+			import string
+			available_drives = ['%s:' % d for d in string.ascii_uppercase if os.path.exists('%s:' % d)]
+
+			for drive in available_drives:
+				self.medList.data.append({'text': drive, 'selectable': True})
+		else:
+			self.medList.data.append({'text': 'main', 'selectable': True})
+			self.medList.data.append({'text': 'sd card', 'selectable': True})
 		
 		# specify pre-selected node by its index in the data
 		self.ctr.selected_nodes = [0]
