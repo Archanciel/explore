@@ -1,16 +1,13 @@
-import logging
+import os, logging
 from kivy.app import App
-from kivy.lang import Builder
 from kivy.config import Config
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.recycleview import RecycleView
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.uix.label import Label
 from kivy.properties import BooleanProperty, StringProperty, NumericProperty
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
 from kivy.utils import platform
 
@@ -109,6 +106,13 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 
 class RVPreselItemPopupFileChooserApp(App):
 	def build(self):
+
+		if os.name != 'posix':
+			# running app om Windows
+			Config.set('graphics', 'width', '600')
+			Config.set('graphics', 'height', '500')
+			Config.write()
+
 		content = ConfirmPopup(text='Do You Love Kivy ?')
 		content.bind(on_answer=self._on_answer)
 		
