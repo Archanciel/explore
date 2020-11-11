@@ -124,7 +124,8 @@ class RVPreselItemPopupFileChooserApp(App):
 		content.bind(on_answer=self._on_answer)
 		
 		if platform == 'android':
-			popupSize = (1280, 1450)
+			popupSize = (1280, 1450) # tablet
+			popupSize = (1060, 1450) # smartphone
 		elif platform == 'win':
 			popupSize = (500, 450)
 		
