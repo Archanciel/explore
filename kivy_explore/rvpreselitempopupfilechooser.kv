@@ -4,8 +4,8 @@
 	orientation: 'vertical'
     BoxLayout:
         orientation: 'vertical'
-        size_hint_y: 0.17 # value for Windows 10
-        #size_hint_y: 0.1 # value for Android
+        #size_hint_y: 0.17 # value for Windows 10
+        size_hint_y: 0.11 # value for Android
         RecycleView:
             id: media_list
             viewclass: 'SelectableLabel'
@@ -41,8 +41,8 @@
 
         TextInput:
             id: text_path_load
-            size_hint_y: 0.12 # value for Windows 10
-            #size_hint_y: 0.05 # value for Android
+            #size_hint_y: 0.12 # value for Windows 10
+            size_hint_y: 0.05 # value for Android
             multiline: False
             readonly: True
 
