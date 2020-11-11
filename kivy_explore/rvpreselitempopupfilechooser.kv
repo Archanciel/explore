@@ -2,63 +2,60 @@
 	ctr: controller
 	medList: media_list
 	orientation: 'vertical'
-	BoxLayout:
-		orientation: 'vertical'
-		#size_hint_y: 1
-		BoxLayout:
-			orientation: 'vertical'
-			size_hint_y: 0.17 # value for Windows 10
-			#size_hint_y: 0.1 # value for Android
-			RecycleView:
-				id: media_list
-				viewclass: 'SelectableLabel'
-				scroll_type: ['bars', 'content']
-				scroll_wheel_distance: dp(114)
-				bar_width: dp(10)
-				scroll_y: 1 # 0 forces scrolling to list bottom after adding
-							# an item, 1 forces scrolling to list top
-				effect_cls: "ScrollEffect" # prevents overscrolling			
-				SelectableRecycleBoxLayout:
-					id: controller
-					key_selection: 'selectable' # required so that 'selectable'
-												# key/value can be added to 
-												# RecycleView data items
-					default_size: None, dp(28)
-					default_size_hint: 1, None
-					size_hint_y: None
-					height: self.minimum_height
-					orientation: 'vertical'
-					multiselect: False
-					touch_multiselect: False
-					spacing: dp(2)
-
-		BoxLayout:
-			orientation: 'vertical'
-			#size_hint_y: 0.9
-
-            FileChooserListView:
-                id: filechooser
-                dirselect: True
-                on_selection: text_path_load.text = self.selection and self.selection[0] or ''
-                #on_selection: text_path_load.text = filechooser.path
-
-            TextInput:
-                id: text_path_load
-                size_hint_y: 0.12 # value for Windows 10
-                #size_hint_y: 0.05 # value for Android
-                multiline: False
-                readonly: True
-
-            GridLayout:
-                cols: 2
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: 0.17 # value for Windows 10
+        #size_hint_y: 0.1 # value for Android
+        RecycleView:
+            id: media_list
+            viewclass: 'SelectableLabel'
+            scroll_type: ['bars', 'content']
+            scroll_wheel_distance: dp(114)
+            bar_width: dp(10)
+            scroll_y: 1 # 0 forces scrolling to list bottom after adding
+                        # an item, 1 forces scrolling to list top
+            effect_cls: "ScrollEffect" # prevents overscrolling
+            SelectableRecycleBoxLayout:
+                id: controller
+                key_selection: 'selectable' # required so that 'selectable'
+                                            # key/value can be added to
+                                            # RecycleView data items
+                default_size: None, dp(28)
+                default_size_hint: 1, None
                 size_hint_y: None
-                height: '28dp'
-                Button:
-                    text: "Cancel"
-                    on_release: root.cancel()
-                Button:
-                    text: "Load"
-                    on_release: root.load(filechooser.path, filechooser.selection)
+                height: self.minimum_height
+                orientation: 'vertical'
+                multiselect: False
+                touch_multiselect: False
+                spacing: dp(2)
+
+    BoxLayout:
+        orientation: 'vertical'
+        #size_hint_y: 0.9
+
+        FileChooserListView:
+            id: filechooser
+            dirselect: True
+            on_selection: text_path_load.text = self.selection and self.selection[0] or ''
+            #on_selection: text_path_load.text = filechooser.path
+
+        TextInput:
+            id: text_path_load
+            size_hint_y: 0.12 # value for Windows 10
+            #size_hint_y: 0.05 # value for Android
+            multiline: False
+            readonly: True
+
+        GridLayout:
+            cols: 2
+            size_hint_y: None
+            height: '28dp'
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
 
 <SelectableLabel>:
 	# Draw a background to indicate selection
