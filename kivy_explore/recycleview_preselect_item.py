@@ -43,6 +43,10 @@ kv = """
 				id: previous_track
 				text: "Previous Track"
 				on_release: controller.select_previous()
+			Button:
+				id: unselect_track
+				text: "Unselect Track"
+				on_release: controller.unselect_current()
 		BoxLayout:
 			RecycleView:
 				id: media_list
@@ -117,6 +121,10 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 			self.select_node(nodes[-1])
 		else:
 			self.select_node(nodes[last - 1])
+
+
+	def unselect_current(self):
+		self.clear_selection()
 
 
 class SelectableLabel(RecycleDataViewBehavior, Label):
