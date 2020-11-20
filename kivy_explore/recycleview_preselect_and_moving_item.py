@@ -36,20 +36,20 @@ kv = """
 		BoxLayout:
 			size_hint_y: 0.3
 			Button:
-				id: next_track
-				text: "Next Track"
-				on_release: controller.select_next()
+				id: move_down
+				text: "Move down"
+				on_release: controller.move_down()
 			Button:
-				id: previous_track
-				text: "Previous Track"
-				on_release: controller.select_previous()
+				id: move_up
+				text: "Move up"
+				on_release: controller.move_up()
 			Button:
 				id: unselect_track
 				text: "Unselect Track"
 				on_release: controller.unselect_current()
 		BoxLayout:
 			RecycleView:
-				id: media_list
+				id: media_list_RV
 				viewclass: 'SelectableLabel'
 				scroll_type: ['bars', 'content']
 				scroll_wheel_distance: dp(114)
@@ -77,9 +77,8 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 								 RecycleBoxLayout):
 	''' Adds selection and focus behaviour to the view. '''
 
-	# required to forbid unselecting a selected item. An item can be unselected
-	# only by selecting another item
-	touch_deselect_last = BooleanProperty(False)
+	# required to authorize unselecting a selected item.
+	touch_deselect_last = BooleanProperty(True)
 
 	def get_nodes(self):
 		nodes = self.get_selectable_nodes()
@@ -90,7 +89,7 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 		
 		selected = self.selected_nodes
 		if not selected:  # nothing selected, select the first
-			self.select_node(nodes[0])
+#			self.select_node(nodes[0])
 			return None, None
 		
 		if len(nodes) == 1:  # the only selectable node is selected already
@@ -101,7 +100,7 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 		return last, nodes
 	
 	
-	def select_next(self):
+	def move_down(self):
 		last, nodes = self.get_nodes()
 		if not nodes:
 			return
@@ -112,7 +111,7 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 			self.select_node(nodes[last + 1])
 	
 	
-	def select_previous(self):
+	def move_up(self):
 		last, nodes = self.get_nodes()
 		if not nodes:
 			return
@@ -135,12 +134,25 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 
 	def refresh_view_attrs(self, rv, index, data):
 		''' Catch and handle the view changes '''
+		self.rv = rv
 		self.index = index
 		return super(SelectableLabel, self).refresh_view_attrs(
 			rv, index, data)
 
 	def on_touch_down(self, touch):
 		''' Add selection on touch down '''
+
+		kivyPlayer = self.rv.parent.parent.parent
+		
+		if kivyPlayer.isPresel:
+			# an item was preselected when opening the app. This flag was used to prevent
+			# apply_selection called for each item to disable the buttons.
+			#
+			# But now, we are in the state of selecting or deselecting manually
+			# the list items and this flag must be set to False so that the buttons can be
+			# deactivated if no item is selected.
+			kivyPlayer.isPresel = False
+
 		if super(SelectableLabel, self).on_touch_down(touch):
 			return True
 		if self.collide_point(*touch.pos) and self.selectable:
@@ -151,8 +163,27 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 		self.selected = is_selected
 		if is_selected:
 			logging.info("selection changed to {0}".format(rv.data[index]))
+			self.enableButtons(rv)
 		else:
 			logging.info("selection removed for {0}".format(rv.data[index]))
+			self.disableButtons(rv)
+	
+	def disableButtons(self, rv):
+		kivyPlayer = rv.parent.parent.parent
+		
+		if kivyPlayer.isPresel:
+			return
+		
+		buttonIds = kivyPlayer.ids
+		buttonIds.move_down.disabled = True
+		buttonIds.move_up.disabled = True
+		buttonIds.unselect_track.disabled = True
+	
+	def enableButtons(self, rv):
+		buttonIds = rv.parent.parent.parent.ids
+		buttonIds.move_down.disabled = False
+		buttonIds.move_up.disabled = False
+		buttonIds.unselect_track.disabled = False
 
 
 class KivyPlayer(BoxLayout):
@@ -161,11 +192,18 @@ class KivyPlayer(BoxLayout):
 	def __init__(self, **kwargs):
 		super(KivyPlayer, self).__init__(**kwargs)
 
-		# Set media_list data
-		self.ids.media_list.data = [{'text': str(x), 'selectable': True} for x in range(100)]
+		# Set media_list_RV data
+		self.ids.media_list_RV.data = [{'text': str(x), 'selectable': True} for x in range(100)]
 		
 		# specify pre-selected node by its index in the data
 		self.ids.controller.selected_nodes = [0]
+		self.isPresel = True
+		
+		# enable the buttons
+		# buttonIds = self.ids.media_list_RV.parent.parent.parent.ids
+		# buttonIds.move_down.disabled = False
+		# buttonIds.move_up.disabled = False
+		# buttonIds.unselect_track.disabled = False
 
 class KivyApp(App):
 	def build(self):
