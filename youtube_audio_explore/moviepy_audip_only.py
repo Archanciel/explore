@@ -23,7 +23,7 @@ for f in files:
 print('\nmoviepy.editor.AudioFileClip(sourceVideoFilePath, fps=22050)\n')
 ts = time.time()
 audio = moviepy.editor.AudioFileClip(sourceVideoFilePath, fps=22050)
-audioFilePath = targetAudioDir + DIR_SEP + 'Consultation Annales Akashiques 19 nov 2020_4.mp3'
+audioFilePath = targetAudioDir + DIR_SEP + 'Consultation Annales Akashiques 19 nov 2020_1.mp3'
 audio.write_audiofile(audioFilePath)
 audio.close()
 print(time.time() - ts) # 37.5 sec
@@ -31,7 +31,7 @@ print(time.time() - ts) # 37.5 sec
 
 print('\nffmpeg_extract_audio(sourceVideoFilePath, audioFilePath, bitrate=64, fps=44100)\n')
 ts = time.time()
-audioFilePath = targetAudioDir + DIR_SEP + 'Consultation Annales Akashiques 19 nov 2020_5.mp3'
+audioFilePath = targetAudioDir + DIR_SEP + 'Consultation Annales Akashiques 19 nov 2020_2.mp3'
 
 # fps=44100 ---> 34.5 sec
 ffmpeg_extract_audio(sourceVideoFilePath, audioFilePath, bitrate=64, fps=44100)
@@ -40,7 +40,16 @@ print(time.time() - ts)
 
 print('\nffmpeg_extract_audio(sourceVideoFilePath, audioFilePath, bitrate=64, fps=22050)\n')
 ts = time.time()
-audioFilePath = targetAudioDir + DIR_SEP + 'Consultation Annales Akashiques 19 nov 2020_6.mp3'
+audioFilePath = targetAudioDir + DIR_SEP + 'Consultation Annales Akashiques 19 nov 2020_3.mp3'
+
+# fps=22050 ---> 19.7 sec quality ok !
+ffmpeg_extract_audio(sourceVideoFilePath, audioFilePath, bitrate=64, fps=22050)
+print(time.time() - ts)
+
+
+print('\nBEST - ffmpeg_extract_audio(sourceVideoFilePath, audioFilePath, bitrate=128, fps=22050)\n')
+ts = time.time()
+audioFilePath = targetAudioDir + DIR_SEP + 'Consultation Annales Akashiques 19 nov 2020_4.mp3'
 
 # fps=22050 ---> 19.7 sec quality ok !
 ffmpeg_extract_audio(sourceVideoFilePath, audioFilePath, bitrate=64, fps=22050)
