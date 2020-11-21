@@ -82,14 +82,15 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 
 	def get_nodes(self):
 		nodes = self.get_selectable_nodes()
+
 		if self.nodes_order_reversed:
 			nodes = nodes[::-1]
 		if not nodes:
 			return None, None
 		
 		selected = self.selected_nodes
+
 		if not selected:  # nothing selected, select the first
-#			self.select_node(nodes[0])
 			return None, None
 		
 		if len(nodes) == 1:  # the only selectable node is selected already
@@ -97,8 +98,8 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 		
 		last = nodes.index(selected[-1])
 		self.clear_selection()
+
 		return last, nodes
-	
 	
 	def move_down(self):
 		last, nodes = self.get_nodes()
@@ -110,7 +111,6 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 		else:
 			self.select_node(nodes[last + 1])
 	
-	
 	def move_up(self):
 		last, nodes = self.get_nodes()
 		if not nodes:
@@ -121,10 +121,26 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 		else:
 			self.select_node(nodes[last - 1])
 
-
 	def unselect_current(self):
+		kivyPlayer = self.parent.parent.parent.parent
+		kivyPlayer.isLineSelected = False
 		self.clear_selection()
-
+		
+		# required to update buttons status if the unselect button was pressed
+		# and the selected item was outside the visible part of the item list !
+		self.updateButtonStatus(kivyPlayer)
+	
+	def updateButtonStatus(self, kivyPlayer):
+		buttonIds = kivyPlayer.ids
+		
+		if kivyPlayer.isLineSelected:
+			buttonIds.move_down.disabled = False
+			buttonIds.move_up.disabled = False
+			buttonIds.unselect_track.disabled = False
+		else:
+			buttonIds.move_down.disabled = True
+			buttonIds.move_up.disabled = True
+			buttonIds.unselect_track.disabled = True
 
 class SelectableLabel(RecycleDataViewBehavior, Label):
 	''' Add selection support to the Label '''
@@ -136,6 +152,7 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 		''' Catch and handle the view changes '''
 		self.rv = rv
 		self.index = index
+
 		return super(SelectableLabel, self).refresh_view_attrs(
 			rv, index, data)
 
@@ -143,15 +160,11 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 		''' Add selection on touch down '''
 
 		kivyPlayer = self.rv.parent.parent.parent
-		
-		if kivyPlayer.isPresel:
-			# an item was preselected when opening the app. This flag was used to prevent
-			# apply_selection called for each item to disable the buttons.
-			#
-			# But now, we are in the state of selecting or deselecting manually
-			# the list items and this flag must be set to False so that the buttons can be
-			# deactivated if no item is selected.
-			kivyPlayer.isPresel = False
+		logging.info('on_touch_down, index {}, text {}, selected {}'.format(self.index, self.text, self.selected))
+
+		# reinitializing the current selection index. The index will be set - or not -
+		# in the apply_selection method !
+		kivyPlayer.isLineSelected = False
 
 		if super(SelectableLabel, self).on_touch_down(touch):
 			return True
@@ -161,29 +174,28 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 	def apply_selection(self, rv, index, is_selected):
 		''' Respond to the selection of items in the view. '''
 		self.selected = is_selected
-		if is_selected:
-			logging.info("selection changed to {0}".format(rv.data[index]))
-			self.enableButtons(rv)
-		else:
-			logging.info("selection removed for {0}".format(rv.data[index]))
-			self.disableButtons(rv)
-	
-	def disableButtons(self, rv):
+		
 		kivyPlayer = rv.parent.parent.parent
 		
-		if kivyPlayer.isPresel:
-			return
+		if is_selected:
+			logging.info("selection set for {0}".format(rv.data[index]))
+			kivyPlayer.isLineSelected = True # will cause the buttons to be enabled
+		else:
+			logging.info("selection removed for {0}".format(rv.data[index]))
 		
-		buttonIds = kivyPlayer.ids
-		buttonIds.move_down.disabled = True
-		buttonIds.move_up.disabled = True
-		buttonIds.unselect_track.disabled = True
+		self.updateButtonStatus(kivyPlayer)
 	
-	def enableButtons(self, rv):
-		buttonIds = rv.parent.parent.parent.ids
-		buttonIds.move_down.disabled = False
-		buttonIds.move_up.disabled = False
-		buttonIds.unselect_track.disabled = False
+	def updateButtonStatus(self, kivyPlayer):
+		buttonIds = kivyPlayer.ids
+		
+		if kivyPlayer.isLineSelected:
+			buttonIds.move_down.disabled = False
+			buttonIds.move_up.disabled = False
+			buttonIds.unselect_track.disabled = False
+		else:
+			buttonIds.move_down.disabled = True
+			buttonIds.move_up.disabled = True
+			buttonIds.unselect_track.disabled = True
 
 
 class KivyPlayer(BoxLayout):
@@ -193,7 +205,7 @@ class KivyPlayer(BoxLayout):
 		super(KivyPlayer, self).__init__(**kwargs)
 
 		# Set media_list_RV data
-		self.ids.media_list_RV.data = [{'text': str(x), 'selectable': True} for x in range(100)]
+		self.ids.media_list_RV.data = [{'text': str(x), 'selectable': True} for x in range(15)]
 		
 		# specify pre-selected node by its index in the data
 		self.ids.controller.selected_nodes = [0]
