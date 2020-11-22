@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-import logging
+import os, logging
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.config import Config
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.recycleview import RecycleView
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.uix.label import Label
 from kivy.properties import BooleanProperty, StringProperty, NumericProperty
@@ -11,6 +11,8 @@ from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 
+MOVE_DIRECTION_UP = 'moveItemUp'
+MOVE_DIRECTION_DOWN = 'moveItemDown'
 
 kv = """
 
@@ -36,20 +38,20 @@ kv = """
 		BoxLayout:
 			size_hint_y: 0.3
 			Button:
-				id: move_down
-				text: "Move down"
-				on_release: controller.move_down()
+				id: moveItemDown
+				text: "Move item down"
+				on_release: controller.moveItemDown()
 			Button:
-				id: move_up
-				text: "Move up"
-				on_release: controller.move_up()
+				id: moveItemUp
+				text: "Move item up"
+				on_release: controller.moveItemUp()
 			Button:
-				id: unselect_track
-				text: "Unselect Track"
-				on_release: controller.unselect_current()
+				id: unselect_item
+				text: "Unselect item"
+				on_release: controller.unselectItem()
 		BoxLayout:
 			RecycleView:
-				id: media_list_RV
+				id: RV_list_item
 				viewclass: 'SelectableLabel'
 				scroll_type: ['bars', 'content']
 				scroll_wheel_distance: dp(114)
@@ -64,11 +66,9 @@ kv = """
 					size_hint_y: None
 					height: self.minimum_height
 					orientation: 'vertical'
-					# multiselect: True
-					# touch_multiselect: True
+					multiselect: False
+					touch_multiselect: False
 					spacing: dp(2)
-
-
 """
 
 Builder.load_string(kv)
@@ -101,27 +101,68 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 
 		return last, nodes
 	
-	def move_down(self):
+	def moveItemUp(self):
 		last, nodes = self.get_nodes()
-		if not nodes:
-			return
 		
-		if last == len(nodes) - 1:
-			self.select_node(nodes[0])
-		else:
-			self.select_node(nodes[last + 1])
-	
-	def move_up(self):
-		last, nodes = self.get_nodes()
 		if not nodes:
 			return
 		
 		if not last:
-			self.select_node(nodes[-1])
+			newSelIdx = -1
+			self.updateLineValues(MOVE_DIRECTION_UP, last, newSelIdx)
+			self.select_node(nodes[newSelIdx])
 		else:
-			self.select_node(nodes[last - 1])
+			newSelIdx = last - 1
+			self.updateLineValues(MOVE_DIRECTION_UP, last, newSelIdx)
+			self.select_node(nodes[newSelIdx])
+	
+	def moveItemDown(self):
+		last, nodes = self.get_nodes()
 
-	def unselect_current(self):
+		if not nodes:
+			return
+
+		if last == len(nodes) - 1:
+			newSelIdx = 0
+			self.updateLineValues(MOVE_DIRECTION_DOWN, last, newSelIdx)
+			self.select_node(nodes[newSelIdx])
+		else:
+			newSelIdx = last + 1
+			self.updateLineValues(MOVE_DIRECTION_DOWN, last, newSelIdx)
+			self.select_node(nodes[newSelIdx])
+	
+	def updateLineValues(self, moveDirection, movedItemSelIndex, movedItemNewSeIndex):
+		movedValue = self.parent.data[movedItemSelIndex]['text']
+
+		if moveDirection == MOVE_DIRECTION_DOWN:
+			if movedItemSelIndex > movedItemNewSeIndex:
+				# we are moving down the last list item. The item will be inserted at top
+				# of the list
+				self.parent.data.pop(movedItemSelIndex)
+				self.parent.data.insert(0, {'text': movedValue, 'selectable': True})
+			else:
+				replacedValue = self.parent.data[movedItemNewSeIndex]['text']
+				self.parent.data.pop(movedItemSelIndex)
+				self.parent.data.insert(movedItemSelIndex, {'text': replacedValue, 'selectable': True})
+				
+				self.parent.data.pop(movedItemNewSeIndex)
+				self.parent.data.insert(movedItemNewSeIndex, {'text': movedValue, 'selectable': True})
+		else:
+			# handling moving up
+			if movedItemSelIndex == 0:
+				# we are moving up the first item. The first item will be appended to the
+				# end of the list
+				self.parent.data.pop(movedItemSelIndex)
+				self.parent.data.append({'text': movedValue, 'selectable': True})
+			else:
+				replacedValue = self.parent.data[movedItemNewSeIndex]['text']
+				self.parent.data.pop(movedItemSelIndex)
+				self.parent.data.insert(movedItemSelIndex, {'text': replacedValue, 'selectable': True})
+				
+				self.parent.data.pop(movedItemNewSeIndex)
+				self.parent.data.insert(movedItemNewSeIndex, {'text': movedValue, 'selectable': True})
+
+	def unselectItem(self):
 		kivyPlayer = self.parent.parent.parent.parent
 		kivyPlayer.isLineSelected = False
 		self.clear_selection()
@@ -134,13 +175,13 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 		buttonIds = kivyPlayer.ids
 		
 		if kivyPlayer.isLineSelected:
-			buttonIds.move_down.disabled = False
-			buttonIds.move_up.disabled = False
-			buttonIds.unselect_track.disabled = False
+			buttonIds.moveItemDown.disabled = False
+			buttonIds.moveItemUp.disabled = False
+			buttonIds.unselect_item.disabled = False
 		else:
-			buttonIds.move_down.disabled = True
-			buttonIds.move_up.disabled = True
-			buttonIds.unselect_track.disabled = True
+			buttonIds.moveItemDown.disabled = True
+			buttonIds.moveItemUp.disabled = True
+			buttonIds.unselect_item.disabled = True
 
 class SelectableLabel(RecycleDataViewBehavior, Label):
 	''' Add selection support to the Label '''
@@ -189,14 +230,13 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 		buttonIds = kivyPlayer.ids
 		
 		if kivyPlayer.isLineSelected:
-			buttonIds.move_down.disabled = False
-			buttonIds.move_up.disabled = False
-			buttonIds.unselect_track.disabled = False
+			buttonIds.moveItemDown.disabled = False
+			buttonIds.moveItemUp.disabled = False
+			buttonIds.unselect_item.disabled = False
 		else:
-			buttonIds.move_down.disabled = True
-			buttonIds.move_up.disabled = True
-			buttonIds.unselect_track.disabled = True
-
+			buttonIds.moveItemDown.disabled = True
+			buttonIds.moveItemUp.disabled = True
+			buttonIds.unselect_item.disabled = True
 
 class KivyPlayer(BoxLayout):
 	''' Main Kivy class for creating the initial BoxLayout '''
@@ -204,21 +244,21 @@ class KivyPlayer(BoxLayout):
 	def __init__(self, **kwargs):
 		super(KivyPlayer, self).__init__(**kwargs)
 
-		# Set media_list_RV data
-		self.ids.media_list_RV.data = [{'text': str(x), 'selectable': True} for x in range(15)]
+		# Set RV_list_item data
+		self.ids.RV_list_item.data = [{'text': 'line {}'.format(x), 'selectable': True} for x in range(15)]
 		
 		# specify pre-selected node by its index in the data
 		self.ids.controller.selected_nodes = [0]
-		self.isPresel = True
-		
-		# enable the buttons
-		# buttonIds = self.ids.media_list_RV.parent.parent.parent.ids
-		# buttonIds.move_down.disabled = False
-		# buttonIds.move_up.disabled = False
-		# buttonIds.unselect_track.disabled = False
 
 class KivyApp(App):
 	def build(self):
+
+		if os.name != 'posix':
+			# running app om Windows
+			Config.set('graphics', 'width', '600')
+			Config.set('graphics', 'height', '500')
+			Config.write()
+
 		return KivyPlayer()
 	
 KivyApp().run()
