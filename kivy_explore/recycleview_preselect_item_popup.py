@@ -1,17 +1,14 @@
 import logging
+
 from kivy.app import App
-from kivy.lang import Builder
-from kivy.config import Config
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.recycleview import RecycleView
-from kivy.uix.recycleview.views import RecycleDataViewBehavior
-from kivy.uix.label import Label
-from kivy.properties import BooleanProperty, StringProperty, NumericProperty
-from kivy.uix.recycleboxlayout import RecycleBoxLayout
+from kivy.properties import BooleanProperty, StringProperty
 from kivy.uix.behaviors import FocusBehavior
-from kivy.uix.recycleview.layout import LayoutSelectionBehavior
-from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
 from kivy.uix.popup import Popup
+from kivy.uix.recycleboxlayout import RecycleBoxLayout
+from kivy.uix.recycleview.layout import LayoutSelectionBehavior
+from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.utils import platform
 
 class ConfirmPopup(BoxLayout):

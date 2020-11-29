@@ -50,6 +50,7 @@ kv = """
 		BoxLayout:
 			RecycleView:
 				id: media_list
+	            effect_cls: "ScrollEffect" # prevents overscrolling
 				viewclass: 'SelectableLabel'
 				scroll_type: ['bars', 'content']
 				scroll_wheel_distance: dp(114)
