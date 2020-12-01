@@ -26,6 +26,12 @@ kv = """
 			size: self.size
 
 <KivyPlayer>:
+    requestInput: request_TextInput
+
+    # adding main windows borders
+    padding: 5
+    spacing: 5
+    
 	canvas:
 		Color:
 			rgba: 0.3, 0.3, 0.3, 1
@@ -33,6 +39,36 @@ kv = """
 			size: self.size
 			pos: self.pos
 	orientation: 'vertical'
+
+    BoxLayout:
+        size_hint_y: None
+        height: "28dp"
+        canvas.before:
+            Color:
+                rgb: [0,0,0]
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        GridLayout:
+            cols: 2
+            TextInput:
+                id: request_TextInput
+                background_color: 0,0,0,0
+                foreground_color: 1,1,1,1
+                focus: True
+                multiline: False
+                #ENTER triggers root.submitRequest()
+                on_text_validate: root.submitRequest()
+                on_text: root.ensureLowercase()
+            Button:
+                id: toggle_app_size_Button
+                text: 'Full'
+                size_hint_x: None
+                width: 130
+                on_press: root.toggleAppPosAndSize()
+
+
 	BoxLayout:
 		orientation: 'vertical'
 		BoxLayout:
@@ -219,11 +255,14 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 		
 		kivyPlayer = rv.parent.parent.parent
 		
+		selItemValue = rv.data[index]['text']
+		
 		if is_selected:
-			logging.info("selection set for {0}".format(rv.data[index]))
+			logging.info("selection set for {0}".format(selItemValue))
 			kivyPlayer.isLineSelected = True # will cause the buttons to be enabled
+			kivyPlayer.requestInput.text = selItemValue
 		else:
-			logging.info("selection removed for {0}".format(rv.data[index]))
+			logging.info("selection removed for {0}".format(selItemValue))
 		
 		self.updateButtonStatus(kivyPlayer)
 	
@@ -250,6 +289,14 @@ class KivyPlayer(BoxLayout):
 		
 		# specify pre-selected node by its index in the data
 		self.ids.controller.selected_nodes = [0]
+
+	def ensureLowercase(self):
+		'''
+		Ensure the input text control only contains lower cases.
+		'''
+		# Get the request from the TextInput
+		requestStr = self.requestInput.text
+		self.requestInput.text = requestStr.lower()
 
 class KivyApp(App):
 	def build(self):

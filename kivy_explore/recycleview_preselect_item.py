@@ -24,6 +24,10 @@ kv = """
 			size: self.size
 
 <KivyPlayer>:
+    # adding main windows borders
+    padding: 5
+    spacing: 5
+    
 	canvas:
 		Color:
 			rgba: 0.3, 0.3, 0.3, 1
