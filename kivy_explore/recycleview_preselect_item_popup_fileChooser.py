@@ -30,8 +30,8 @@ class FileChooserPopup(BoxLayout):
 			self.popupBoxLayout.size_hint_y = 0.17
 			self.choosenFileText.size_hint_y = 0.12
 		else:
-			self.diskList.data.append({'text': 'main', 'selectable': True})
-			self.diskList.data.append({'text': 'sd card', 'selectable': True})
+			self.diskList.data.append({'text': '/storage/emulated/0', 'selectable': True})
+			self.diskList.data.append({'text': '/storage/0000-0000', 'selectable': True})
 			
 			# sizing FileChooserPopup widgets
 			self.popupBoxLayout.size_hint_y = 0.16
@@ -47,6 +47,9 @@ class FileChooserPopup(BoxLayout):
 
 		pathFileName = os.path.join(path, filename[0])
 		self.rootGUI.loadFile(pathFileName)
+		self.rootGUI.dismissPopup()
+
+	def cancel(self):
 		self.rootGUI.dismissPopup()
 
 	def on_answer(self, *args):
@@ -86,7 +89,11 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 		if is_selected:
 			rootGUI = rv.parent.parent
 			diskLetter = rv.data[index]['text']
-			rootGUI.fileChooser.rootpath = diskLetter + '\\'
+			if os.name != 'posix':
+				# we are on Windows
+				rootGUI.fileChooser.path = diskLetter + '\\'
+			else:
+				rootGUI.fileChooser.path = diskLetter
 
 class RVPreselItemPopupFileChooserApp(App):
 	def build(self):
