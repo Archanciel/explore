@@ -11,26 +11,44 @@ from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.popup import Popup
 from kivy.utils import platform
 
-class ConfirmPopup(BoxLayout):
+class FileChooserPopup(BoxLayout):
 	text = StringProperty()
 	
-	def __init__(self, **kwargs):
+	def __init__(self, rootGUI, **kwargs):
 		self.register_event_type('on_answer')
-		super(ConfirmPopup, self).__init__(**kwargs)
+		super(FileChooserPopup, self).__init__(**kwargs)
+		self.rootGUI = rootGUI
 		
 		if os.name != 'posix':
 			import string
 			available_drives = ['%s:' % d for d in string.ascii_uppercase if os.path.exists('%s:' % d)]
 
 			for drive in available_drives:
-				self.medList.data.append({'text': drive, 'selectable': True})
+				self.diskList.data.append({'text': drive, 'selectable': True})
+
+			# sizing FileChooserPopup widgets
+			self.popupBoxLayout.size_hint_y = 0.17
+			self.choosenFileText.size_hint_y = 0.12
 		else:
-			self.medList.data.append({'text': 'main', 'selectable': True})
-			self.medList.data.append({'text': 'sd card', 'selectable': True})
-		
+			self.diskList.data.append({'text': 'main', 'selectable': True})
+			self.diskList.data.append({'text': 'sd card', 'selectable': True})
+			
+			# sizing FileChooserPopup widgets
+			self.popupBoxLayout.size_hint_y = 0.16
+			self.choosenFileText.size_hint_y = 0.08
+
 		# specify pre-selected node by its index in the data
-		self.ctr.selected_nodes = [0]
-	
+		self.diskRecycleBoxLayout.selected_nodes = [0]
+
+	def load(self, path, filename):
+		if not filename:
+			# no file selected. Load dialog remains open ..
+			return
+
+		pathFileName = os.path.join(path, filename[0])
+		self.rootGUI.loadFile(pathFileName)
+		self.rootGUI.dismissPopup()
+
 	def on_answer(self, *args):
 		pass
 
@@ -41,47 +59,6 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 	# required to forbid unselecting a selected item. An item can be unselected
 	# only by selecting another item
 	touch_deselect_last = BooleanProperty(False)
-
-	def get_nodes(self):
-		nodes = self.get_selectable_nodes()
-		if self.nodes_order_reversed:
-			nodes = nodes[::-1]
-		if not nodes:
-			return None, None
-		
-		selected = self.selected_nodes
-		if not selected:  # nothing selected, select the first
-			self.select_node(nodes[0])
-			return None, None
-		
-		if len(nodes) == 1:  # the only selectable node is selected already
-			return None, None
-		
-		last = nodes.index(selected[-1])
-		self.clear_selection()
-		return last, nodes
-	
-	
-	def select_next(self):
-		last, nodes = self.get_nodes()
-		if not nodes:
-			return
-		
-		if last == len(nodes) - 1:
-			self.select_node(nodes[0])
-		else:
-			self.select_node(nodes[last + 1])
-	
-	
-	def select_previous(self):
-		last, nodes = self.get_nodes()
-		if not nodes:
-			return
-		
-		if not last:
-			self.select_node(nodes[-1])
-		else:
-			self.select_node(nodes[last - 1])
 
 class SelectableLabel(RecycleDataViewBehavior, Label):
 	''' Add selection support to the Label '''
@@ -105,11 +82,11 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 	def apply_selection(self, rv, index, is_selected):
 		''' Respond to the selection of items in the view. '''
 		self.selected = is_selected
+		
 		if is_selected:
-			logging.info("selection changed to {0}".format(rv.data[index]))
-		else:
-			logging.info("selection removed for {0}".format(rv.data[index]))
-
+			rootGUI = rv.parent.parent
+			diskLetter = rv.data[index]['text']
+			rootGUI.fileChooser.rootpath = diskLetter + '\\'
 
 class RVPreselItemPopupFileChooserApp(App):
 	def build(self):
@@ -120,22 +97,31 @@ class RVPreselItemPopupFileChooserApp(App):
 			Config.set('graphics', 'height', '500')
 			Config.write()
 
-		content = ConfirmPopup(text='Do You Love Kivy ?')
-		content.bind(on_answer=self._on_answer)
+		fileChooser = FileChooserPopup(self, text='Do You Love Kivy ?')
+		fileChooser.bind(on_answer=self._on_answer)
 		
 		if platform == 'android':
 			popupSize = (1280, 1450) # tablet
 			popupSize = (1060, 1450) # smartphone
 		elif platform == 'win':
 			popupSize = (500, 450)
-		
+
 		self.popup = Popup(title="Answer Question",
-		                   content=content,
+		                   content=fileChooser,
 		                   size_hint=(None, None),
 		                   size=popupSize,
 		                   auto_dismiss=False)
+			
 		self.popup.open()
-	
+		
+	def loadFile(self, pathFileName):
+		import logging
+		
+		logging.info('loadFile ' + pathFileName)
+
+	def dismissPopup(self):
+		self.popup.dismiss()
+
 	def _on_answer(self, instance, answer):
 		logging.info("USER ANSWER: {}".format(repr(answer)))
 		self.popup.dismiss()
