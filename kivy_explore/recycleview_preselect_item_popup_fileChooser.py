@@ -11,6 +11,10 @@ from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.popup import Popup
 from kivy.utils import platform
 
+SD_CARD_DIR_TABLET = '/storage/0000-0000'
+SD_CARD_DIR_SMARTPHONE = '/storage/9016-4EF8'
+
+
 class FileChooserPopup(BoxLayout):
 	text = StringProperty()
 	
@@ -34,7 +38,13 @@ class FileChooserPopup(BoxLayout):
 		else:
 			self.pathList.data.append({'text': 'Data file location setting', 'selectable': True, 'path': '/storage/emulated/0/download/Audiobooks'})
 			self.pathList.data.append({'text': 'Smartphone', 'selectable': True, 'path': '/storage/emulated/0'})
-			self.pathList.data.append({'text': 'SD card', 'selectable': True, 'path': '/storage/0000-0000'})
+			
+			sdCardDir = SD_CARD_DIR_SMARTPHONE
+			
+			if not os.path.isdir(sdCardDir):
+				sdCardDir = SD_CARD_DIR_TABLET
+				
+			self.pathList.data.append({'text': 'SD card', 'selectable': True, 'path': sdCardDir})
 			
 			# sizing FileChooserPopup widgets
 			self.popupBoxLayout.size_hint_y = 0.16
