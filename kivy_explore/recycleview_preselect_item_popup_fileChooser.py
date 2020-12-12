@@ -22,16 +22,19 @@ class FileChooserPopup(BoxLayout):
 		if os.name != 'posix':
 			import string
 			available_drives = ['%s:' % d for d in string.ascii_uppercase if os.path.exists('%s:' % d)]
+			
+			self.pathList.data.append({'text': 'Data file location setting', 'selectable': True, 'path': 'c:\\temp\\cpdata'})
 
 			for drive in available_drives:
-				self.diskList.data.append({'text': drive, 'selectable': True})
+				self.pathList.data.append({'text': drive, 'selectable': True, 'path': drive})
 
 			# sizing FileChooserPopup widgets
 			self.popupBoxLayout.size_hint_y = 0.17
 			self.choosenFileText.size_hint_y = 0.12
 		else:
-			self.diskList.data.append({'text': '/storage/emulated/0', 'selectable': True})
-			self.diskList.data.append({'text': '/storage/0000-0000', 'selectable': True})
+			self.pathList.data.append({'text': 'Data file location setting', 'selectable': True, 'path': '/storage/emulated/0/download/Audiobooks'})
+			self.pathList.data.append({'text': 'Smartphone', 'selectable': True, 'path': '/storage/emulated/0'})
+			self.pathList.data.append({'text': 'SD card', 'selectable': True, 'path': '/storage/0000-0000'})
 			
 			# sizing FileChooserPopup widgets
 			self.popupBoxLayout.size_hint_y = 0.16
@@ -88,12 +91,16 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 		
 		if is_selected:
 			rootGUI = rv.parent.parent
-			diskLetter = rv.data[index]['text']
+			selectedPath = rv.data[index]['path']
+			
 			if os.name != 'posix':
 				# we are on Windows
-				rootGUI.fileChooser.path = diskLetter + '\\'
-			else:
-				rootGUI.fileChooser.path = diskLetter
+				selectedPath = selectedPath + '\\'  # adding '\\' is required,otherwise,
+													# when selecting D:, the directory
+													# hosting the utility is selected !
+				
+			rootGUI.fileChooser.path = selectedPath
+			rootGUI.currentPathField.text = selectedPath
 
 class RVPreselItemPopupFileChooserApp(App):
 	def build(self):

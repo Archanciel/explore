@@ -3,7 +3,8 @@
 	diskRecycleBoxLayout: selectable_recyclebox_layout
 	fileChooser: file_chooser
 	choosenFileText: text_path_load
-	diskList: disk_list
+	pathList: path_list
+	currentPathField: text_path_load
 	orientation: 'vertical'
     BoxLayout:
         id: popup_boxlayout
@@ -12,7 +13,7 @@
         #size_hint_y: 0.11 # value for Android tablet
         size_hint_y: 0.16 # value for Android smartphone
         RecycleView:
-            id: disk_list
+            id: path_list
             effect_cls: "ScrollEffect" # prevents overscrolling
             viewclass: 'SelectableLabel'
             scroll_type: ['bars', 'content']
