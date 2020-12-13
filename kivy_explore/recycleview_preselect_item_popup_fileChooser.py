@@ -4,7 +4,7 @@ from kivy.config import Config
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.uix.label import Label
-from kivy.properties import BooleanProperty, StringProperty, NumericProperty
+from kivy.properties import BooleanProperty, StringProperty
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
@@ -18,10 +18,10 @@ SD_CARD_DIR_SMARTPHONE = '/storage/9016-4EF8'
 class FileChooserPopup(BoxLayout):
 	text = StringProperty()
 	
-	def __init__(self, rootGUI, **kwargs):
+	def __init__(self, rootApp, **kwargs):
 		self.register_event_type('on_answer')
 		super(FileChooserPopup, self).__init__(**kwargs)
-		self.rootGUI = rootGUI
+		self.rootApp = rootApp
 		
 		if os.name != 'posix':
 			import string
@@ -37,7 +37,7 @@ class FileChooserPopup(BoxLayout):
 			self.choosenFileText.size_hint_y = 0.12
 		else:
 			self.pathList.data.append({'text': 'Data file location setting', 'selectable': True, 'path': '/storage/emulated/0/download/Audiobooks'})
-			self.pathList.data.append({'text': 'Smartphone', 'selectable': True, 'path': '/storage/emulated/0'})
+			self.pathList.data.append({'text': 'Main RAM', 'selectable': True, 'path': '/storage/emulated/0'})
 			
 			sdCardDir = SD_CARD_DIR_SMARTPHONE
 			
@@ -59,11 +59,11 @@ class FileChooserPopup(BoxLayout):
 			return
 
 		pathFileName = os.path.join(path, filename[0])
-		self.rootGUI.loadFile(pathFileName)
-		self.rootGUI.dismissPopup()
+		self.rootApp.loadFile(pathFileName)
+		self.rootApp.dismissPopup()
 
 	def cancel(self):
-		self.rootGUI.dismissPopup()
+		self.rootApp.dismissPopup()
 
 	def on_answer(self, *args):
 		pass
@@ -121,7 +121,7 @@ class RVPreselItemPopupFileChooserApp(App):
 			Config.set('graphics', 'height', '500')
 			Config.write()
 
-		fileChooser = FileChooserPopup(self, text='Do You Love Kivy ?')
+		fileChooser = FileChooserPopup(rootApp=self, text='Do You Love Kivy ?')
 		fileChooser.bind(on_answer=self._on_answer)
 		
 		if platform == 'android':
@@ -130,7 +130,7 @@ class RVPreselItemPopupFileChooserApp(App):
 		elif platform == 'win':
 			popupSize = (500, 450)
 
-		self.popup = Popup(title="Answer Question",
+		self.popup = Popup(title="Load file",
 		                   content=fileChooser,
 		                   size_hint=(None, None),
 		                   size=popupSize,
