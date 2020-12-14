@@ -19,6 +19,9 @@ from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
 
+SD_CARD_DIR_TABLET = '/storage/0000-0000'
+SD_CARD_DIR_SMARTPHONE = '/storage/9016-4EF8'
+
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 								 RecycleBoxLayout):
 	''' Adds selection and focus behaviour to the view. '''
