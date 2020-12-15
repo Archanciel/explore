@@ -9,9 +9,8 @@
 
 <FileChooserPopup>: # sub-class of RecycleView
     popupBoxLayout: popup_boxlayout
-	diskRecycleBoxLayout: selectable_recyclebox_layout
+	diskRecycleBoxLayout: selectable_recyclebox_layout_file_chooser
 	fileChooser: file_chooser
-	choosenFileText: text_path_load
 	pathList: path_list
 	currentPathField: text_path_load
 	orientation: 'vertical'
@@ -24,15 +23,15 @@
         RecycleView:
             id: path_list
             effect_cls: "ScrollEffect" # prevents overscrolling
-            viewclass: 'SelectableLabel'
+            viewclass: 'SelectableLabelFileChooser'
             scroll_type: ['bars', 'content']
             scroll_wheel_distance: dp(114)
             bar_width: dp(10)
             scroll_y: 1 # 0 forces scrolling to list bottom after adding
                         # an item, 1 forces scrolling to list top
             effect_cls: "ScrollEffect" # prevents overscrolling
-            SelectableRecycleBoxLayout:
-                id: selectable_recyclebox_layout
+            SelectableRecycleBoxLayoutFileChooser:
+                id: selectable_recyclebox_layout_file_chooser
                 key_selection: 'selectable' # required so that 'selectable'
                                             # key/value can be added to
                                             # RecycleView data items
@@ -72,7 +71,7 @@
                 text: "Load"
                 on_release: root.load(file_chooser.path, file_chooser.selection)
 
-<SelectableLabel>:
+<SelectableLabelFileChooser>:
     # Draw a background to indicate selection
     canvas.before:
         Color:

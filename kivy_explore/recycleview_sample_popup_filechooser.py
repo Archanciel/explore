@@ -22,14 +22,14 @@ from kivy.uix.recycleview.views import RecycleDataViewBehavior
 SD_CARD_DIR_TABLET = '/storage/0000-0000'
 SD_CARD_DIR_SMARTPHONE = '/storage/9016-4EF8'
 
-class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
+class SelectableRecycleBoxLayoutFileChooser(FocusBehavior, LayoutSelectionBehavior,
 								 RecycleBoxLayout):
 	''' Adds selection and focus behaviour to the view. '''
 
 	# required to authorise unselecting a selected item
 	touch_deselect_last = BooleanProperty(True)
 
-class SelectableLabel(RecycleDataViewBehavior, Label):
+class SelectableLabelFileChooser(RecycleDataViewBehavior, Label):
 	''' Add selection support to the Label '''
 	index = None
 	selected = BooleanProperty(False)
@@ -38,12 +38,12 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 	def refresh_view_attrs(self, rv, index, data):
 		''' Catch and handle the view changes '''
 		self.index = index
-		return super(SelectableLabel, self).refresh_view_attrs(
+		return super(SelectableLabelFileChooser, self).refresh_view_attrs(
 			rv, index, data)
 	
 	def on_touch_down(self, touch):
 		''' Add selection on touch down '''
-		if super(SelectableLabel, self).on_touch_down(touch):
+		if super(SelectableLabelFileChooser, self).on_touch_down(touch):
 			return True
 		if self.collide_point(*touch.pos) and self.selectable:
 			return self.parent.select_with_touch(self.index, touch)
@@ -86,7 +86,7 @@ class FileChooserPopup(BoxLayout):
 			
 			# sizing FileChooserPopup widgets
 			self.popupBoxLayout.size_hint_y = 0.17
-			self.choosenFileText.size_hint_y = 0.12
+			self.currentPathField.size_hint_y = 0.12
 		else:
 			self.pathList.data.append({'text': 'Data file location setting', 'selectable': True,
 			                           'path': '/storage/emulated/0/download/Audiobooks'})
@@ -101,7 +101,7 @@ class FileChooserPopup(BoxLayout):
 			
 			# sizing FileChooserPopup widgets
 			self.popupBoxLayout.size_hint_y = 0.16
-			self.choosenFileText.size_hint_y = 0.08
+			self.currentPathField.size_hint_y = 0.08
 		
 		# specify pre-selected node by its index in the data
 		self.diskRecycleBoxLayout.selected_nodes = [0]
