@@ -6,6 +6,12 @@
             Button:
                 text: 'Load'
                 on_release: root.show_load()
+            Button:
+                id: menu_Button
+                text: "..."
+                on_release: root.openDropDownMenu(self)
+        BoxLayout: # required so that the drop down menu can be displayed
+            size_hint_y: 0.94
 
 <FileChooserPopup>: # sub-class of RecycleView
     popupBoxLayout: popup_boxlayout
@@ -84,3 +90,18 @@
         Rectangle:
             pos: self.pos
             size: self.size
+
+<CustomDropDown>
+    saveButton: save_Button
+    Button:
+        text: 'Load'
+        size_hint_y: None
+        height: '28dp'
+        on_release: root.showLoad()
+    Button:
+        id: save_Button
+        text: 'Save'
+        size_hint_y: None
+        height: '28dp'
+        disabled: True
+        on_release: root.showSave()

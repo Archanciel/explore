@@ -18,6 +18,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
+from kivy.uix.dropdown import DropDown
 
 SD_CARD_DIR_TABLET = '/storage/0000-0000'
 SD_CARD_DIR_SMARTPHONE = '/storage/9016-4EF8'
@@ -106,11 +107,22 @@ class FileChooserPopup(BoxLayout):
 		# specify pre-selected node by its index in the data
 		self.diskRecycleBoxLayout.selected_nodes = [0]
 
+class CustomDropDown(DropDown):
+	saveButton = ObjectProperty(None)
+	statusToRequestInputButton = ObjectProperty(None)
+	
+	def __init__(self, owner):
+		super().__init__()
+		self.owner = owner
+	
+	def showLoad(self):
+		self.owner.show_load()
 
-class AppGUI(FloatLayout): 
+class AppGUI(FloatLayout):
 	def __init__(self, **kwargs):
 		super(AppGUI, self).__init__(**kwargs)
-		
+		self.dropDownMenu = CustomDropDown(owner=self)
+
 	def dismiss_popup(self):
 		self._popup.dismiss()
 
@@ -125,6 +137,9 @@ class AppGUI(FloatLayout):
 
 		import logging
 		logging.info('loadFile ' + pathFileName)
+	
+	def openDropDownMenu(self, widget):
+		self.dropDownMenu.open(widget)
 	
 	def on_pause(self):
 		# Here you can save data if needed
