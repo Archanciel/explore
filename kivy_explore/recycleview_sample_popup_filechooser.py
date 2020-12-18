@@ -116,21 +116,22 @@ class CustomDropDown(DropDown):
 		self.owner = owner
 	
 	def showLoad(self):
-		self.owner.show_load()
+		self.owner.openFileLoadPopup()
 
 class AppGUI(FloatLayout):
 	def __init__(self, **kwargs):
 		super(AppGUI, self).__init__(**kwargs)
 		self.dropDownMenu = CustomDropDown(owner=self)
 
-	def dismiss_popup(self):
+	def dismissPopup(self):
 		self._popup.dismiss()
 
-	def show_load(self):
-		content = FileChooserPopup(rootGUI=self, load=self.load, cancel=self.dismiss_popup)
+	def openFileLoadPopup(self):
+		content = FileChooserPopup(rootGUI=self, load=self.load, cancel=self.dismissPopup)
 		self._popup = Popup(title="RecycleView in Popup", content=content,
 							size_hint=(0.9, 0.9))
 		self._popup.open()
+		self.dropDownMenu.dismiss()
 		
 	def load(self, path, filename):
 		pathFileName = os.path.join(path, filename[0])
