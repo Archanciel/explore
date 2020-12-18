@@ -1,15 +1,47 @@
+<AppGUI>: # sub-class of FloatLayout
+	labelOne: label_1
+	labelTwo: label_2
+    BoxLayout:
+        orientation: 'vertical'
+		BoxLayout:
+			orientation: 'vertical'
+			Label:
+				id: label_1
+				size_hint_y: 0.05
+				canvas.before:
+					Color:
+						rgba: 1, .5, .1, 1
+					Rectangle:
+						pos: self.pos
+						size: self.size
+			Label:
+				id: label_2
+				size_hint_y: 0.1
+				canvas.before:
+					Color:
+						rgba: .5, .5, .8, 1
+					Rectangle:
+						pos: self.pos
+						size: self.size
+			Label:
+				id: label_3
+				size_hint_y: 0.85
+				text: 'Required so that popup is displayable !'
+
+
+
 <ConfirmPopup>:
 	ctr: controller
 	medList: media_list
 	orientation: 'vertical'
 	BoxLayout:
 		orientation: 'vertical'
-		size_hint_y: 0.1
+		size_hint_y: 0.2
 		Label:
 			text: root.text
 	BoxLayout:
 		orientation: 'vertical'
-		size_hint_y: 0.8
+		size_hint_y: 0.7
 		BoxLayout:
 			size_hint_y: 0.1
 			Button:
@@ -45,8 +77,8 @@
 					spacing: dp(2)
 	GridLayout:
 		cols: 2
-		size_hint_y: None
-		height: '28dp'
+		size_hint_y: 0.1 # 1 - 0.2 - 0.7 = 0.1
+		#height: '28dp' # has no effect if size_hint_y is not None !
 		Button:
 			text: 'Yes'
 			on_release: root.dispatch('on_answer','yes')

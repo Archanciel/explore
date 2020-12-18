@@ -103,9 +103,35 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 		else:
 			logging.info("selection removed for {0}".format(rv.data[index]))
 
+class AppGUI(BoxLayout): 
+	def __init__(self, **kwargs):
+		super(AppGUI, self).__init__(**kwargs)
+		
+	def dismiss_popup(self):
+		self._popup.dismiss()
+
+	def show_load(self):
+		content = ConfirmPopup(text='Do You Love Kivy ?')
+		self._popup = Popup(title="RecycleView in Popup", content=content,
+							size_hint=(0.9, 0.9))
+		self._popup.open()
+		
+	def load(self, path, filename):
+
+		self.dismiss_popup()
+
+	def on_pause(self):
+		# Here you can save data if needed
+		return True
+
+	def on_resume(self):
+		# Here you can check if any data needs replacing (usually nothing)
+		pass
 
 class RVPreselItemPopupApp(App):
 	def build(self):
+		self.appGUI = AppGUI()
+		
 		content = ConfirmPopup(text='Do You Love Kivy ?')
 		content.bind(on_answer=self._on_answer)
 		
@@ -120,9 +146,14 @@ class RVPreselItemPopupApp(App):
 		                   size=popupSize,
 		                   auto_dismiss=False)
 		self.popup.open()
+		
+		return self.appGUI  # without that, when closing the popup,
+							# the appGUI body is not displayed !
 	
 	def _on_answer(self, instance, answer):
 		logging.info("USER ANSWER: {}".format(repr(answer)))
+		self.appGUI.labelOne.text = answer
+		self.appGUI.labelTwo.text = answer.upper()
 		self.popup.dismiss()
 	
 RVPreselItemPopupApp().run()
