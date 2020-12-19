@@ -1,0 +1,72 @@
+<AppGUI>: # sub-class of FloatLayout
+	labelLeftOne: label_left_1
+	labelLeftTwo: label_left_2
+	BoxLayout:
+   	 BoxLayout:
+     	   orientation: 'vertical'
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					id: label_left_1
+					size_hint_y: 0.05
+					canvas.before:
+						Color:
+							rgba: 1, 0, 0, 1
+						Rectangle:
+							pos: self.pos
+							size: self.size
+					text: 'Left'
+				Label:
+					id: label_left_2
+					size_hint_y: 0.1
+					canvas.before:
+						Color:
+							rgba: .0, 0.9, .1, .3
+						Rectangle:
+							pos: self.pos
+							size: self.size
+				Label:
+					id: label_left_3
+					size_hint_y: 0.85
+					text: 'This is the main label'
+   	 BoxLayout:
+     	   orientation: 'vertical'
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					id: label_right_1
+					size_hint_y: None
+					height: dp(28)
+					canvas.before:
+						Color:
+							rgba: 1, 0, 0, 0.5
+						Rectangle:
+							pos: self.pos
+							size: self.size
+					text: 'Right'
+				BoxLayout:
+					size_hint_y: None
+					Label:
+						text: 'Hello world in BoxLayout'
+						font_size: '15sp'
+						size_hint_y: None
+						height: self.texture_size[1] + dp(10)					
+						canvas.before:
+							Color:
+								rgba: 1, 0, 0.5, 0.5
+							Rectangle:
+								pos: self.pos
+								size: self.size
+				Label:
+					id: label_right_2
+					size_hint_y: 0.15
+					canvas.before:
+						Color:
+							rgba: .0, 0.9, .1, .15
+						Rectangle:
+							pos: self.pos
+							size: self.size
+				Label:
+					id: label_right_3
+					size_hint_y: 0.85
+					text: 'This is the main label'

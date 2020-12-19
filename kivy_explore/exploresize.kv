@@ -1,0 +1,40 @@
+<AppGUI>: # sub-class of FloatLayout
+    BoxLayout:
+        BoxLayout:
+            orientation: 'vertical'
+            BoxLayout:
+                orientation: 'vertical'
+                BoxLayout:
+                    size_hint_y: None
+                    Label:
+                        text: 'Hello world in BoxLayout'
+                        font_size: '15sp'
+                        size_hint_y: None
+                        height: self.texture_size[1] + dp(10)
+                        canvas.before:
+                            Color:
+                                rgba: 1, 0, 0, 0.5
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                Label:
+                    size_hint_y: 1
+                    text: 'This is the main label'
+        BoxLayout:
+            orientation: 'vertical'
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'Hello world'
+                    font_size: '15sp'
+                    size_hint_y: None
+                    height: self.texture_size[1] + dp(10)
+                    canvas.before:
+                        Color:
+                            rgba: 1, 0, 0, 0.5
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                Label:
+                    size_hint_y: 1
+                    text: 'This is the main label'
