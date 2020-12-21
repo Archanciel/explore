@@ -24,8 +24,30 @@
             orientation: 'vertical'
             BoxLayout:
                 orientation: 'vertical'
+                GridLayout:
+                    cols: 1
+                    rows: 1
+                    size_hint_y: None
+                    Label:
+                        text: 'Hello world in GridLayout'
+                        font_size: '15sp'
+                        size_hint_y: None
+                        height: self.texture_size[1] + dp(10)
+                        canvas.before:
+                            Color:
+                                rgba: 1, 0, 0, 0.5
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
                 Label:
-                    text: 'Hello world'
+                    size_hint_y: 1
+                    text: 'This is the main label'
+        BoxLayout:
+            orientation: 'vertical'
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'Hello world in no layout'
                     font_size: '15sp'
                     size_hint_y: None
                     height: self.texture_size[1] + dp(10)
