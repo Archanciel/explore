@@ -7,7 +7,7 @@
                 BoxLayout:
                     size_hint_y: None
                     Label:
-                        text: 'Hello in BoxLayout s_hint_y: None'
+                        text: 'Hello World in BoxLayout size_hint_y: None'
                         font_size: '15sp'
                         size_hint_y: None
                         height: self.texture_size[1] + dp(10)
@@ -23,7 +23,7 @@
                 BoxLayout:
                     size_hint_y: None
                     Label:
-                        text: 'Hello in BoxLayout s_hint_y: None'
+                        text: 'Hello World in BoxLayout size_hint_y: None'
                         font_size: '15sp'
                         size_hint_y: None
                         height: self.texture_size[1] + dp(10)
@@ -40,7 +40,7 @@
                 BoxLayout:
                     size_hint_y: None
                     Label:
-                        text: 'Hello in BoxLayout s_hint_y: 1'
+                        text: 'Hello World in BoxLayout size_hint_y: 1'
                         font_size: '15sp'
                         size_hint_y: 1
                         height: self.texture_size[1] + dp(10)
@@ -56,46 +56,9 @@
                 BoxLayout:
                     size_hint_y: None
                     Label:
-                        text: 'Hello in BoxLayout s_hint_y: 1'
+                        text: 'Hello World in BoxLayout size_hint_y: 1'
                         font_size: '15sp'
                         size_hint_y: 1
-                        height: self.texture_size[1] + dp(10)
-                        canvas.before:
-                            Color:
-                                rgba: 1, 0, 0, 0.5
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
-        BoxLayout:
-            orientation: 'vertical'
-            BoxLayout:
-                orientation: 'vertical'
-                GridLayout:
-                    cols: 1
-                    rows: 1
-                    size_hint_y: None
-                    Label:
-                        text: 'Hello in GridLayout'
-                        font_size: '15sp'
-                        size_hint_y: None
-                        height: self.texture_size[1] + dp(10)
-                        canvas.before:
-                            Color:
-                                rgba: 1, 0, 0, 0.5
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
-                Label:
-                    size_hint_y: 1
-                    text: 'This is the main label'
-                GridLayout:
-                    cols: 1
-                    rows: 1
-                    size_hint_y: None
-                    Label:
-                        text: 'Hello in GridLayout'
-                        font_size: '15sp'
-                        size_hint_y: None
                         height: self.texture_size[1] + dp(10)
                         canvas.before:
                             Color:
