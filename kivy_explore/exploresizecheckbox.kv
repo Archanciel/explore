@@ -63,7 +63,7 @@
                     text: 'This is the main label'
                 GridLayout:
                     size_hint_y: 0.023 # tablet
-                    #size_hint_y: 0.023 # smartphone
+                    #size_hint_y: 0.035 # smartphone
                     #size_hint_y: 0.08 # Windows
                     cols: 2
                     GridLayout:
@@ -75,5 +75,5 @@
                  	       readonly: False
 						CheckBox:
 							#size_hint_x: 0.17 # smartphone
-							size_hint_x: 0.1 # tablet, Windows
+							size_hint_x: 0.06 # tablet, Windows
 							on_press: root.toggleCheckbox(self.active)
