@@ -1,78 +1,78 @@
 <AppGUI>: # sub-class of FloatLayout
-    BoxLayout:
-        BoxLayout:
-            orientation: 'vertical'
-            BoxLayout:
-                orientation: 'vertical'
-                BoxLayout:
-                    size_hint_y: None
-                    Label:
-                        text: 'Hello world in BoxLayout'
-                        font_size: '15sp'
-                        size_hint_x: 0.9
-                        size_hint_y: 1 # required so the chkbx is centered vertically !!
-                        height: self.texture_size[1] + dp(10)
-                        canvas.before:
-                            Color:
-                                rgba: 1, 0, 0, 0.5
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
+	BoxLayout:
+		BoxLayout:
+			orientation: 'vertical'
+			BoxLayout:
+				orientation: 'vertical'
+				BoxLayout:
+					size_hint_y: None
+					Label:
+						text: 'Hello world in BoxLayout'
+						font_size: '15sp'
+						size_hint_x: 0.9
+						size_hint_y: 1 # required so the chkbx is centered vertically !!
+						height: self.texture_size[1] + dp(10)
+						canvas.before:
+							Color:
+								rgba: 1, 0, 0, 0.5
+							Rectangle:
+								pos: self.pos
+								size: self.size
 					CheckBox:
 						size_hint_x: 0.1
-	                    #size_hint_max_x: 10
+						#size_hint_max_x: 10
 						on_press: root.toggleCheckbox(self.active)
-                Label:
-                    size_hint_y: 1
-                    text: 'This is the main label'
-                BoxLayout:
-                    size_hint_y: None
-                    #Label:
-                    TextInput:
-                        text: 'Hello world in BoxLayout'
-                        font_size: '15sp'
-                        size_hint_x: 0.9
-                        size_hint_y: 1 # required so the chkbx is centered vertically !!
-                        height: dp(25)
-                        multiline: False
-                        readonly: False
+				Label:
+					size_hint_y: 1
+					text: 'This is the main label'
+				BoxLayout:
+					size_hint_y: None
+					#Label:
+					TextInput:
+						text: 'Hello world in BoxLayout'
+						font_size: '15sp'
+						size_hint_x: 0.9
+						size_hint_y: 1 # required so the chkbx is centered vertically !!
+						height: dp(25)
+						multiline: False
+						readonly: False
 					CheckBox:
 						size_hint_x: None
 						on_press: root.toggleCheckbox(self.active)
-        BoxLayout:
-            orientation: 'vertical'
-            BoxLayout:
-                orientation: 'vertical'
-                GridLayout:
-                    cols: 1
-                    rows: 1
-                    size_hint_y: None
-                    Label:
-                        text: 'Hello world in GridLayout'
-                        font_size: '15sp'
-                        size_hint_y: None
-                        height: self.texture_size[1] + dp(10)
-                        canvas.before:
-                            Color:
-                                rgba: 1, 0, 0, 0.5
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
-                Label:
-                    size_hint_y: 1
-                    text: 'This is the main label'
-                GridLayout:
-                    size_hint_y: 0.023 # tablet
-                    #size_hint_y: 0.035 # smartphone
-                    #size_hint_y: 0.08 # Windows
-                    cols: 2
-                    GridLayout:
-     	               rows: 1
-           	         TextInput:
-          	              text: 'Hello world in GridLayout'
-                     	   font_size: '15sp'
-          	              multiline: False
-                 	       readonly: False
+		BoxLayout:
+			orientation: 'vertical'
+			BoxLayout:
+				orientation: 'vertical'
+				GridLayout:
+					cols: 1
+					rows: 1
+					size_hint_y: None
+					Label:
+						text: 'Hello world in GridLayout'
+						font_size: '15sp'
+						size_hint_y: None
+						height: self.texture_size[1] + dp(10)
+						canvas.before:
+							Color:
+								rgba: 1, 0, 0, 0.5
+							Rectangle:
+								pos: self.pos
+								size: self.size
+				Label:
+					size_hint_y: 1
+					text: 'This is the main label'
+				GridLayout:
+					size_hint_y: 0.023 # tablet
+					#size_hint_y: 0.035 # smartphone
+					#size_hint_y: 0.08 # Windows
+					cols: 2
+					GridLayout:
+					   rows: 1
+					 TextInput:
+						  text: 'Hello world in GridLayout'
+						   font_size: '15sp'
+						  multiline: False
+						   readonly: False
 						CheckBox:
 							#size_hint_x: 0.17 # smartphone
 							size_hint_x: 0.06 # tablet, Windows
