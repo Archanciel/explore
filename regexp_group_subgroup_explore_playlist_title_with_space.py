@@ -33,12 +33,14 @@ class TimeFrameParser:
 			
 		return videoTimeFramesDic			
 
+# title component 'The_playlist' has no space in it !
 playlistTitle = 'The_playlist (s01:05:52-01:07:23 e01:15:52-01:17:23 e01:15:52-01:17:23) (s1:05:52-1:07:23)'
 
 tp = TimeFrameParser()
 videoTimeFramesDic = tp.splitPlayListTitle(playlistTitle)
 print(videoTimeFramesDic)
 
+# title component 'The playlist' has a space in it !
 playlistTitle = 'The playlist (s01:05:52-01:07:23 e01:15:52-01:17:23 e01:15:52-01:17:23) (s1:05:52-1:07:23)'
 
 tp = TimeFrameParser()
