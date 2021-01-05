@@ -12,7 +12,6 @@ class TimeFrameParser:
 		
 		return videoTimeFramesDic
 
-
 	def extractTimeInfo(self, playlistName):
 		videoTimeFramesPattern = r'(\([se\d:\- ]*\) ?)'
 		startEndTimeFramePattern = r'([\dsSeE:-]*)'

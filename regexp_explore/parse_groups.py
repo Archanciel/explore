@@ -14,11 +14,12 @@ def parse(text, pattern):
 
 def printList(list):
 	print('list: ', end='')
-
+	
 	for line in list:
 		print(line, end='')
 
 	print()
+
 
 text = "Hello world 475 times you said that for 2 people"
 pattern = r'(\D+)(\d+|.*)'
