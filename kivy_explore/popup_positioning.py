@@ -8,7 +8,7 @@ class PopupApp(App):
     def build(self):
         p = Popup(title='test',
                   size_hint=(.5, .5),
-                  pos_hint={'right': .9, 'top': 0.9})
+                  pos_hint={'right': .9, 'top': 0.7})
  
         Clock.schedule_once(p.open, 2)
         return Widget()
