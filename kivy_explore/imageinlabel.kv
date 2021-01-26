@@ -1,0 +1,28 @@
+# File name: imageinlabel.kv 
+#:kivy 1.9.0
+<Button>:
+    color: .8,.9,0,.65
+    font_size: 32
+
+<MyGridLayout>:
+    rows: 3
+    spacing: 10
+    GridLayout:
+        rows: 1
+        size_hint_y: .40
+        Label:            
+            text: 'Hello [b]World[/b]/n[i]coucou[/i]'
+            size: self.texture_size
+            text_size: root.width, None
+            font_size: 44
+            halign: 'center'
+            valign: 'middle'
+            markup: True
+            Image:
+                center: self.parent.center
+                size_hint: (None, None)
+                y: self.parent.y + self.parent.height - 600
+                allow_stretch: True
+                width: 1500
+                height:500
+                source: 'image_in_label.jpg'
