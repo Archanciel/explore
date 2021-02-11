@@ -44,11 +44,22 @@ class ScrollableMarkupLabel(BoxLayout):
         self.textOutput.text = ''
         self.textInput.focus = True
 
+    def addMultipleLines(self):
+        resultStr = 'aaa'
+        
+        for i in range(4):
+            if len(self.textOutput.text) == 0:
+                self.textOutput.text = self.formatText(resultStr, i % 3)
+            else:
+                self.textOutput.text = self.textOutput.text + '\n' + self.formatText(resultStr, i % 3)
+            # self.outputResultScrollView.scroll_to(100000)
+            # self.resultOutput.cursor = (10000,0)
+
 
 class ScrollableLabelMarkupApp(App):
     def build(self):
         Config.set('graphics', 'width', '300')
-        Config.set('graphics', 'height', '100')
+        Config.set('graphics', 'height', '200')
         Config.write()
 
         self.gui = ScrollableMarkupLabel()
