@@ -4,7 +4,7 @@ from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 
 
-class TextInputScrolling(BoxLayout):
+class ScrollableMarkupLabel(BoxLayout):
     textInput = ObjectProperty()
     scroller = ObjectProperty()
     textOutput = ObjectProperty()
@@ -51,7 +51,7 @@ class ScrollableLabelMarkupApp(App):
         Config.set('graphics', 'height', '100')
         Config.write()
 
-        self.gui = TextInputScrolling()
+        self.gui = ScrollableMarkupLabel()
         return self.gui
 
 ScrollableLabelMarkupApp().run()
