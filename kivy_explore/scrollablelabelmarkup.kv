@@ -1,0 +1,49 @@
+<TextInputScrolling>:
+	textInput: txt_input
+	textOutput: content_text
+	scroller: scroll_view
+
+	orientation: 'vertical'
+	BoxLayout:
+		orientation: 'vertical'
+		BoxLayout:
+			orientation: 'vertical'
+			pos_hint: { 'top': 1}
+			size_hint_y: None
+			height: '28dp'
+			TextInput:
+				id: txt_input
+				focus: True
+				multiline: False
+				on_text_validate: root.submitRequest() # ENTER triggers root.submitRequest()
+
+		BoxLayout:
+			id: content_box
+			orientation: "vertical"
+			content: content_text
+
+			ScrollView:
+				id: scroll_view
+				effect_cls: "ScrollEffect" # prevents overscrolling
+				do_scroll_x: False # limiting to vertical scrolling
+				Label:
+					id: content_text
+					size_hint_y: None
+					height: self.texture_size[1]
+					text_size: (self.width-20), None
+					line_height: 0.9
+					background_color: 0,0,0,0
+					foreground_color: 1,1,1,1
+					valign: "top"
+					markup: True
+
+			BoxLayout:
+				orientation: 'horizontal'
+				size_hint_y: None
+				height: '28dp'
+				Button:
+					id: clear_button
+					text: "Clear all"
+					on_press: root.clearAll()
+
+
