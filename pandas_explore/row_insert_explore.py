@@ -6,11 +6,11 @@ initialReturnsDf = pd.read_csv('init_returns.csv', parse_dates=['DATE'], dtype={
 initialReturnsDf = initialReturnsDf.set_index(['DATE'])
 
 # inserting two empty columns
-initialReturnsDf.insert(loc=0, column='CAPITAL', value=[0 for i in range(initialReturnsDf.shape[0])])
+initialReturnsDf.insert(loc=0, column='EARNING CAPITAL', value=[0 for i in range(initialReturnsDf.shape[0])])
 initialReturnsDf.insert(loc=0, column='DEPOT/RETRAIT', value=[0 for i in range(initialReturnsDf.shape[0])])
 
 # converting the two columns to float64
-initialReturnsDf[['CAPITAL', 'DEPOT/RETRAIT']] = initialReturnsDf[['CAPITAL', 'DEPOT/RETRAIT']].apply(np.float64)		
+initialReturnsDf[['EARNING CAPITAL', 'DEPOT/RETRAIT']] = initialReturnsDf[['EARNING CAPITAL', 'DEPOT/RETRAIT']].apply(np.float64)
 
 # loading deposits csv file
 depositsDf = pd.read_csv('deposits.csv', parse_dates=['DATE'], dtype={'DEPOT/RETRAIT': np.float64})
@@ -45,11 +45,8 @@ initialReturnsDf = initialReturnsDf[cols]
 initialReturnsDf['IDX'] = range(1, len(initialReturnsDf) + 1)
 initialReturnsDf = initialReturnsDf.set_index('IDX')
 
-# update CAPITAL values
-initialReturnsDf.loc[1, 'CAPITAL'] = initialReturnsDf.loc[1, 'DEPOT/RETRAIT']
-
 for i in range(2, len(initialReturnsDf) + 1):
-    initialReturnsDf.loc[i, 'CAPITAL'] = initialReturnsDf.loc[i-1, 'CAPITAL'] + initialReturnsDf.loc[i, 'DEPOT/RETRAIT'] + initialReturnsDf.loc[i, 'GAIN']
+    initialReturnsDf.loc[i, 'EARNING CAPITAL'] = initialReturnsDf.loc[i-1, 'EARNING CAPITAL'] + initialReturnsDf.loc[i - 1, 'DEPOT/RETRAIT'] + initialReturnsDf.loc[i - 1, 'GAIN']
 
 print('\ninitialReturnsDf after updating CAPITAL')
 print(initialReturnsDf)
