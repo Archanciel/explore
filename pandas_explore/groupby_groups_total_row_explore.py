@@ -1,7 +1,10 @@
 import pandas as pd
 import numpy as np
 
-np.random.seed(42)
+OWNER = 'OWNER'
+CAPITAL = 'CAPITAL'
+YIELD = 'YIELD'
+TOTAL = 'TOTAL'
 
 df = pd.DataFrame({
 "Group": 3*['X']+5*['Y'],
