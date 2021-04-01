@@ -1,5 +1,7 @@
 import pandas as pd
 
+# THIS VARIANT IS BETTER IN MY OPINION
+
 OWNER = 'OWNER'
 DEPWITHDR = 'DEP/WITHDR'
 DATEFROM = 'DATE FROM'
@@ -7,6 +9,8 @@ DATETO = 'DATE TO'
 CAPITAL = 'CAPITAL'
 YIELD = 'YIELD AMT'
 TOTAL = 'TOTAL'
+
+addEmptyRow = False
 
 df = pd.DataFrame({
 	OWNER: 2*['JOE']+3*['ROB'],
@@ -44,12 +48,14 @@ for index, row in df.iterrows():
 		totalRow[OWNER] += ' total'
 		newDf = newDf.append(totalRow, ignore_index=True)
 		totalIndex += 1
-		newDf = newDf.append({OWNER: '',
-							  DEPWITHDR: '',
-						 	 CAPITAL: '',
-							  DATEFROM: '',
-							  DATETO: '',
-							  YIELD: ''}, ignore_index=True)
+		
+		if addEmptyRow:
+			newDf = newDf.append({OWNER: '',
+								  DEPWITHDR: '',
+							     CAPITAL: '',
+								  DATEFROM: '',
+								  DATETO: '',
+								  YIELD: ''}, ignore_index=True)
 		newDf = newDf.append({OWNER: row[OWNER], 
 							  DEPWITHDR: row[DEPWITHDR],
 							  CAPITAL: row[CAPITAL],
