@@ -48,13 +48,13 @@ print(dfg)
 print()
 
 # finally, adding a TOTAL row
-dfg.loc[TOTAL] = dfg.sum(numeric_only=True, axis=0)[[CAPITAL, YIELD]]
+dfg.loc[TOTAL] = dfg.sum(numeric_only=True, axis=0)[[CAPITAL, YIELD, TOTAL]]
 '''
        OWNER  CAPITAL  YIELD AMT    TOTAL
 0      Carla  19000.0     2700.0  21700.0
 1        Joe  15000.0     1500.0  16500.0
 2        Rob   2000.0      200.0   2200.0
-TOTAL         36000.0     4400.0
+TOTAL         36000.0     4400.0  40400.0
 '''
 
 print(dfg.fillna(''))
