@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 data = [{'cap': 1000, 'rev': 20},{'cap': 5000, 'rev': 150}]
 
