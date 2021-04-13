@@ -34,7 +34,7 @@ dfg = df.groupby([OWNER]).sum().reset_index()
 print(dfg)
 print()
 
-# adding a TOTAL column
+# adding a TOTAL column (see alternative solution below !)
 for index in range(0, len(dfg)):
 	dfg.loc[index, TOTAL] = dfg.loc[index, CAPITAL] + dfg.loc[index, YIELD]
 '''
@@ -72,3 +72,14 @@ TOTAL  36000.0     4400.0  40400.0
 '''
 
 print(dfg.fillna(''))
+
+# Alternative solution
+df_2 = pd.DataFrame({OWNER: 2 * ['Joe'] + 3 * ['Carla'] + ['Rob'],
+                   CAPITAL: [10000, 5000, 20000, 3000, -4000, 2000],
+                   YIELD: [1000, 500, 2000, 300, 400, 200]})
+print('\nAlternative solution\n')
+print(df_2)
+
+df_2[TOTAL] = df_2[CAPITAL] + df_2[YIELD]
+output = df_2.groupby(by=[OWNER]).sum()
+print(output)
