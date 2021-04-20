@@ -1,0 +1,56 @@
+<ScrollPopup>:
+	orientation: "vertical"
+	popupButton: popup_button
+
+	BoxLayout:
+		size_hint_y: None
+		Button:
+			id: popup_button
+			text: "Open scrollable popup"
+			size_hint_y: None
+			height: "40dp"
+			on_press: root.openPopup()
+
+<ScrollablePopup>:
+	id: scr_popup
+	auto_dismiss: False
+	contentBox: content_box
+	scrollView: scroll_view
+	padding:10, 10
+
+	BoxLayout:
+		id: content_box
+		orientation: "vertical"
+		content: content_text
+
+		ScrollView:
+			id: scroll_view
+			effect_cls: "ScrollEffect" # prevents overscrolling
+			do_scroll_x: True # limiting to vertical scrolling
+			Label:
+				id: content_text
+				size_hint_x: None # requnred for horizontal scrolling to work
+				size_hint_y: None # requnred for horizontal scrolling to work
+				height: self.texture_size[1] # required for vertical scrolling to work
+				width: self.texture_size[0]  # Set the Label width to the text width.
+											 # Requnred for horizontal scrolling to work
+				line_height: 1.5
+				valign: "top"
+
+		Button:
+			text: "Update content scroll to top"
+			size_hint_y: None
+			height: "40dp"
+			on_press: scr_popup.updateScrollablePopupContentScrollToTop()
+
+		Button:
+			text: "Update content scroll to bottom"
+			size_hint_y: None
+			height: "40dp"
+			on_press: scr_popup.updateScrollablePopupContentScrollToBottom()
+
+		Button:
+			text: "Close"
+			size_hint_y: None
+			height: "40dp"
+			on_press: root.dismiss()
