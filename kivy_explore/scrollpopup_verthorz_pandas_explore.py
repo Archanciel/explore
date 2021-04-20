@@ -52,6 +52,8 @@ class ScrollPopup(BoxLayout):
 						   CAPITAL_DM: [10000, 5000, 20000, 4000, 3000] * 5,
 						   YIELD_DM: [1000, 500, 2000, 400, 300] * 5})
 
+		# adding OWNER total rows
+
 		dfGroupOwnerTotal = df.groupby([OWNER]).agg({CAPITAL_USD: 'sum',
 													 YIELD_USD: 'sum',
 													 CAPITAL_CHF: 'sum',
