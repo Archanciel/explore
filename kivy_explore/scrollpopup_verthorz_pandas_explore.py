@@ -23,6 +23,9 @@ class ScrollablePopup(Popup):
 	def scrollToTop(self):
 		self.scrollView.scroll_y = 1 # force scrolling to top
 
+	def scrollToBottom(self):
+		self.scrollView.scroll_y = 0 # force scrolling to bottom
+
 	def initText(self, text):
 		self.contentBox.content.text = text
 
@@ -42,15 +45,15 @@ class ScrollPopup(BoxLayout):
 	def createDataframe(self):
 		df = pd.DataFrame({OWNER: ['John', 'John', 'John', 'John', 'John', 'John', 'Rob', 'Rob', 'Rob', 'Rob', 'Rob',
 								   'Rob', 'Rob', 'Rob', 'Tom', 'Tom', 'Tom', 'Tom', 'Tom', 'Tom', 'Bob', 'Bob', 'Bob',
-								   'Bob', 'Bob'],
-						   CAPITAL_USD: [10000, 5000, 20000, 4000, 3000] * 5,
-						   YIELD_USD: [1000, 500, 2000, 400, 300] * 5,
-						   CAPITAL_CHF: [10000, 5000, 20000, 4000, 3000] * 5,
-						   YIELD_CHF: [1000, 500, 2000, 400, 300] * 5,
-						   CAPITAL_EUR: [10000, 5000, 20000, 4000, 3000] * 5,
-						   YIELD_EUR: [1000, 500, 2000, 400, 300] * 5,
-						   CAPITAL_DM: [10000, 5000, 20000, 4000, 3000] * 5,
-						   YIELD_DM: [1000, 500, 2000, 400, 300] * 5})
+								   'Bob', 'Bob'] * 3,
+						   CAPITAL_USD: [10000, 5000, 20000, 4000, 3000] * 15,
+						   YIELD_USD: [1000, 500, 2000, 400, 300] * 15,
+						   CAPITAL_CHF: [10000, 5000, 20000, 4000, 3000] * 15,
+						   YIELD_CHF: [1000, 500, 2000, 400, 300] * 15,
+						   CAPITAL_EUR: [10000, 5000, 20000, 4000, 3000] * 15,
+						   YIELD_EUR: [1000, 500, 2000, 400, 300] * 15,
+						   CAPITAL_DM: [10000, 5000, 20000, 4000, 3000] * 15,
+						   YIELD_DM: [1000, 500, 2000, 400, 300] * 15})
 
 		# adding OWNER total rows
 

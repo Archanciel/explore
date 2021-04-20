@@ -8,16 +8,12 @@ class ScrollablePopup(Popup):
 	contentBox = ObjectProperty()
 	scrollView = ObjectProperty()
 
-	def updateScrollablePopupContentScrollToBottom(self):
-		content = "Hello World\n"
-		self.contentBox.content.text = content * 50
-		self.scrollView.scroll_y = 0 # force scrolling to bottom
 
-
-	def updateScrollablePopupContentScrollToTop(self):
-		content = "Hello World\n"
-		self.contentBox.content.text = content * 50
+	def scrollToTop(self):
 		self.scrollView.scroll_y = 1 # force scrolling to top
+
+	def scrollToBottom(self):
+		self.scrollView.scroll_y = 0 # force scrolling to bottom
 
 	def initText(self, text):
 		self.contentBox.content.text = text
