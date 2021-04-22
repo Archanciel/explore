@@ -29,7 +29,11 @@
 			do_scroll_x: True # limiting to vertical scrolling
 			Label:
 				id: content_text
-				size_hint_x: None # requnred for horizontal scrolling to work
+				size_hint_x: None # None is optimal since the width of the scrollable
+								  # surface is optimized for the displayed text. But
+								  # any v-lue greater than 1 can be set to enable 
+								  # scrolling, with the risk of cutting part of the
+								  # text width !
 				size_hint_y: None # requnred for horizontal scrolling to work
 				height: self.texture_size[1] # required for vertical scrolling to work
 				width: self.texture_size[0]  # Set the Label width to the text width.
