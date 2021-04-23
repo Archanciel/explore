@@ -16,7 +16,8 @@
 			TextInput:
 				id: txt_input
 				focus: True
-				multiline: False
+				multiline: True
+				text: 'hello world'
 				on_text_validate: root.submitRequest() # ENTER triggers root.submitRequest()
 
 		BoxLayout:
@@ -48,6 +49,7 @@
 					foreground_color: 1,1,1,1
 					valign: "top"
 					markup: True
+					text: 'coucou'
 
 			BoxLayout:
 				orientation: 'horizontal'
