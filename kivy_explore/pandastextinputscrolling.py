@@ -21,7 +21,9 @@ class PandasTextInputScrolling(BoxLayout):
 
     def initTextOutput(self):
         self.textOutput.text = ''
-        self.textOutput.text = self.createDataframe()
+        dataframeStr = self.createDataframe()
+        self.textOutput.text = dataframeStr
+        print(dataframeStr)
 
     def clearAll(self):
         self.textOutput.text = ''
@@ -104,8 +106,8 @@ class PandasTextInputScrollingApp(App):
     def build(self):
         if os.name != 'posix':
             # running app om Windows
-            Config.set('graphics', 'width', '400')
-            Config.set('graphics', 'height', '300')
+            Config.set('graphics', 'width', '500')
+            Config.set('graphics', 'height', '400')
             Config.write()
 
         self.gui = PandasTextInputScrolling()

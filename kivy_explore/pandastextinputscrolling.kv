@@ -8,27 +8,32 @@
 			orientation: 'vertical'
 			size_hint_y: 0.9
 
-            ScrollView:
-                id: scrlv
-    			size_hint_y: 0.9
-    			effect_cls: "ScrollEffect" # prevents overscrolling
-                TextInput:
-                    id: txt_output
-                    readonly: True
-                    size_hint_x: 1.5  # any value greater than 1 can be set to enable
-                                      # scrolling, with the risk of cutting part of the
-                                      # text width !
-                    size_hint_y: None # required for horizontal scrolling to work
-                    height: self.texture_size[1] # required for vertical scrolling to work
-                    line_height: 1.5
-                    height: max( (len(self._lines)+1) * self.line_height, scrlv.height)
-            Button:
-                id: clear_output_Button
-                text: 'Clear'
-                size_hint_y: 0.1
-                on_press: root.clearAll()
-            Button:
-                id: fill_output_Button
-                text: 'Show Pandas data frame'
-                size_hint_y: 0.1
-                on_press: root.initTextOutput()
+			ScrollView:
+				id: scrlv
+				size_hint_y: 0.9
+				effect_cls: "ScrollEffect" # prevents overscrolling
+				TextInput:
+					id: txt_output
+					font_name: 'JetBrainsMono-Regular'
+					font_size: '12' # ok on Windows but much too smallon Android
+					background_color: 43, 43, 43, 0.18
+					cursor_color: 1, 1, 1, 1
+					foreground_color: 1, 1, 1, 1
+					readonly: True
+					size_hint_x: 1.5  # any value greater than 1 can be set to enable
+									  # scrolling, with the risk of cutting part of the
+									  # text width !
+					size_hint_y: None # required for horizontal scrolling to work
+					height: self.texture_size[1] # required for vertical scrolling to work
+					line_height: 1.5
+					height: max( (len(self._lines)+1) * self.line_height, scrlv.height)
+			Button:
+				id: clear_output_Button
+				text: 'Clear'
+				size_hint_y: 0.1
+				on_press: root.clearAll()
+			Button:
+				id: fill_output_Button
+				text: 'Show Pandas data frame'
+				size_hint_y: 0.1
+				on_press: root.initTextOutput()

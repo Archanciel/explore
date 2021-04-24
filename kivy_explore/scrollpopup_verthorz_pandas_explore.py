@@ -5,6 +5,7 @@ from kivy.config import Config
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
+from kivy.core.text import LabelBase
 
 OWNER = 'OWNER'
 CAPITAL_USD = 'CAPITAL USD'
