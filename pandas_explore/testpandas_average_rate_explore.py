@@ -5,7 +5,7 @@ from io import StringIO
 from pandas_average_rate_explore import *
 
 class MyTestCase(unittest.TestCase):
-    def test_all_calls_to_func_computeDataFrameAmounts(self):
+    def test_func_computeDataFrameAmounts_SELL_ALL_DEPOSIT_SELL_ALL_YIELD(self):
         stdout = sys.stdout
         capturedStdoutStr = StringIO()
         sys.stdout = capturedStdoutStr
@@ -14,10 +14,6 @@ class MyTestCase(unittest.TestCase):
                          POTENTIAL_CAP_GAIN_PERCENT]
 
         computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ALL_YIELD, droppedColLst)
-        computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ALL_MINUS_ONE_YIELD, droppedColLst)
-        computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_1000_YIELDS, droppedColLst)
-        computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ONLY_ONE_YIELD, droppedColLst)
-        computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_NO_YIELD, droppedColLst)
 
         sys.stdout = stdout
 
@@ -42,7 +38,24 @@ SELL_ALL_DEPOSIT_SELL_ALL_YIELD
 4   -500.00  -1000.00  0.809524   -750.000  162.54     243.810    595.238095  15039.373810
 5   1000.00    800.00  0.809070   1500.000  712.55    1068.825      0.000000  16808.198810
 6 -22532.55 -27039.06  0.809070 -33798.825    0.10       0.150  10048.583810      0.000000
+'''
+        self.maxDiff = None
+        self.assertEqual(expectedOutputStr, capturedStdoutStr.getvalue())
 
+    def test_func_computeDataFrameAmounts_SELL_ALL_DEPOSIT_SELL_ALL_MINUS_ONE_YIELD(self):
+        stdout = sys.stdout
+        capturedStdoutStr = StringIO()
+        sys.stdout = capturedStdoutStr
+
+        droppedColLst = [REALIZED_CAP_GAIN_PERCENT,
+                         POTENTIAL_CAP_GAIN_PERCENT]
+
+        computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ALL_MINUS_ONE_YIELD, droppedColLst)
+
+        sys.stdout = stdout
+
+        expectedOutputStr = \
+'''
 
 SELL_ALL_DEPOSIT_SELL_ALL_MINUS_ONE_YIELD
 
@@ -62,7 +75,24 @@ SELL_ALL_DEPOSIT_SELL_ALL_MINUS_ONE_YIELD
 4   -500.00  -1000.00  0.809524   -750.000  162.54     243.810    595.238095  15039.373810
 5   1000.00    800.00  0.809070   1500.000  712.55    1068.825      0.000000  16808.198810
 6 -22531.55 -27037.86  0.809070 -33797.325    0.10       0.150  10047.383810      1.500000
+'''
+        self.maxDiff = None
+        self.assertEqual(expectedOutputStr, capturedStdoutStr.getvalue())
 
+    def test_to_func_computeDataFrameAmounts_SELL_ALL_DEPOSIT_SELL_1000_YIELDS(self):
+        stdout = sys.stdout
+        capturedStdoutStr = StringIO()
+        sys.stdout = capturedStdoutStr
+
+        droppedColLst = [REALIZED_CAP_GAIN_PERCENT,
+                         POTENTIAL_CAP_GAIN_PERCENT]
+
+        computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_1000_YIELDS, droppedColLst)
+
+        sys.stdout = stdout
+
+        expectedOutputStr = \
+'''
 
 SELL_ALL_DEPOSIT_SELL_1000_YIELDS
 
@@ -82,7 +112,24 @@ SELL_ALL_DEPOSIT_SELL_1000_YIELDS
 4   -500.0   -1000.0  0.809524     -750.0  162.54     243.810   595.238095  15039.373810
 5   1000.0     800.0  0.809070     1500.0  712.55    1068.825     0.000000  16808.198810
 6 -22000.0  -26400.0  0.809070   -33000.0    0.10       0.150  9409.523810    798.825000
+'''
+        self.maxDiff = None
+        self.assertEqual(expectedOutputStr, capturedStdoutStr.getvalue())
 
+    def test_to_func_computeDataFrameAmounts_SELL_ALL_DEPOSIT_SELL_ONLY_ONE_YIELD(self):
+        stdout = sys.stdout
+        capturedStdoutStr = StringIO()
+        sys.stdout = capturedStdoutStr
+
+        droppedColLst = [REALIZED_CAP_GAIN_PERCENT,
+                         POTENTIAL_CAP_GAIN_PERCENT]
+
+        computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ONLY_ONE_YIELD, droppedColLst)
+
+        sys.stdout = stdout
+
+        expectedOutputStr = \
+'''
 
 SELL_ALL_DEPOSIT_SELL_ONLY_ONE_YIELD
 
@@ -102,7 +149,24 @@ SELL_ALL_DEPOSIT_SELL_ONLY_ONE_YIELD
 4   -500.0   -1000.0  0.809524     -750.0  162.54     243.810   595.238095  15039.373810
 5   1000.0     800.0  0.809070     1500.0  712.55    1068.825     0.000000  16808.198810
 6 -21001.0  -25201.2  0.809070   -31501.5    0.10       0.150  8210.723810   2297.325000
+'''
+        self.maxDiff = None
+        self.assertEqual(expectedOutputStr, capturedStdoutStr.getvalue())
 
+    def test_to_func_computeDataFrameAmounts_SELL_ALL_DEPOSIT_SELL_NO_YIELD(self):
+        stdout = sys.stdout
+        capturedStdoutStr = StringIO()
+        sys.stdout = capturedStdoutStr
+
+        droppedColLst = [REALIZED_CAP_GAIN_PERCENT,
+                         POTENTIAL_CAP_GAIN_PERCENT]
+
+        computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_NO_YIELD, droppedColLst)
+
+        sys.stdout = stdout
+
+        expectedOutputStr = \
+'''
 
 SELL_ALL_DEPOSIT_SELL_NO_YIELD
 
