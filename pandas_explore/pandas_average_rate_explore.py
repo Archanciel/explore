@@ -108,7 +108,6 @@ def computeDataFrameAmounts(sellType,
 				# here, we are handling the very first deposit/purchase
 				currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase = depWithdrCryptoAmountAtDateFromFiatRate / \
 																				 currentTotalDepositCryptoAmount
-#				currentTotalDepositCryptoAmountAtAverageFiatRate = currentTotalDepositCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase
 			else:
 				# here, we are handling one of the next deposit/purchase
 				currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase = (previousCurrentTotalDepositCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase + \
@@ -129,17 +128,24 @@ def computeDataFrameAmounts(sellType,
 			# all the crypto amounts purchased before the sell date.
 			if currentTotalDepositCryptoAmount < 0:
 				withdrawalCryptoAmountWithoutSoldYieldAmount = depWithdrCryptoAmount - currentTotalDepositCryptoAmount
-				realizedCapitalGain = -1 * depWithdrCryptoAmountAtDateFromFiatRate - -1 * withdrawalCryptoAmountWithoutSoldYieldAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase
+				withdrawalCryptoAmountWithoutSoldYieldAmountAtAverageFiatRate = withdrawalCryptoAmountWithoutSoldYieldAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase
+				realizedCapitalGain = -1 * depWithdrCryptoAmountAtDateFromFiatRate - -1 * withdrawalCryptoAmountWithoutSoldYieldAmountAtAverageFiatRate
 				df.iloc[index][REALIZED_CAP_GAIN] = realizedCapitalGain
 				realizedCapitalGainPercent = -100 * realizedCapitalGain / \
-											 currentTotalDepositCryptoAmountAtAverageFiatRate
+											 withdrawalCryptoAmountWithoutSoldYieldAmountAtAverageFiatRate
 
 				# the case if not only the current deposit crypto amount has been sold, but also
 				# part of or all the accumulated yield crypto amounts
-				potentialCapitalGain = (currentTotalDepositCryptoAmount + currentTotalYieldCrypto) * \
-										currentCryptoFiatRate
-				potentialCapitalGainPercent = -100 * potentialCapitalGain / \
-											  currentTotalDepositCryptoAmountAtAverageFiatRate
+				remainingCryptoAmount = currentTotalDepositCryptoAmount + currentTotalYieldCrypto
+
+				if round(remainingCryptoAmount, 8) == 0:
+					potentialCapitalGain = 0.0
+					potentialCapitalGainPercent = 0.0
+				else:
+					potentialCapitalGain = remainingCryptoAmount * \
+										   currentCryptoFiatRate
+					potentialCapitalGainPercent = -100 * potentialCapitalGain / \
+												  currentTotalDepositCryptoAmountAtAverageFiatRate
 			else:
 				realizedCapitalGain = -1 * depWithdrCryptoAmountAtDateFromFiatRate - -1 * depWithdrCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase
 				df.iloc[index][REALIZED_CAP_GAIN] = realizedCapitalGain
@@ -157,13 +163,8 @@ def computeDataFrameAmounts(sellType,
 
 			df.iloc[index][REALIZED_CAP_GAIN_PERCENT] = realizedCapitalGainPercent
 
-		df.iloc[index][POTENTIAL_CAP_GAIN] = round(potentialCapitalGain, 8)	# rounding avoid data frame
-																			# potential capital gain values
-																			# exponential formatting
-		df.iloc[index][POTENTIAL_CAP_GAIN_PERCENT] = round(potentialCapitalGainPercent, 8)	# rounding avoid data frame
-																							# potential capital gain values
-																							# exponential formatting
-
+		df.iloc[index][POTENTIAL_CAP_GAIN] = potentialCapitalGain
+		df.iloc[index][POTENTIAL_CAP_GAIN_PERCENT] = potentialCapitalGainPercent
 		df.iloc[index][AVERAGE_RATE] = currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase
 		previousCurrentTotalDepositCryptoAmount = currentTotalDepositCryptoAmount
 
