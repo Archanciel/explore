@@ -127,7 +127,7 @@ def computeDataFrameAmounts(sellType,
 			# average crypto/fiat rate valid at the sell date, i.e. at the fiat average cost of
 			# all the crypto amounts purchased before the sell date.
 			if currentTotalDepositCryptoAmount < 0:
-				# here, not only all the current deposit crypto amount is withdrawned, but also
+				# here, not only all the current deposit crypto amount is withdrawn, but also
 				# part of or all the accumulated yield crypto amounts
 				withdrawalCryptoAmountWithoutSoldYieldAmount = depWithdrCryptoAmount - currentTotalDepositCryptoAmount
 				withdrawalCryptoAmountWithoutSoldYieldAmountAtAverageFiatRate = withdrawalCryptoAmountWithoutSoldYieldAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase
@@ -139,16 +139,19 @@ def computeDataFrameAmounts(sellType,
 				remainingCryptoAmount = currentTotalDepositCryptoAmount + currentTotalYieldCrypto
 
 				if round(remainingCryptoAmount, 8) == 0:
-					# here all the deposited cryptos as well as all the accumulated yielded cryptos are withrawned
+					# here all the deposited cryptos as well as all the accumulated yielded cryptos are withdrawn
 					potentialCapitalGain = 0.0
 					potentialCapitalGainPercent = 0.0
 				else:
 					# here all the deposited cryptos as well as part of the accumulated yielded cryptos are
-					# withrawned
+					# withdrawn. So, the potential capital gain is composed essentially of accumulated yield
+					# cryptos. The potential capital gain percent is calculated in comparison of the last
+					# deposited crypto amount at the last average crypto/fiat rate. So, the calculated percent
+					# is comparable to the other potential capital gain percents.
 					potentialCapitalGain = remainingCryptoAmount * \
 										   currentCryptoFiatRate
-					potentialCapitalGainPercent = -100 * potentialCapitalGain / \
-												  currentTotalDepositCryptoAmountAtAverageFiatRate
+					potentialCapitalGainPercent = 100 * potentialCapitalGain / \
+												  (currentTotalDepositCryptoAmountAtAverageFiatRate - (depWithdrCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase))
 			else:
 				# here, only deposited cryptos, so no yielded cryptos, are withdrawned
 				realizedCapitalGain = -1 * depWithdrCryptoAmountAtDateFromFiatRate - -1 * depWithdrCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase
@@ -162,7 +165,7 @@ def computeDataFrameAmounts(sellType,
 					potentialCapitalGainPercent = (potentialCapitalGain / \
 												   currentTotalDepositCryptoAmountAtAverageFiatRate) * 100
 				else:
-					# here, exactly all the deposited cryptos without any yielded cryptos are withdrawned
+					# here, exactly all the deposited cryptos without any yielded cryptos are withdrawn
 					realizedCapitalGainPercent = (realizedCapitalGain / \
 												  (-1 * depWithdrCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase)) * 100
 					potentialCapitalGainPercent = (potentialCapitalGain / \
