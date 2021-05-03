@@ -17,7 +17,8 @@ SELL_ALL_DEPOSIT_SELL_1000_YIELDS = 'SELL_ALL_DEPOSIT_SELL_1000_YIELDS'
 SELL_ALL_DEPOSIT_SELL_ALL_MINUS_ONE_YIELD = 'SELL_ALL_DEPOSIT_SELL_ALL_MINUS_ONE_YIELD'
 SELL_ALL_DEPOSIT_SELL_NO_YIELD = 'SELL_ALL_DEPOSIT_SELL_NO_YIELD'
 
-def computeDataFrameAmounts(sellType):
+def computeDataFrameAmounts(sellType,
+							droppedColLst):
 	if sellType == SELL_ALL_DEPOSIT_SELL_ALL_YIELD:
 		df = pd.DataFrame({CRYPTO: [10000.0, 10000.0, 1000.0, -500.0, -500, 1000, -22532.55],
 						   DF_RATE: [5000.0, 10000.0, 2000.0, -500.0, -1000, 800, -25200 - 1839.06],
@@ -79,7 +80,10 @@ def computeDataFrameAmounts(sellType):
 	print('\n')
 	print(sellType)
 	print()
-	print(df.to_string())
+	dfToPrint = df.copy()
+	dfToPrint.drop(droppedColLst, axis='columns', inplace=True)
+
+	print(dfToPrint.to_string())
 
 	currentTotalDepositCryptoAmount = 0
 	previousCurrentTotalDepositCryptoAmount = 0
@@ -111,7 +115,7 @@ def computeDataFrameAmounts(sellType):
 																				 currentTotalDepositCryptoAmount
 			potentialCapitalGain = (currentTotalDepositCryptoAmount * currentCryptoFiatRate) + \
 								   (currentTotalYieldCrypto * currentCryptoFiatRate) - \
-								   currentTotalDepositCryptoAmountAtAverageFiatRate
+								   currentTotalDepositCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase
 			if currentTotalDepositCryptoAmountAtAverageFiatRate != 0:
 				potentialCapitalGainPercent = potentialCapitalGain / \
 											  currentTotalDepositCryptoAmountAtAverageFiatRate * 100
@@ -164,12 +168,19 @@ def computeDataFrameAmounts(sellType):
 		df.iloc[index][AVERAGE_RATE] = currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase
 		previousCurrentTotalDepositCryptoAmount = currentTotalDepositCryptoAmount
 
-	print(df.to_string())
+	# drop columns
+	dfToPrint = df.copy()
+	dfToPrint.drop(droppedColLst, axis='columns', inplace=True)
 
+	print(dfToPrint.to_string())
 
-computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ALL_YIELD)
-computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ALL_MINUS_ONE_YIELD)
-computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_1000_YIELDS)
-computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ONLY_ONE_YIELD)
-computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_NO_YIELD)
+#droppedColLst = []
+droppedColLst = [REALIZED_CAP_GAIN_PERCENT,
+				 POTENTIAL_CAP_GAIN_PERCENT]
+
+computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ALL_YIELD, droppedColLst)
+computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ALL_MINUS_ONE_YIELD, droppedColLst)
+computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_1000_YIELDS, droppedColLst)
+computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ONLY_ONE_YIELD, droppedColLst)
+computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_NO_YIELD, droppedColLst)
 
