@@ -108,6 +108,7 @@ def computeDataFrameAmounts(sellType,
 				# here, we are handling the very first deposit/purchase
 				currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase = depWithdrCryptoAmountAtDateFromFiatRate / \
 																				 currentTotalDepositCryptoAmount
+#				currentTotalDepositCryptoAmountAtAverageFiatRate = currentTotalDepositCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase
 			else:
 				# here, we are handling one of the next deposit/purchase
 				currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase = (previousCurrentTotalDepositCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase + \
@@ -116,11 +117,9 @@ def computeDataFrameAmounts(sellType,
 			potentialCapitalGain = (currentTotalDepositCryptoAmount * currentCryptoFiatRate) + \
 								   (currentTotalYieldCrypto * currentCryptoFiatRate) - \
 								   currentTotalDepositCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase
-			if currentTotalDepositCryptoAmountAtAverageFiatRate != 0:
-				potentialCapitalGainPercent = potentialCapitalGain / \
-											  currentTotalDepositCryptoAmountAtAverageFiatRate * 100
-			else:
-				potentialCapitalGainPercent = 0.0
+
+			potentialCapitalGainPercent = (potentialCapitalGain / \
+										   (currentTotalDepositCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase)) * 100
 		else:
 			# this is a withdrawal (or sale)...
 
@@ -174,9 +173,9 @@ def computeDataFrameAmounts(sellType,
 
 	print(dfToPrint.to_string())
 
-#droppedColLst = []
-droppedColLst = [REALIZED_CAP_GAIN_PERCENT,
-				 POTENTIAL_CAP_GAIN_PERCENT]
+droppedColLst = []
+#droppedColLst = [REALIZED_CAP_GAIN_PERCENT,
+#				 POTENTIAL_CAP_GAIN_PERCENT]
 
 computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ALL_YIELD, droppedColLst)
 computeDataFrameAmounts(SELL_ALL_DEPOSIT_SELL_ALL_MINUS_ONE_YIELD, droppedColLst)
