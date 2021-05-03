@@ -103,7 +103,7 @@ def computeDataFrameAmounts(sellType,
 		currentTotalDepositCryptoAmountAtAverageFiatRate = currentTotalDepositCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase
 
 		if depWithdrCryptoAmount > 0:
-			# we are depositing (purchasing) cryptos ...
+			# we are depositing (after purchase) cryptos ...
 			if previousCurrentTotalDepositCryptoAmount == 0:
 				# here, we are handling the very first deposit/purchase
 				currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase = depWithdrCryptoAmountAtDateFromFiatRate / \
@@ -120,7 +120,7 @@ def computeDataFrameAmounts(sellType,
 			potentialCapitalGainPercent = (potentialCapitalGain / \
 										   (currentTotalDepositCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase)) * 100
 		else:
-			# this is a withdrawal (or sale)...
+			# this is a withdrawal (for sale)...
 
 			# the realized capital gain is equal to the sold crypro amount converted at the
 			# crypto/fiat rate at the sell date minus the sold crypro amount converted at the
@@ -153,13 +153,15 @@ def computeDataFrameAmounts(sellType,
 									   (currentTotalYieldCrypto * currentCryptoFiatRate) - \
 									   currentTotalDepositCryptoAmountAtAverageFiatRate
 				if currentTotalDepositCryptoAmountAtAverageFiatRate != 0:
-					realizedCapitalGainPercent = realizedCapitalGain / \
-												 currentTotalDepositCryptoAmountAtAverageFiatRate * 100
-					potentialCapitalGainPercent = potentialCapitalGain / \
-												  currentTotalDepositCryptoAmountAtAverageFiatRate * 100
+					realizedCapitalGainPercent = (realizedCapitalGain / \
+												  currentTotalDepositCryptoAmountAtAverageFiatRate) * 100
+					potentialCapitalGainPercent = (potentialCapitalGain / \
+												   currentTotalDepositCryptoAmountAtAverageFiatRate) * 100
 				else:
-					realizedCapitalGainPercent = 0.0
-					potentialCapitalGainPercent = 0.0
+					realizedCapitalGainPercent = (realizedCapitalGain / \
+												  (-1 * depWithdrCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase)) * 100
+					potentialCapitalGainPercent = (potentialCapitalGain / \
+												   (-1 * depWithdrCryptoAmount * currentDepositCryptoAverageFiatRateModifiedOnlyWhenNewPurchase)) * 100
 
 			df.iloc[index][REALIZED_CAP_GAIN_PERCENT] = realizedCapitalGainPercent
 
