@@ -24,12 +24,11 @@ df = pd.DataFrame({OWNER: ['John', 'John', 'John', 'John', 'John', 'John', 'Rob'
 				   CAPITAL_DM: [10000, 5000, 20000, 4000, 3000] * 5,
 				   YIELD_DM: [1000, 500, 2000, 400, 300] * 5})
 
+# Summing USD, CHF and D( columns
 dfGroupOwnerTotal = df.groupby([OWNER]).agg({CAPITAL_USD: 'sum',
 											 YIELD_USD: 'sum',
 											 CAPITAL_CHF: 'sum',
 											 YIELD_CHF: 'sum',
-											 CAPITAL_EUR: 'sum',
-											 YIELD_EUR: 'sum',
 											 CAPITAL_DM: 'sum',
 											 YIELD_DM: 'sum'})
 totalDf = pd.DataFrame(columns=[OWNER,
@@ -62,6 +61,10 @@ for index, row in df.iterrows():
 		totalRow = dfGroupOwnerTotal.loc[currentOwner]
 		totalDf = totalDf.append(totalRow, ignore_index=True)
 		totalDf.iloc[totalDfIndex][OWNER] = currentOwner + ' total'
+		
+		# overwriting DM capital total by a non numeric string title
+		totalDf.iloc[totalDfIndex][CAPITAL_DM] = 'Total yield DM'
+		
 		totalDfIndex += 1
 		totalDf = totalDf.append({OWNER: row[OWNER],
 								  CAPITAL_USD: row[CAPITAL_USD],
