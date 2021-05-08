@@ -45,12 +45,18 @@ arrays = [
 tuples = list(zip(*arrays))
 index = pd.MultiIndex.from_tuples(tuples)
 df.columns = index
+
+df.style.format("{:.2%}", subset=pd.IndexSlice[:,PERCENT_LABEL]) \
+		.format("{:.2f}", subset=pd.IndexSlice[:,[FLOAT_LABEL]])
+df.style.bar(subset=[LOCATION_LABEL], align='mid', color=['#d65f5f', '#5fba7d'])
+
+
 print(df.to_string(index=False))
 
 str = \
 '''
-                                                        NUMERIC                         TEXT
-                                    FLOAT               PERCENT                  INVEST TOWN
+														NUMERIC                         TEXT
+									FLOAT               PERCENT                  INVEST TOWN
 OWNER      USD      EUR      USD      EUR USD YIELD   EUR YIELD USA LOCATION FRANCE LOCATION
   JOE  4422.00  4422.00  4422.00  4422.00      22 %        42 %   NEW YORK        PARIS
   JOE   511.00   511.00   511.00   511.00      11 %        51 %   NEW YORK        PARIS
