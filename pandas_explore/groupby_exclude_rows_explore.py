@@ -30,7 +30,9 @@ print(groupByDf)
 
 # second way
 dfFiltered = df.loc[~df[OWNER].str.contains('OB')]
+print('dfFiltered:')
 print(dfFiltered)
 groupByDfFiltered = dfFiltered.groupby([OWNER]).agg(aggDic).reset_index()
+print('groupByDfFiltered:')
 print(groupByDfFiltered)
 
