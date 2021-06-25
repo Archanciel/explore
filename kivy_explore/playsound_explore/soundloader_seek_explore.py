@@ -39,6 +39,14 @@ Builder.load_string('''
 
 
 class MyLayout(Widget):
+	"""
+	WARNING
+
+	Only work if ffpyplayer is installed !
+	(C:\Program Files\Python39> ./python -m pip install ffpyplayer
+	Successfully installed ffpyplayer-4.3.2)
+	"""
+	
 	music_file = AUDIO_DIR + "Un résumé audio de ce qu'enseigne ' Le Cours en Miracles '.mp3"
 	music_obj = None
 
