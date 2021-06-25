@@ -45,6 +45,8 @@ class MyLayout(Widget):
 	Only work if ffpyplayer is installed !
 	(C:\Program Files\Python39> ./python -m pip install ffpyplayer
 	Successfully installed ffpyplayer-4.3.2)
+	
+	NOT WORKING ON ANDROID SINCE INSTALLING FFPYPLAYER FAILS !
 	"""
 	
 	music_file = AUDIO_DIR + "Un résumé audio de ce qu'enseigne ' Le Cours en Miracles '.mp3"

@@ -164,6 +164,9 @@ class AudioPlayer(Widget):
 		seek() and get_pos() only work if ffpyplayer is installed !
 		(C:\Program Files\Python39> ./python -m pip install ffpyplayer
 		Successfully installed ffpyplayer-4.3.2)
+	
+		NOT WORKING ON ANDROID SINCE INSTALLING FFPYPLAYER FAILS !
+
 		:return:
 		"""
 		posSeconds = self.nowPlaying.get_pos()
@@ -180,6 +183,9 @@ class AudioPlayer(Widget):
 		seek() and get_pos() only work if ffpyplayer is installed !
 		(C:\Program Files\Python39> ./python -m pip install ffpyplayer
 		Successfully installed ffpyplayer-4.3.2)
+	
+		NOT WORKING ON ANDROID SINCE INSTALLING FFPYPLAYER FAILS !
+
 		:return:
 		"""
 		posSeconds = self.nowPlaying.get_pos()
