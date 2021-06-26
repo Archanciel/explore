@@ -3,7 +3,9 @@ from kivy.core.audio import SoundLoader
 from kivy.uix.widget import Widget
 from kivy.lang import Builder
 
-import os
+import os, time, threading
+
+SLIDER_UPDATE_FRENQUENCY = 1
 
 if os.name == 'posix':
 	AUDIO_DIR = '/storage/emulated/0/Download/Audiobooks/Various/'
@@ -38,6 +40,23 @@ Builder.load_string('''
 			on_release: root.start_song()''')
 
 
+class AsynchSliderUpdater:
+	def __init__(self, music_obj, slider):
+		self.music_obj = music_obj
+		self.slider = slider
+	
+	def updateSlider(self):
+		music_length = self.music_obj.length
+		stop = False
+		
+		while not stop:
+			time.sleep(SLIDER_UPDATE_FRENQUENCY)
+			music_pos = self.music_obj.get_pos()
+			if music_pos < music_length:
+				self.slider.value = music_pos
+			else:
+				stop = True
+
 class MyLayout(Widget):
 	"""
 	WARNING
@@ -59,11 +78,19 @@ class MyLayout(Widget):
 			print(self.music_obj.length)
 			self.ids.song_title.text = self.music_obj.source
 			self.ids.slider.max = self.music_obj.length
+			
+			self.sliderAsynchUpdater = AsynchSliderUpdater(self.music_obj, self.ids.slider)
+			t = threading.Thread(target=self.sliderAsynchUpdater.updateSlider, args=())
+			t.daemon = True
+			t.start()
+
 			self.music_obj.play()
 
 	def change_pos(self, value):
 		if self.music_obj is not None:
-			self.music_obj.seek(value)
+			if abs(self.music_obj.get_pos() - value) > SLIDER_UPDATE_FRENQUENCY:
+				print(value)
+				self.music_obj.seek(value)
 
 
 class Awesome(App):
