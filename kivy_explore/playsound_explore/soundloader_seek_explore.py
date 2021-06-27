@@ -89,6 +89,7 @@ class MyLayout(Widget):
 	def change_pos(self, value):
 		if self.music_obj is not None:
 			if abs(self.music_obj.get_pos() - value) > SLIDER_UPDATE_FRENQUENCY:
+				# test required to avoid mp3 playing perturbation
 				print(value)
 				self.music_obj.seek(value)
 
