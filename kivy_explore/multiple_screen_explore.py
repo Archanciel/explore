@@ -5,24 +5,24 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 # tutorial video: https://youtu.be/xaYn4XdieCs
 
 class MainWindow(Screen):
-    pass
+	pass
 
 
 class SecondWindow(Screen):
-    pass
+	pass
 
 
 class WindowManager(ScreenManager):
-    pass
+	pass
 
 
 kv = Builder.load_file("multiple_screen_explore.kv")
 
 
 class MyMainApp(App):
-    def build(self):
-        return kv
+	def build(self):
+		return kv
 
 
 if __name__ == "__main__":
-    MyMainApp().run()
+	MyMainApp().run()
