@@ -1,5 +1,5 @@
-<AppGUI>: # sub-class of FloatLayout
-	cols: 1
+<ConfirmPopup>:
+    cols:1
 	GridLayout:
 	    cols: 1
 	    rows: 3
@@ -8,16 +8,15 @@
             rows: 2
             size_hint: (1, 0.13)
             Label:
-                size_hint: (None, 0.03)
-                valign: 'bottom'
-                text: 'File name      '
+                size_hint: (None, 0.1)
+                text: 'Source file       '
             TextInput:
-                size_hint_y: 0.05
+                size_hint_y: 0.2
                 halign: 'left'
                 text: 'd:/download/audiobooks/gary_renard/audio file.mp3'
         GridLayout:
             cols: 3
-            size_hint: (1, 0.6)
+            size_hint: (1, 0.4)
             GridLayout:
                 cols: 1
                 size_hint: (0.3, 0.4)
@@ -67,7 +66,7 @@
                     GridLayout:
                         cols: 1
                         rows: 1
-                        size_hint_y: 0.5
+                        size_hint: (0.4, 0.4)
                         Slider:
                             id: slider
                             min: 0
@@ -75,23 +74,17 @@
                             step: 1
                             value: 0
                             on_value: root.change_pos(self.value)
-
             GridLayout:
                 cols: 1
                 size_hint: (0.3, 0.4)
-            GridLayout:
-                cols: 1
-                rows: 1
-                size_hint: (0.4, 0.6)
         GridLayout:
             cols: 1
             rows: 2
             size_hint: (1, 0.17)
             Label:
-                size_hint: (None, 0.02)
-                valign: 'bottom'
-                text: 'Split file name'
+                size_hint: (None, 0.1)
+                text: 'Split file           '
             TextInput:
-                size_hint_y: 0.02
+                size_hint_y: 0.13
                 halign: 'left'
                 text: 'd:/download/audiobooks/gary_renard/audio file 1.mp3'
