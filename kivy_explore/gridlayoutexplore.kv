@@ -2,7 +2,7 @@
 	cols: 1
 	GridLayout:
 	    cols: 1
-	    rows: 3
+	    rows: 5
         GridLayout:
             cols: 1
             rows: 2
@@ -10,7 +10,7 @@
             Label:
                 size_hint: (None, 0.03)
                 valign: 'bottom'
-                text: 'File name      '
+                text: '  Source file name'
             TextInput:
                 size_hint_y: 0.05
                 halign: 'left'
@@ -79,10 +79,6 @@
             GridLayout:
                 cols: 1
                 size_hint: (0.3, 0.4)
-            GridLayout:
-                cols: 1
-                rows: 1
-                size_hint: (0.4, 0.6)
         GridLayout:
             cols: 1
             rows: 2
@@ -95,3 +91,11 @@
                 size_hint_y: 0.02
                 halign: 'left'
                 text: 'd:/download/audiobooks/gary_renard/audio file 1.mp3'
+        BoxLayout:
+            size_hint_y: 0.5
+        BoxLayout:
+            size_hint_y: 0.2
+            Button:
+                text: 'Save'
+            Button:
+                text: 'Cancel'

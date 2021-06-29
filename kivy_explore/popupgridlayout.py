@@ -6,19 +6,12 @@ from kivy.properties import StringProperty
 from kivy.utils import platform
 
 class ConfirmPopup(GridLayout):
-	text = StringProperty()
-	
 	def __init__(self, **kwargs):
-		self.register_event_type('on_answer')
 		super(ConfirmPopup, self).__init__(**kwargs)
-	
-	def on_answer(self, *args):
-		pass
 
 class PopupGridLayoutApp(App):
 	def build(self):
-		content = ConfirmPopup(text='Do You Love Kivy long line long line line\nSecond line\nThird line')
-		content.bind(on_answer=self._on_answer)
+		content = ConfirmPopup()
 		
 		if platform == 'android':
 			popupSize = (980, 450)
