@@ -13,17 +13,6 @@ from kivy.app import App
 # widgets to the resulting “cells”.
 from kivy.uix.gridlayout import GridLayout
 
-# Builder is a global Kivy instance used
-# in widgets that you can use to load other
-# kv files in addition to the default ones.
-from kivy.lang import Builder
-
-# Loading Multiple .kv files
-Builder.load_file('box1.kv')
-Builder.load_file('box2.kv')
-Builder.load_file('box3.kv')
-
-
 # Creating main kv file class
 class MainMultipleKvFileGUI(GridLayout):
 	pass
@@ -32,6 +21,16 @@ class MainMultipleKvFileGUI(GridLayout):
 # Create App class
 class MainMultipleKvFileApp(App):
 	def build(self):
+		# Builder is a global Kivy instance used
+		# in widgets that you can use to load other
+		# kv files in addition to the default ones.
+		from kivy.lang import Builder
+		
+		# Loading Multiple .kv files
+		Builder.load_file('box1.kv')
+		Builder.load_file('box2.kv')
+		Builder.load_file('box3.kv')
+
 		self.x = 150
 		self.y = 400
 		return MainMultipleKvFileGUI()
