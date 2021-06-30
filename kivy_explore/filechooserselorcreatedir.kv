@@ -1,0 +1,85 @@
+FileChooserSelOrCreateDirGUI:
+	BoxLayout:
+		orientation: 'vertical'
+		BoxLayout:
+			size_hint_y: 0.06
+			Button:
+				id: load_btn
+				text: 'Create or select dir'
+				on_release: root.show_load()
+
+<LoadDialog>:
+	drivesListRV: recycleView_drives_list
+	text_path_load: text_path_load
+	selRbLayout: sel_rb_layout
+	BoxLayout:
+		size: root.size
+		pos: root.pos
+		orientation: "vertical"
+
+		BoxLayout:
+			id: boxlayout_recycleview
+			size_hint_y: 0.29 # value for Windows 10
+			#size_hint_y: 0.06 # value for Android
+			RecycleView:
+				id: recycleView_drives_list
+				scroll_y: 0 # value for Windows 10.
+				            # 0 forces scrolling to list bottom after adding
+							# an item, 1 forces scrolling to list top
+				#scroll_y: 1 # value for Android
+				effect_cls: "ScrollEffect" # prevents overscrolling
+				viewclass: 'SelectableLabel'
+
+				SelectableRecycleBoxLayout:
+				    id: sel_rb_layout
+					default_size: None, dp(25) # value for Windows 10
+					                           # Height of list line. There's
+											   # a dependency between this value
+											   # and the number of items that
+											   # can be added to the list !!!!
+					#default_size: None, dp(20) # value for Android
+					key_selection: 'selectable'
+					default_size_hint: 1, None
+					size_hint_y: None
+					spacing: 0.5
+					orientation: 'vertical'
+					multiselect: False
+					touch_multiselect: False
+
+		FileChooserListView:
+			id: filechooser
+			dirselect: True
+			on_selection: text_path_load.text = self.selection and self.selection[0] or ''
+			#on_selection: text_path_load.text = filechooser.path
+
+		TextInput:
+			id: text_path_load
+			size_hint_y: 0.1 # value for Windows 10
+			#size_hint_y: 0.03 # value for Android
+			multiline: False
+			readonly: False
+
+		BoxLayout:
+			size_hint_y: 0.1 # value for Windows 10
+			#size_hint_y: 0.06 # value for Android
+			Button:
+				text: "Cancel"
+				on_release: root.cancel()
+
+			Button:
+				text: "Select or create dir"
+				on_release: root.load(root.text_path_load.text)
+
+<SelectableLabel>:
+	# Draw a background to indicate selection
+	canvas.before:
+		Color:
+			rgba: (1, 0, 0, 1) if self.selected else (.0, 0.9, .1, .3)
+		Rectangle:
+			pos: self.pos
+			size: self.size
+		Color:
+			rgba: (0, 0.9, .1, .3)
+		Rectangle:
+			pos: self.pos
+			size: self.size
