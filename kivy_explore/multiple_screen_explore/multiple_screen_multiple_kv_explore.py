@@ -16,11 +16,12 @@ class WindowManager(ScreenManager):
 	pass
 
 
-kv = Builder.load_file("multiple_screen_multiple_kv_explore.kv")
-
-
 class MyMainApp(App):
 	def build(self):
+		Builder.load_file("mainwindow.kv")
+		Builder.load_file("secondwindow.kv")
+		kv = Builder.load_file("windowmanager.kv")
+		
 		return kv
 
 

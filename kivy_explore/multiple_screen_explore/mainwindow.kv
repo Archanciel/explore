@@ -1,7 +1,3 @@
-WindowManager:
-	MainWindow:
-	SecondWindow:
-
 <MainWindow>:
 	name: "main"
 
@@ -24,13 +20,3 @@ WindowManager:
 			on_release:
 				app.root.current = "second" if passw.text == "tim" else "main"
 				root.manager.transition.direction = "left"
-
-
-<SecondWindow>:
-	name: "second"
-
-	Button:
-		text: "Go Back"
-		on_release:
-			app.root.current = "main"
-			root.manager.transition.direction = "right"
