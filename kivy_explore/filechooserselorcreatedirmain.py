@@ -113,9 +113,7 @@ class FileChooserSelOrCreateDirGUI(FloatLayout):
 		# not working content.ids.controller.selectItem(0)
 
 	def selectOrCreateDir(self, textPathLoad):
-		if os.path.isfile(textPathLoad):
-			print("{} file was selected".format(textPathLoad))
-		elif os.path.isdir(textPathLoad):
+		if os.path.isdir(textPathLoad):
 			print("{} dir was selected".format(textPathLoad))
 		else:
 			try:

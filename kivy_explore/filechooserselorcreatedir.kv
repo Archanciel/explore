@@ -24,16 +24,16 @@ FileChooserSelOrCreateDirGUI:
 			RecycleView:
 				id: recycleView_drives_list
 				scroll_y: 0 # value for Windows 10.
-				            # 0 forces scrolling to list bottom after adding
+							# 0 forces scrolling to list bottom after adding
 							# an item, 1 forces scrolling to list top
 				#scroll_y: 1 # value for Android
 				effect_cls: "ScrollEffect" # prevents overscrolling
 				viewclass: 'SelectableLabel'
 
 				SelectableRecycleBoxLayout:
-				    id: sel_rb_layout
+					id: sel_rb_layout
 					default_size: None, dp(25) # value for Windows 10
-					                           # Height of list line. There's
+											   # Height of list line. There's
 											   # a dependency between this value
 											   # and the number of items that
 											   # can be added to the list !!!!
@@ -51,6 +51,7 @@ FileChooserSelOrCreateDirGUI:
 			dirselect: True
 			on_selection: text_path_load.text = self.selection and self.selection[0] or ''
 			#on_selection: text_path_load.text = filechooser.path
+			filters: [lambda folder, filename: not filename.endswith('')]
 
 		TextInput:
 			id: text_path_load
