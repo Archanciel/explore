@@ -29,10 +29,14 @@ class MainWindow(Screen):
 	def switchToSecondScreen(self):
 		self.parent.current = "second"
 		self.manager.transition.direction = "left"
-
+		
+	def doMainWork(self):
+		print('MainWindow.doMainWork()')
+		
 
 class SecondWindow(Screen):
-	pass
+	def doSecondWork(self):
+		print('SecondWindow.doSecondWork()')
 
 
 class WindowManager(ScreenManager):

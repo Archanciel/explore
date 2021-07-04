@@ -17,13 +17,16 @@
 				text: 'tim'
 
 		GridLayout:
-			cols: 2
-            Button:
-                text: "Switch to second screen"
-                on_release: root.switchToSecondScreen()
-            Button:
-                text: "Submit"
-                on_release:
-                    app.root.current = "second" if passw.text == "tim" else "main"
-                    root.manager.transition.direction = "left"
+			cols: 3
+			Button:
+				text: "Switch to second screen"
+				on_release: root.switchToSecondScreen()
+			Button:
+				text: "Submit"
+				on_release:
+					app.root.current = "second" if passw.text == "tim" else "main"
+					root.manager.transition.direction = "left"
+			Button:
+			    text: 'Do main work'
+			    on_press: root.doMainWork()
 
