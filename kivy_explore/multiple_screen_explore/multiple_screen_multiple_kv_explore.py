@@ -1,15 +1,35 @@
 from kivy.app import App
+from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 from kivy.core.clipboard import Clipboard
 
+
+
 # tutorial video: https://youtu.be/xaYn4XdieCs
 
 class MainWindow(Screen):
+	def __init__(self, **kw):
+		super().__init__(**kw)
+		
+		# WARNING: accessing MainWindow fields defined in kv file
+		# in the __init__ ctor is no longer possible when using
+		# ScreenManager. Here's the solution:
+		# (https://stackoverflow.com/questions/26916262/why-cant-i-access-the-screen-ids)
+		Clock.schedule_once(self._finish_init)
+
+	def _finish_init(self, dt):
+		self.password.text = 'loo'
+
 	def printClipboard(self, clipboardContent):
 		print('Clipboard content\n')
 		print(clipboardContent)
+		
+	def switchToSecondScreen(self):
+		self.parent.current = "second"
+		self.manager.transition.direction = "left"
+
 
 class SecondWindow(Screen):
 	pass

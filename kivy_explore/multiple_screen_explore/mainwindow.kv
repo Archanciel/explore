@@ -1,5 +1,6 @@
 <MainWindow>:
 	name: "main"
+	password: passw
 
 	GridLayout:
 		cols:1
@@ -15,8 +16,14 @@
 				multiline: False
 				text: 'tim'
 
-		Button:
-			text: "Submit"
-			on_release:
-				app.root.current = "second" if passw.text == "tim" else "main"
-				root.manager.transition.direction = "left"
+		GridLayout:
+			cols: 2
+            Button:
+                text: "Switch to second screen"
+                on_release: root.switchToSecondScreen()
+            Button:
+                text: "Submit"
+                on_release:
+                    app.root.current = "second" if passw.text == "tim" else "main"
+                    root.manager.transition.direction = "left"
+
