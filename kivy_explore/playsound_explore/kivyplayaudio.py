@@ -23,10 +23,10 @@ class KivyAudio(BoxLayout):
 		if sound:
 			sound.play()
 
-class KivyAudioApp(App):
+class KivyPlayAudioApp(App):
 
 	def build(self):
 		return KivyAudio()
 
-myApp = KivyAudioApp()
+myApp = KivyPlayAudioApp()
 myApp.run()
