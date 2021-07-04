@@ -47,6 +47,8 @@ class MyMainApp(App):
 		
 		self.mainWindow = MainWindow()
 		
+		# WARNING: in order for WindowManager to work, its kv file must
+		# be returned by the app build() method !
 		return kv
 
 	def on_start(self):
