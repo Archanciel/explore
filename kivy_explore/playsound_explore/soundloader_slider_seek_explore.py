@@ -13,7 +13,7 @@ else:
 	AUDIO_DIR = 'D:\\Users\\Jean-Pierre\\Downloads\\Audiobooks\\Various\\'
 
 Builder.load_string('''
-<MyLayout>:
+<SoundPlayerGUI>:
 	BoxLayout:
 		orientation: "vertical"
 		size: root.width, root.height
@@ -32,32 +32,30 @@ Builder.load_string('''
 			max: 1
 			step: 1
 			value: 0
-			on_value: root.change_pos(self.value)
+			on_value: root.updateSoundPos(self.value)
 
 		Button:
 			text: "Animate!"
 			font_size: 32
-			on_release: root.start_song()''')
+			on_release: root.startSong()''')
 
 
 class AsynchSliderUpdater:
-	def __init__(self, music_obj, slider):
-		self.music_obj = music_obj
+	def __init__(self, soundloaderMp3Obj, slider):
+		self.soundloaderMp3Obj = soundloaderMp3Obj
+		self.mp3PosSliderStop = self.soundloaderMp3Obj.length - SLIDER_UPDATE_FRENQUENCY
 		self.slider = slider
 	
 	def updateSlider(self):
-		music_length = self.music_obj.length
-		stop = False
+		mp3Pos = self.soundloaderMp3Obj.get_pos()
 		
-		while not stop:
+		while mp3Pos < self.mp3PosSliderStop:
+			self.slider.value = mp3Pos
+			print(mp3Pos)
 			time.sleep(SLIDER_UPDATE_FRENQUENCY)
-			music_pos = self.music_obj.get_pos()
-			if music_pos < music_length:
-				self.slider.value = music_pos
-			else:
-				stop = True
+			mp3Pos = self.soundloaderMp3Obj.get_pos()
 
-class MyLayout(Widget):
+class SoundPlayerGUI(Widget):
 	"""
 	WARNING
 
@@ -69,36 +67,41 @@ class MyLayout(Widget):
 	"""
 	
 	music_file = AUDIO_DIR + "Un résumé audio de ce qu'enseigne ' Le Cours en Miracles '.mp3"
-	music_obj = None
+	soundloaderMp3Obj = None
 
-	def start_song(self):
-		self.music_obj = SoundLoader.load(self.music_file)
-		if self.music_obj:
-			print(self.music_obj.source)
-			print(self.music_obj.length)
-			self.ids.song_title.text = self.music_obj.source
-			self.ids.slider.max = self.music_obj.length
-			
-			self.sliderAsynchUpdater = AsynchSliderUpdater(self.music_obj, self.ids.slider)
-			t = threading.Thread(target=self.sliderAsynchUpdater.updateSlider, args=())
-			t.daemon = True
-			t.start()
-
-			self.music_obj.play()
-
-	def change_pos(self, value):
-		if self.music_obj is not None:
-			if abs(self.music_obj.get_pos() - value) > SLIDER_UPDATE_FRENQUENCY:
+	def startSong(self):
+		self.soundloaderMp3Obj = SoundLoader.load(self.music_file)
+		if self.soundloaderMp3Obj:
+			print(self.soundloaderMp3Obj.source)
+			print(self.soundloaderMp3Obj.length)
+			self.ids.song_title.text = self.soundloaderMp3Obj.source
+			self.ids.slider.max = self.soundloaderMp3Obj.length
+			self.startSliderUpdateThread()
+			self.soundloaderMp3Obj.play()
+	
+	def startSliderUpdateThread(self):
+		sliderAsynchUpdater = AsynchSliderUpdater(self.soundloaderMp3Obj, self.ids.slider)
+		t = threading.Thread(target=sliderAsynchUpdater.updateSlider, args=())
+		t.daemon = True
+		t.start()
+	
+	def updateSoundPos(self, value):
+		if self.soundloaderMp3Obj is not None:
+			if abs(self.soundloaderMp3Obj.get_pos() - value) > SLIDER_UPDATE_FRENQUENCY:
 				# test required to avoid mp3 playing perturbation
-				print(value)
-				self.music_obj.seek(value)
+				print('updateSoundPos', value)
+				self.soundloaderMp3Obj.seek(value)
+				print(self.soundloaderMp3Obj._state)
+				if self.soundloaderMp3Obj._state == 'paused':
+					self.soundloaderMp3Obj.play()
+					self.startSliderUpdateThread()
 
 
-class Awesome(App):
+class SoundPlayer(App):
 	def build(self):
 		self.title = "Hello!"
-		return MyLayout()
+		return SoundPlayerGUI()
 
 
 if __name__ == "__main__":
-	Awesome().run()
+	SoundPlayer().run()
