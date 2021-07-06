@@ -84,15 +84,14 @@ class SoundPlayerGUI(Widget):
 		t = threading.Thread(target=sliderAsynchUpdater.updateSlider, args=())
 		t.daemon = True
 		t.start()
-	
+
 	def updateSoundPos(self, value):
 		if self.soundloaderMp3Obj is not None:
 			if abs(self.soundloaderMp3Obj.get_pos() - value) > SLIDER_UPDATE_FRENQUENCY:
 				# test required to avoid mp3 playing perturbation
 				print('updateSoundPos', value)
 				self.soundloaderMp3Obj.seek(value)
-				print(self.soundloaderMp3Obj._state)
-				if self.soundloaderMp3Obj._state == 'paused':
+				if self.soundloaderMp3Obj.status == 'stop':
 					self.soundloaderMp3Obj.play()
 					self.startSliderUpdateThread()
 
