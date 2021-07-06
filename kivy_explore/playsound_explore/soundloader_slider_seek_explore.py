@@ -47,11 +47,17 @@ class AsynchSliderUpdater:
 		self.slider = slider
 	
 	def updateSlider(self):
+		"""
+		This method updates the slider position every
+		SLIDER_UPDATE_FRENQUENCY seconds to reflect the current mp3
+		playing position.
+		:return:
+		"""
 		mp3Pos = self.soundloaderMp3Obj.get_pos()
 		
 		while mp3Pos < self.mp3PosSliderStop:
 			self.slider.value = mp3Pos
-			print(mp3Pos)
+			print('AsynchSliderUpdater.updateSlider() mp3 pos: {}'.format(mp3Pos))
 			time.sleep(SLIDER_UPDATE_FRENQUENCY)
 			mp3Pos = self.soundloaderMp3Obj.get_pos()
 
@@ -71,9 +77,11 @@ class SoundPlayerGUI(Widget):
 
 	def startSong(self):
 		self.soundloaderMp3Obj = SoundLoader.load(self.music_file)
+		
 		if self.soundloaderMp3Obj:
-			print(self.soundloaderMp3Obj.source)
-			print(self.soundloaderMp3Obj.length)
+			print('SoundPlayerGUI startSong()')
+			print('SoundLoader mp3 file: {}'.format(self.soundloaderMp3Obj.source))
+			print('SoundLoader mp3 file length: {}\n'.format(self.soundloaderMp3Obj.length))
 			self.ids.song_title.text = self.soundloaderMp3Obj.source
 			self.ids.slider.max = self.soundloaderMp3Obj.length
 			self.startSliderUpdateThread()
@@ -86,12 +94,24 @@ class SoundPlayerGUI(Widget):
 		t.start()
 
 	def updateSoundPos(self, value):
+		"""
+		Method called by the slider every time its value changes. The
+		value of the slider changes for two reasons:
+			1/ the user moved the slider
+			2/ the AsynchSliderUpdater.updateSlider() called by a
+			   separate thread which updates the slider position
+			   every second to reflect the current mp3 playing position
+			   was executed.
+		:param value:
+		:return:
+		"""
 		if self.soundloaderMp3Obj is not None:
 			if abs(self.soundloaderMp3Obj.get_pos() - value) > SLIDER_UPDATE_FRENQUENCY:
 				# test required to avoid mp3 playing perturbation
 				print('updateSoundPos', value)
 				self.soundloaderMp3Obj.seek(value)
 				if self.soundloaderMp3Obj.status == 'stop':
+					# here, the mp3 was played until its end
 					self.soundloaderMp3Obj.play()
 					self.startSliderUpdateThread()
 
