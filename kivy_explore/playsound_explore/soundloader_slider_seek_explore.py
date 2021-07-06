@@ -108,7 +108,7 @@ class SoundPlayerGUI(Widget):
 		if self.soundloaderMp3Obj is not None:
 			if abs(self.soundloaderMp3Obj.get_pos() - value) > SLIDER_UPDATE_FRENQUENCY:
 				# test required to avoid mp3 playing perturbation
-				print('updateSoundPos', value)
+				print('SoundPlayerGUI.updateSoundPos: {}'.format(value))
 				self.soundloaderMp3Obj.seek(value)
 				if self.soundloaderMp3Obj.status == 'stop':
 					# here, the mp3 was played until its end
