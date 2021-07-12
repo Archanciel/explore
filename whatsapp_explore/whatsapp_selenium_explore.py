@@ -1,4 +1,6 @@
 # source code: https://github.com/samarth1011/Whatsapp_Automation_Selenium/blob/main/whatsapp.py
+# Video "Whatsapp Automation -Send Attachments (Images/Videos) using Python"
+# https://www.youtube.com/watch?v=61GkUO1ZUD8
 
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
