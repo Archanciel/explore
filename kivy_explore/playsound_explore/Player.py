@@ -17,7 +17,7 @@ class ChooseFile(FloatLayout):
 	select = ObjectProperty(None)
 	cancel = ObjectProperty(None)
 
-POSITION_SECONDS_CHANGE = 5
+POSITION_SECONDS_CHANGE = 1
 
 if os.name == 'posix':
 	AUDIO_DIR = '/storage/emulated/0/Download/Audiobooks'
@@ -156,6 +156,13 @@ class AudioPlayer(Widget):
 		self.ids.toggle_play_btn.text = '||'
 		self.currentSong_index = self.currentSong_index - 1
 		self.ids.currentPlay.text = self.songs[self.currentSong_index][:-4]
+
+	def back_to_song_start(self):
+		self.nowPlaying.seek(0)
+	
+	def go_to_song_end(self):
+		duration = self.nowPlaying.length
+		self.nowPlaying.seek(duration)
 	
 	def forward_seconds(self):
 		"""

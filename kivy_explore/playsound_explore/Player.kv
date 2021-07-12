@@ -46,7 +46,7 @@
 		Button:
 			background_color : 64/255, 134/255, 205/255, 1
 			text : '<<|'
-			on_press : root.prev_song()
+			on_press : root.back_to_song_start()
 		Button:
 			background_color : 64/255, 134/255, 205/255, 1
 			text : '<<'
@@ -63,7 +63,7 @@
 		Button:
 			background_color : 64/255, 134/255, 205/255, 1
 			text : '|>>'
-			on_press : root.next_song()
+			on_press : root.go_to_song_end()
 	Button:
 		id : currentPlay
 		text : 'Now is playing ...'
