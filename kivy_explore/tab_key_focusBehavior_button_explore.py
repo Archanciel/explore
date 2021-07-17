@@ -4,7 +4,12 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 
 class FocusButton(FocusBehavior, Button):
-	def _on_focus(self, instance, value, *largs):
+	def __init__(self, **kwargs):
+		super().__init__(**kwargs)
+	
+	def on_focus(self, instance, value, *largs):
+		self.get_focus_previous().background_color = 1.0, 1.0, 1.0, 1.0
+		self.background_color = 1.0, 0.0, 0.0, 1.0
 		print(self.text)
 
 class FocusBehaviorGUI(GridLayout):
