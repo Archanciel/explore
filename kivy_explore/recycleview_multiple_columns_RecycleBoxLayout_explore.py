@@ -17,7 +17,7 @@ class RV(RecycleView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.data = [{'spalte1_SP': str(x['SP1']), 'spalte2_SP': str(x['SP2']), 'spalte3_SP': str(x['SP3'])} for x in items]
-
+    
 class TestRVBoxLayoutApp(App):
     def build(self):
         return RV()
