@@ -44,7 +44,7 @@ class MultiFieldLine(RecycleDataViewBehavior, BoxLayout):
 		self.selected = is_selected
   
 		if is_selected:
-			print(rv.data[index])
+			self.appGUI.outputSelectedData(rv.data[index])
 
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
@@ -60,6 +60,8 @@ class AppGUI(GridLayout):
 		super().__init__(**kwargs)
 		self.rv.data = [{'label_1': str(x['number']), 'label_2': str(x['name']), 'label_3': str(x['size']), 'checkbox_1': x['in_stock']} for x in items]
 
+	def outputSelectedData(self, data):
+		print(data)
 
 class ExploreRecycleViewMultipleFieldBoxLayoutApp(App):
 	def build(self):
