@@ -1,0 +1,43 @@
+<MultiFieldLine>:
+	orientation: 'horizontal'
+	label_1: ''
+	label_2: ''
+	label_3: ''
+	checkbox_1: False
+	Label:
+		text: root.label_1
+	Label:
+		text: root.label_2
+	Label:
+		text: root.label_3
+	CheckBox:
+		active: root.checkbox_1
+<AppGUI>: # inherit from GridLayout
+	rv: rv_id
+	cols:  1
+	rows: 2
+	GridLayout: # col titles
+		cols: 4
+		rows: 1
+		size_hint_y: 0.04
+		Label:
+			text: 'Number'
+		Label:
+			text: 'Name'
+		Label:
+			text: 'Size'
+		Label
+			text: 'In stock'
+	GridLayout: # data
+		cols: 1
+		rows: 1
+		size_hint_y: 0.96
+		RecycleView:
+			id: rv_id
+			viewclass: 'MultiFieldLine'
+			RecycleBoxLayout:
+				default_size: None, dp(20)
+				default_size_hint: 1, None
+				size_hint_y: None
+				height: self.minimum_height
+				orientation: 'vertical'
