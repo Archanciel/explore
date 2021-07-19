@@ -18,7 +18,42 @@ items = [{'number': '510001', 'name': 'Big Pump', 'size': '1.50 L', 'in_stock': 
 
 class MultiFieldLine(RecycleDataViewBehavior, BoxLayout):
 	# class layout defined in kv file
-	pass
+	index = None
+	selected = BooleanProperty(False)
+	selectable = BooleanProperty(True)
+	
+	def refresh_view_attrs(self, rv, index, data):
+		''' Catch and handle the view changes '''
+		self.rv = rv
+		self.apprGUI = rv.parent.parent.parent
+		self.index = index
+		
+		return super(MultiFieldLine, self).refresh_view_attrs(
+			rv, index, data)
+	
+	def on_touch_down(self, touch):
+		''' Add selection on touch down '''
+		if super(MultiFieldLine, self).on_touch_down(touch):
+			return True
+		if self.collide_point(*touch.pos) and self.selectable:
+			return self.parent.select_with_touch(self.index, touch)
+	
+	def apply_selection(self, rv, index, is_selected):
+		# instance variable used in .kv file to change the selected item
+		# color !
+		self.selected = is_selected
+  
+		if is_selected:
+			print(rv.data[index])
+
+
+class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
+								 RecycleBoxLayout):
+	''' Adds selection and focus behaviour to the view. '''
+	
+	# required to authorise unselecting a selected item
+	touch_deselect_last = BooleanProperty(True)
+
 
 class AppGUI(GridLayout):
 	def __init__(self, **kwargs):
