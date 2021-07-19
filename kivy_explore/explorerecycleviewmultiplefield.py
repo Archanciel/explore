@@ -17,7 +17,7 @@ items = [{'number': '510001', 'name': 'Big Pump', 'size': '1.50 L', 'in_stock': 
 
 
 class MultiFieldLine(RecycleDataViewBehavior, BoxLayout):
-	# class layout defined in kv file
+	''' class layout defined in kv file '''
 	index = None
 	selected = BooleanProperty(False)
 	selectable = BooleanProperty(True)
