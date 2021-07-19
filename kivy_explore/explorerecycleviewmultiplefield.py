@@ -25,7 +25,7 @@ class MultiFieldLine(RecycleDataViewBehavior, BoxLayout):
 	def refresh_view_attrs(self, rv, index, data):
 		''' Catch and handle the view changes '''
 		self.rv = rv
-		self.apprGUI = rv.parent.parent.parent
+		self.appGUI = rv.appGUI
 		self.index = index
 		
 		return super(MultiFieldLine, self).refresh_view_attrs(
