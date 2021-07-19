@@ -10,13 +10,13 @@ from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
 
 items = [{'number': '510001', 'name': 'Big Pump', 'size': '1.50 L', 'in_stock': True},
-		 {'number': '523001', 'name': 'Leonie Still', 'size': '1.60 L', 'in_stock': False},
+		 {'number': '523001', 'name': 'Leonie Still very, very,very long, long name', 'size': '1.60 L', 'in_stock': False},
 		 {'number': '641301', 'name': 'Apple Mix', 'size': '1.30 L', 'in_stock': True},
 		 {'number': '681301', 'name': 'Orange Mix', 'size': '1.40 L', 'in_stock': True}
 		]
 
 
-class MultiFieldLine(RecycleDataViewBehavior, BoxLayout):
+class MultiFieldLine(RecycleDataViewBehavior, GridLayout):
 	''' class layout defined in kv file '''
 	index = None
 	selected = BooleanProperty(False)
@@ -61,10 +61,10 @@ class AppGUI(GridLayout):
 		self.rv.data = [{'label_1': str(x['number']), 'label_2': str(x['name']), 'label_3': str(x['size']), 'checkbox_1': x['in_stock']} for x in items]
 
 
-class ExploreRecycleViewMultipleFieldApp(App):
+class ExploreRecycleViewMultipleFieldGridLayoutApp(App):
 	def build(self):
 		return AppGUI()
 
 
 if __name__ == '__main__':
-	ExploreRecycleViewMultipleFieldApp().run()
+	ExploreRecycleViewMultipleFieldGridLayoutApp().run()
