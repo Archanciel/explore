@@ -23,7 +23,7 @@ pyautogui.click(1209, 248)
 
 # Pièce jointe
 time.sleep(EVERNOTE_TIME_SLEEP)
-pyautogui.click(1002, 571)
+pyautogui.click(1019, 656)
 
 # File field
 time.sleep(EVERNOTE_TIME_SLEEP)
