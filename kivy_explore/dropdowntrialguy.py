@@ -5,8 +5,20 @@ from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 
 class CustomDropDown(DropDown):
-    pass
     
+    def firstItem(self):
+        """
+        Display second menu item
+        """
+        self.gridlayout.height = 100
+
+    def secondItem(self):
+        """
+        Display second menu item
+        """
+        self.gridlayout.height = 0
+
+
 class DropDownTrialGUY(BoxLayout):
     #dropD = CustomDropDown() #menu not displaying if CustomDropDown not instanciated in __inie__ !
 
@@ -17,8 +29,7 @@ class DropDownTrialGUY(BoxLayout):
         
     def openMenu(self, widget):
         self.dropD.open(widget)
-                             
-                                           
+        
 class DropDownTrialGUYApp(App):
     def build(self):
         return DropDownTrialGUY()

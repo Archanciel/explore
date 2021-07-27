@@ -1,16 +1,22 @@
 DropDownTrialGUY:
 
 <CustomDropDown>
+    gridlayout: gridlayout_splitButton
     Button:
         text: 'My first Item'
         size_hint_y: None
         height: '28dp'
-        on_release: root.select('item1')
-    Button:
-        text: 'My second Item'
+        on_release: root.firstItem()
+    GridLayout: # enable to hide or display 'My second Item' menu item
+        id: gridlayout_splitButton
+		cols: 1
         size_hint_y: None
-        height: '28dp'
-        on_release: root.select('item2')
+        height: "0dp"
+        Button:
+            text: 'My second Item'
+            size_hint_y: None
+            height: '28dp'
+            on_release: root.secondItem()
 
 <DropDownTrialGUY>:
     orientation: "vertical"

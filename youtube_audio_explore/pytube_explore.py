@@ -6,6 +6,8 @@ else:
 	AUDIO_DIR = 'D:\\Users\\Jean-Pierre\\Downloads\\Audiobooks\\pytube_explore\\'
 
 singlevideoUrl = 'https://youtu.be/Eqy6M6qLWGw'
+#singlevideoUrl = 'https://youtu.be/LhH9uX3kgTI'
+#singlevideoUrl = 'https://youtu.be/llAt4-PDX-o'
 
 youtube = pytube.YouTube(singlevideoUrl)
 video = youtube.streams.first()
