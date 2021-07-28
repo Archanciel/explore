@@ -1,13 +1,20 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 
-class GuiKv(BoxLayout):
+class KivyGUI(BoxLayout):
 	def __init__(self, **kwargs):
-		super(GuiKv, self).__init__(**kwargs)
+		super(KivyGUI, self).__init__(**kwargs)
 		self.ids.next_track.text = 'NEXT TRACK'
 		
+	def nextTrack(self):
+		print('KivyGUI.nextTrack() called')
+	
+	def previousTrack(self):
+		print('KivyGUI.previousTrack() called')
+
+
 class GuiKvApp(App):
 	def build(self):
-		return GuiKv()
+		return KivyGUI()
 	
 GuiKvApp().run()
