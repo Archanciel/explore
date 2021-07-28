@@ -10,14 +10,16 @@ class CustomDropDown(DropDown):
         """
         Display second menu item
         """
-        self.gridlayout.height = 100
+        self.gridlayoutSecondItem.height = self.secondItemButton.height
 
     def secondItem(self):
         """
-        Display second menu item
+        Hide second menu item
         """
-        self.gridlayout.height = 0
+        self.gridlayoutSecondItem.height = 0
 
+    def thirdItem(self):
+        print('CustomDropDown.thirdItem() called')
 
 class DropDownTrialGUY(BoxLayout):
     #dropD = CustomDropDown() #menu not displaying if CustomDropDown not instanciated in __inie__ !
