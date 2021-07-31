@@ -5,11 +5,11 @@ from kivy.lang import Builder
 class UsingKivyCustomClassGUI(BoxLayout):
 	pass
 
-class KivyCustomClassExploreApp(App):
+class KivyCustomClassButtonsExploreApp(App):
 	def build(self):
 		Builder.load_file('kivycustomclassbuttons.kv')
 		
 		return UsingKivyCustomClassGUI()
 
 
-KivyCustomClassExploreApp().run()
+KivyCustomClassButtonsExploreApp().run()
