@@ -7,7 +7,7 @@ class UsingKivyCustomClassGUI(BoxLayout):
 
 class KivyCustomClassExploreApp(App):
 	def build(self):
-		Builder.load_file('kivycustomclassgui.kv')
+		Builder.load_file('kivycustomclassbuttons.kv')
 		
 		return UsingKivyCustomClassGUI()
 
