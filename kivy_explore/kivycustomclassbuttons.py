@@ -1,9 +1,9 @@
 from kivy.uix.boxlayout import BoxLayout
 
 
-class KivyCustomClassGUI(BoxLayout):
+class KivyCustomClassButtons(BoxLayout):
 	def __init__(self, **kwargs):
-		super(KivyCustomClassGUI, self).__init__(**kwargs)
+		super(KivyCustomClassButtons, self).__init__(**kwargs)
 	
 	# self.ids.next_track.text = 'NEXT TRACK'
 	
