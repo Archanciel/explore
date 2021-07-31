@@ -2,14 +2,14 @@ from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
 
-class UsingKivyCustomClassEmbededGUI(BoxLayout):
+class AppGUI(BoxLayout):
 	pass
 
 class KivyCustomClassFieldsButtonsExploreApp(App):
 	def build(self):
 		Builder.load_file('kivycustomclassfieldsbuttons.kv')
 		
-		return UsingKivyCustomClassEmbededGUI()
+		return AppGUI()
 
 
 KivyCustomClassFieldsButtonsExploreApp().run()
