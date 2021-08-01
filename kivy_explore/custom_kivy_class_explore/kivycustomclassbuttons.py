@@ -7,8 +7,8 @@ class KivyCustomClassButtons(BoxLayout):
 	
 	# self.ids.next_track.text = 'NEXT TRACK'
 	
-	def nextTrack(self):
-		print('KivyGUI.nextTrack() called')
+	def firstButton(self):
+		print('KivyCustomClassButtons.firstButton pressed')
 	
-	def previousTrack(self):
-		print('KivyGUI.previousTrack() called')
+	def secondButton(self):
+		print('KivyCustomClassButtons.secondButton pressed')

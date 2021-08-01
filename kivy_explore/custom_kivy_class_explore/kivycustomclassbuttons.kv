@@ -2,13 +2,13 @@
 # which will be removed by Pycharm when optimizing the import !
 #: import KivyCustomClassButtons kivycustomclassbuttons.KivyCustomClassButtons
 
-<KivyCustomClassButtons>:
+<KivyCustomClassButtons>: # inherits from BoxLayout
     orientation: 'vertical'
     Button:
-        id: next_track
-        text: "Next Track"
-        on_press: root.nextTrack()
+        id: first_button
+        text: "First Button"
+        on_press: root.firstButton()
     Button:
         id: previous_track
-        text: "Previous Track"
-        on_press: root.previousTrack()
+        text: "Second Button"
+        on_press: root.secondButton()
