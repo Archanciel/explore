@@ -13,7 +13,7 @@ class AppGUI(BoxLayout):
 
 class KivyCustomClassButtonsExploreApp(App):
 	def build(self):
-		Builder.load_file('kivycustomclassbuttonslayout.kv')
+		Builder.load_file('kivycustomclassbuttons.kv')
 		
 		return AppGUI()
 
