@@ -5,8 +5,6 @@ class KivyCustomClassButtons(BoxLayout):
 	def __init__(self, **kwargs):
 		super(KivyCustomClassButtons, self).__init__(**kwargs)
 	
-	# self.ids.next_track.text = 'NEXT TRACK'
-	
 	def firstButton(self):
 		print('KivyCustomClassButtons.firstButton pressed')
 	

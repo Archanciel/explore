@@ -10,5 +10,3 @@ class KivyCustomClassFieldsButtons(BoxLayout):
 	
 	def printSecondText(self):
 		print(self.ids.second_text_input.text)
-
-# self.ids.next_track.text = 'NEXT TRACK'
