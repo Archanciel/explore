@@ -5,8 +5,10 @@ class KivyCustomClassButtons(BoxLayout):
 	def __init__(self, **kwargs):
 		super(KivyCustomClassButtons, self).__init__(**kwargs)
 	
-	def firstButton(self):
+	def firstButtonPressed(self):
 		print('KivyCustomClassButtons.firstButton pressed')
+		self.parent.firstButtonPressed()
 	
-	def secondButton(self):
+	def secondButtonPressed(self):
 		print('KivyCustomClassButtons.secondButton pressed')
+		self.parent.secondButtonPressed()

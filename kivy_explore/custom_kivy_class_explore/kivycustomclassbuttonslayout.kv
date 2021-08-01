@@ -4,12 +4,13 @@
 #: import KivyCustomClassButtons kivycustomclassbuttons.KivyCustomClassButtons
 
 <KivyCustomClassButtons>: # inherits from BoxLayout
+    id: kivy_custom_class_buttons
     orientation: 'vertical'
     Button:
         id: first_button
         text: "First Button"
-        on_press: root.firstButton()
+        on_press: kivy_custom_class_buttons.firstButtonPressed()
     Button:
         id: previous_track
         text: "Second Button"
-        on_press: root.secondButton()
+        on_press: kivy_custom_class_buttons.secondButtonPressed()
