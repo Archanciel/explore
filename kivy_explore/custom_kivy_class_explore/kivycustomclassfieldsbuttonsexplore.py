@@ -8,7 +8,8 @@ class AppGUI(BoxLayout):
 class KivyCustomClassFieldsButtonsExploreApp(App):
 	def build(self):
 		Builder.load_file('kivycustomclassfieldsbuttons.kv')
-		
+		Builder.load_file('kivycustomclassbuttons.kv')
+
 		return AppGUI()
 
 

@@ -1,17 +1,21 @@
 # Next import instruction avoids importing the class in the app python file, import
-# which will be removed by Pycharm when optimizing the import !
+# which will be removed by Pycharm when optimizing the imports !
+
 #: import KivyCustomClassButtons kivycustomclassbuttons.KivyCustomClassButtons
 
-<KivyCustomClassFieldsButtons>: # inherits from BoxLayout
+<KivyCustomClassFieldsButtons>: # inherits from KivyCustomClassButtons
 	orientation: 'vertical'
     TextInput:
         id: first_text_input
-        text: "First Text"
+        size_hint_y: 0.07
+        text: "First TextInput"
         multiline: False
         on_text_validate: root.printFirstText()
     TextInput:
         id: second_text_input
-        text: "Second Text"
+        size_hint_y: 0.07
+        text: "Second TextInput"
         multiline: False
         on_text_validate: root.printSecondText()
-    KivyCustomClassButtons:
+    KivyCustomClassButtons: # WHY IS CONTENT OF KivyCustomClassButtons KV FILE
+                            # NOT DISPLAYED ?

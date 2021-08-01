@@ -1,7 +1,9 @@
 from kivy.uix.boxlayout import BoxLayout
 
+from kivy_explore.custom_kivy_class_explore.kivycustomclassbuttons import KivyCustomClassButtons
 
-class KivyCustomClassFieldsButtons(BoxLayout):
+
+class KivyCustomClassFieldsButtons(KivyCustomClassButtons):
 	def __init__(self, **kwargs):
 		super(KivyCustomClassFieldsButtons, self).__init__(**kwargs)
 		
