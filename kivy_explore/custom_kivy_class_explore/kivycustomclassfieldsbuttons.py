@@ -1,7 +1,7 @@
 from kivy.uix.boxlayout import BoxLayout
 
 # instrution below causes failure on Android !
-#from kivy_explore.custom_kivy_class_explore.kivycustomclassbuttons import KivyCustomClassButtons
+from kivy_explore.custom_kivy_class_explore.kivycustomclassbuttons import KivyCustomClassButtons
 
 # class KivyCustomClassFieldsButtons(KivyCustomClassButtons):   # inheriting from KivyCustomClassButtons
 																# does cause double display of tet fields

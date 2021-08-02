@@ -1,0 +1,27 @@
+#:kivy 1.10.0
+
+<BLMother@BoxLayout>:
+    orientation:"vertical"
+    padding: 10, 0
+    spacing: 10
+    TextInput:
+    	size_hint_y: 0.1
+    	multiline: False
+    	
+
+<BLChildren@BLMother>:
+    orientation:"vertical"
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 0.8
+        Rectangle:
+            size: self.size
+            pos: self.x + self.width*0.025, self.y
+    #BLMother:
+    	#size_hint_y: 0.1
+    Button:
+    	size_hint_y: 0.9
+    	text: 'Reset text'
+
+<RootWidget>:
+    BLChildren:
