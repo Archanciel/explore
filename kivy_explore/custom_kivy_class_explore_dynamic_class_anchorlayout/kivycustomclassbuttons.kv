@@ -1,0 +1,23 @@
+# Next import instruction avoids importing the class in the app python file, import
+# which will be removed by Pycharm when optimizing the imports !
+
+#: import KivyCustomClassButtons kivycustomclassbuttons.KivyCustomClassButtons
+
+<KivyCustomClassButtons>: # inherits from AnchorLayout
+	id: kivy_custom_class_buttons
+	AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'top'
+        Button:
+            id: first_button
+            size_hint_y: 0.5
+            text: "First Button"
+            on_press: kivy_custom_class_buttons.firstButtonPressed()
+	AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        Button:
+            id: previous_track
+            size_hint_y: 0.5
+            text: "Second Button"
+            on_press: kivy_custom_class_buttons.secondButtonPressed()

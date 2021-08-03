@@ -1,0 +1,43 @@
+<AppGUI>: # sub-class of BoxLayout
+    AnchorLayout:
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'top'
+            Label:
+                text: 'Label top'
+                font_size: '15sp'
+                size_hint_y: 0.1
+                canvas.before:
+                    Color:
+                        rgba: 1, 0, 0, 0.5
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'bottom'
+            Label:
+                size_hint_y: 0.1
+                text: 'Label bottom'
+                font_size: '15sp'
+                size_hint_y: 0.1
+                pos_hint: {'bottom': 1}
+                canvas.before:
+                    Color:
+                        rgba: 1, 0, 0, 0.5
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+            Label:
+                text: 'Label middle'
+                font_size: '15sp'
+                size_hint_y: 0.1
+                canvas.before:
+                    Color:
+                        rgba: 1, 0, 0, 0.5
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
