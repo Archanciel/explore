@@ -12,3 +12,9 @@ class KivyCustomClassButtons(BoxLayout):
 	def secondButtonPressed(self):
 		print('KivyCustomClassButtons.secondButton pressed')
 		self.parent.secondButtonPressed()
+	
+	def printFirstText(self):
+		print('KivyCustomClassButtons.printFirstText() ', self.ids.first_text_input.text)
+	
+	def printSecondText(self):
+		print('KivyCustomClassButtons.printSecondText() ', self.ids.second_text_input.text)
