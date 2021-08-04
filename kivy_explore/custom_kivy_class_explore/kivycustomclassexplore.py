@@ -17,14 +17,14 @@ class AppGUI(BoxLayout):
 		print('AppGUI.printSecondText() ', self.ids.kivy_custom_class_fields_buttons.ids.second_text_input.text)
 
 
-class KivyCustomClassFieldsButtonsExploreApp(App):
+class KivyCustomClassExploreApp(App):
 	def build(self):
 		# IPORTANT: the order of loading the kv files determines the
 		# order in which the kv content is displayed.
 		Builder.load_file('kivycustomclassbuttons.kv')
-		Builder.load_file('kivycustomclassfieldsbuttons.kv')
+		Builder.load_file('kivycustomclassfields.kv')
 
 		return AppGUI()
 
 
-KivyCustomClassFieldsButtonsExploreApp().run()
+KivyCustomClassExploreApp().run()
