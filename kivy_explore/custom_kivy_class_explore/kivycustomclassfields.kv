@@ -1,16 +1,18 @@
-<KivyCustomClassFields>: # inherits from KivyCustomClassButtons
+<KivyCustomClassFields>: # inherits from KivyCustomClassSpinner
 	orientation: 'vertical'
 	TextInput:
 		id: first_text_input
-		size_hint_y: 0.13
+		size_hint_y: 0.15
 		text: "First TextInput"
 		multiline: False
 		on_text_validate: root.printFirstText()
 	TextInput:
 		id: second_text_input
-		size_hint_y: 0.13
+		size_hint_y: 0.15
 		text: "Second TextInput"
 		multiline: False
 		on_text_validate: root.printSecondText()
-#    KivyCustomClassButtons: # WARNING: does causes double display !
-#        id: kivy_custom_class_buttons
+#    KivyCustomClassSpinner: # WARNING: does causes duplicate
+                             # KivyCustomClassSpinner and
+                             # KivyCustomClassButtons display !
+#        id: kivy_custom_class_spinner

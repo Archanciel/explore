@@ -1,0 +1,11 @@
+<KivyCustomClassSpinner>: # inherits from KivyCustomClassButtons
+	id: custom_spinner_instance
+	orientation: 'vertical'
+	Spinner:
+    	id: spinner_instance
+        size_hint_y: 0.2
+		text: 'Select'
+		values: ('Spinner One', 'Spinner Two')
+		on_text: custom_spinner_instance.spinnerValueSet()
+#    KivyCustomClassButtons: # WARNING: does causes duplicate KivyCustomClassButtons display !
+#        id: kivy_custom_class_buttons

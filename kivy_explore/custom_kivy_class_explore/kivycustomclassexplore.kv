@@ -1,5 +1,11 @@
 #: import KivyCustomClassFields kivycustomclassfields.KivyCustomClassFields
 
 <AppGUI>: # inherits from BoxLayout
-	KivyCustomClassFields:
-	    id: kivy_custom_class_fields_buttons
+    id: kivy_custom_class_app_gui
+    orientation: 'vertical'
+    GridLayout:
+        cols: 1
+        rows: 5
+        KivyCustomClassFields:
+            id: kivy_custom_class_fields_buttons
+            size_hint_y: 0.1

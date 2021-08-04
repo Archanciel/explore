@@ -1,6 +1,6 @@
-from kivycustomclassbuttons import KivyCustomClassButtons
+from kivycustomclassspinner import KivyCustomClassSpinner
 
-class KivyCustomClassFields(KivyCustomClassButtons):
+class KivyCustomClassFields(KivyCustomClassSpinner):
 	def __init__(self, **kwargs):
 		super(KivyCustomClassFields, self).__init__(**kwargs)
 	
