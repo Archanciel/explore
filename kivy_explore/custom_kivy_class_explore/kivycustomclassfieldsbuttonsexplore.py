@@ -19,8 +19,10 @@ class AppGUI(BoxLayout):
 
 class KivyCustomClassFieldsButtonsExploreApp(App):
 	def build(self):
-		Builder.load_file('kivycustomclassfieldsbuttons.kv')
+		# IPORTANT: the order of loading the kv files determines the
+		# order in which the kv content is displayed.
 		Builder.load_file('kivycustomclassbuttons.kv')
+		Builder.load_file('kivycustomclassfieldsbuttons.kv')
 
 		return AppGUI()
 
