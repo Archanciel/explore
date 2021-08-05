@@ -7,4 +7,11 @@ class KivyCustomClassSpinner(KivyCustomClassButtons):
 	def spinnerValueSet(self):
 		spinnerTextSet = self.ids.spinner_instance.text
 		print('KivyCustomClassSpinner.spinnerValueSet() ', spinnerTextSet)
-		self.parent.parent.spinnerValueSet(spinnerTextSet)
+	
+	def firstButtonPressed(self):
+		print('KivyCustomClassSpinner.firstButton pressed')
+		super().firstButtonPressed()
+	
+	def secondButtonPressed(self):
+		print('KivyCustomClassSpinner.secondButton pressed')
+		super(KivyCustomClassSpinner, self).secondButtonPressed()
