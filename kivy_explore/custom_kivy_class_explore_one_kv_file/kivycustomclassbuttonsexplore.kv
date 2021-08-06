@@ -1,2 +1,17 @@
+#: import KivyCustomClassFields kivycustomclassfields.KivyCustomClassFields
+
+<KivyCustomClassButtons>: # inherits from BoxLayout
+    id: custom_class_buttons_instance # the instance type will be the
+                                      # lowest sub class of KivyCustomClassButtons.
+    orientation: 'vertical'
+    Button:
+        id: first_button
+        text: "First Button"
+        on_press: custom_class_buttons_instance.firstButtonPressed()
+    Button:
+        id: second_button
+        text: "Second Button"
+        on_press: custom_class_buttons_instance.secondButtonPressed()
+
 <AppGUI>: # inherits from BoxLayout
 	KivyCustomClassButtons:

@@ -22,15 +22,15 @@ class AppGUI(BoxLayout):
 		print('AppGUI.spinnerValueSet() executed, which updated first text input field !')
 
 
-class KivyCustomClassExploreApp(App):
+class KivyCustomClassExploreOneKvApp(App):
 	def build(self):
 		# IMPORTANT: the order of loading the kv files determines the
 		# order in which the kv content is displayed.
-		Builder.load_file('kivycustomclassfields.kv')
-		Builder.load_file('kivycustomclassspinner.kv')
-		Builder.load_file('kivycustomclassbuttons.kv')
+		# Builder.load_file('kivycustomclassfields.kv')
+		# Builder.load_file('kivycustomclassspinner.kv')
+		# Builder.load_file('kivycustomclassbuttons.kv')
 
 		return AppGUI()
 
 
-KivyCustomClassExploreApp().run()
+KivyCustomClassExploreOneKvApp().run()
