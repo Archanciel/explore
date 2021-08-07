@@ -16,6 +16,19 @@
         text: "Second Button"
         on_press: custom_class_buttons_instance.secondButtonPressed()
 
+<KivyCustomClassSpinner>: # inherits from KivyCustomClassButtons
+	id: custom_class_spinner_instance # the instance type will be the
+                                      # lowest sub class of KivyCustomClassSpinner
+	orientation: 'vertical'
+	Spinner:
+    	id: spinner_instance
+        size_hint_y: 0.2
+		text: 'Select'
+		values: ('Spinner One', 'Spinner Two')
+		on_text: custom_class_spinner_instance.spinnerValueSet()
+#    KivyCustomClassButtons: # WARNING: does causes duplicate KivyCustomClassButtons display !
+#        id: kivy_custom_class_buttons
+
 <KivyCustomClassFields>: # inherits from KivyCustomClassSpinner,
                          # is the lowest sub class.
 	orientation: 'vertical'
@@ -35,19 +48,6 @@
                              # KivyCustomClassSpinner and
                              # KivyCustomClassButtons display !
 #        id: kivy_custom_class_spinner
-
-<KivyCustomClassSpinner>: # inherits from KivyCustomClassButtons
-	id: custom_class_spinner_instance # the instance type will be the
-                                      # lowest sub class of KivyCustomClassSpinner
-	orientation: 'vertical'
-	Spinner:
-    	id: spinner_instance
-        size_hint_y: 0.2
-		text: 'Select'
-		values: ('Spinner One', 'Spinner Two')
-		on_text: custom_class_spinner_instance.spinnerValueSet()
-#    KivyCustomClassButtons: # WARNING: does causes duplicate KivyCustomClassButtons display !
-#        id: kivy_custom_class_buttons
 
 <AppGUI>: # inherits from BoxLayout
     id: kivy_custom_class_app_gui
