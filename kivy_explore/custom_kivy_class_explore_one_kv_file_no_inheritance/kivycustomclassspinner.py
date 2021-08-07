@@ -1,6 +1,7 @@
-from kivycustomclassbuttons import KivyCustomClassButtons
+from kivy.uix.boxlayout import BoxLayout
 
-class KivyCustomClassSpinner(KivyCustomClassButtons):
+
+class KivyCustomClassSpinner(BoxLayout):
 	def __init__(self, **kwargs):
 		super(KivyCustomClassSpinner, self).__init__(**kwargs)
 
@@ -18,7 +19,6 @@ class KivyCustomClassSpinner(KivyCustomClassButtons):
 		KivyCustomClassSpinner.
 		"""
 		print('KivyCustomClassSpinner.firstButton pressed')
-		super().firstButtonPressed()
 	
 	def secondButtonPressed(self):
 		"""
@@ -26,4 +26,3 @@ class KivyCustomClassSpinner(KivyCustomClassButtons):
 		KivyCustomClassSpinner.
 		"""
 		print('KivyCustomClassSpinner.secondButton pressed')
-		super(KivyCustomClassSpinner, self).secondButtonPressed()
