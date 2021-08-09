@@ -2,37 +2,32 @@
 #: import KivyCustomClassSpinner kivycustomclassspinner.KivyCustomClassSpinner
 #: import KivyCustomClassButtons kivycustomclassbuttons.KivyCustomClassButtons
 
-# IMPORTANT: the order of declaring the KivyCustomClasses below
-# determines the order in which those components are displayed.
-
 <KivyCustomClassButtons>: # inherits from BoxLayout
-    id: custom_class_buttons_instance # the instance type will be the
-                                      # lowest sub class of KivyCustomClassButtons.
-    orientation: 'vertical'
-    Button:
-        id: first_button
-        text: "First Button"
-        on_press: custom_class_buttons_instance.firstButtonPressed()
-    Button:
-        id: second_button
-        text: "Second Button"
-        on_press: custom_class_buttons_instance.secondButtonPressed()
+	id: custom_class_buttons_instance # the instance type will be the
+									  # lowest sub class of KivyCustomClassButtons.
+	orientation: 'vertical'
+	Button:
+		id: first_button
+		text: "First Button"
+		on_press: custom_class_buttons_instance.firstButtonPressed()
+	Button:
+		id: second_button
+		text: "Second Button"
+		on_press: custom_class_buttons_instance.secondButtonPressed()
 
-<KivyCustomClassSpinner>: # inherits from KivyCustomClassButtons
+<KivyCustomClassSpinner>: # inherits from BoxLayout
 	id: custom_class_spinner_instance # the instance type will be the
-                                      # lowest sub class of KivyCustomClassSpinner
+									  # lowest sub class of KivyCustomClassSpinner
 	orientation: 'vertical'
 	Spinner:
-    	id: spinner_instance
-        size_hint_y: 0.2
+		id: spinner_instance
 		text: 'Select'
 		values: ('Spinner One', 'Spinner Two')
 		on_text: custom_class_spinner_instance.spinnerValueSet()
 #    KivyCustomClassButtons: # WARNING: does causes duplicate KivyCustomClassButtons display !
 #        id: kivy_custom_class_buttons
 
-<KivyCustomClassFields>: # inherits from KivyCustomClassSpinner,
-                         # is the lowest sub class.
+<KivyCustomClassFields>: # inherits from BoxLayout
 	orientation: 'vertical'
 	TextInput:
 		id: first_text_input
@@ -47,17 +42,19 @@
 		multiline: False
 		on_text_validate: root.printSecondText()
 #    KivyCustomClassSpinner: # WARNING: does causes duplicate
-                             # KivyCustomClassSpinner and
-                             # KivyCustomClassButtons display !
+							 # KivyCustomClassSpinner and
+							 # KivyCustomClassButtons display !
 #        id: kivy_custom_class_spinner
 
 <AppGUI>: # inherits from BoxLayout
-    id: kivy_custom_class_app_gui
-    orientation: 'vertical'
-    GridLayout:
-        cols: 1
-        rows: 5
-        KivyCustomClassFields:
-            id: custom_class_fields_instance
-        KivyCustomClassButtons:
-        KivyCustomClassSpinner:
+	id: kivy_custom_class_app_gui
+	orientation: 'vertical'
+	GridLayout:
+		cols: 1
+		rows: 5
+		KivyCustomClassFields:
+			id: custom_class_fields_instance
+			size_hint_y: 0.2
+		KivyCustomClassSpinner:
+			size_hint_y: 0.12
+		KivyCustomClassButtons:
