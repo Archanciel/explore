@@ -11,7 +11,7 @@ if os.name == 'posix':
 		'quiet': False
 	}
 else:
-	targetAudioDir = 'D:\\Users\\Jean-Pierre\\Downloads\\Audiobooks\\test_youtube_dl'
+	targetAudioDir = 'D:\\Users\\Jean-Pierre\\Downloads\\Audiobooks\\test\\test_youtube_dl'
 	ydl_opts = {
 		'outtmpl': targetAudioDir + '\\%(title)s.%(ext)s',
 		#'format': 'bestaudio/best',
@@ -28,7 +28,7 @@ playlistUrl = 'https://www.youtube.com/playlist?list=PLzwWSJNcZTMSFWGrRGKOypqN29
 playlistObject = Playlist(playlistUrl)
 playlistObject._video_regex = re.compile(r"\"singleVideoUrl\":\"(/watch\?v=[\w-]*)")
 singlevideoUrl = 'https://youtu.be/Eqy6M6qLWGw'
-downloadPlaylist = False
+downloadPlaylist = True
 
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 	if downloadPlaylist:
