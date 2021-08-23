@@ -1,23 +1,29 @@
 <TextInputTextSize>:
-    orientation: "vertical"
-    textInput: txt_input
-    textOutput: txt_output
+    canvas.before:
+        Color:
+            rgb: [0.22,0.22,0.22]
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	orientation: "vertical"
+	textInputSingleLine: txt_input_singleline
+	textInputMultiline: txt_input_multiline
 
-    BoxLayout:
-        orientation: "vertical"
-        size_hint_y: None
-        height: "56dp"
-        canvas.before:
-            Rectangle:
-                pos: self.pos
-                size: self.size
-        TextInput:
-            id: txt_input
-            focus: True
-            multiline: False
-            on_text_validate: root.submitRequest() # ENTER triggers root.submitRequest()
-        TextInput:
-            id: txt_output
-            readonly: True
-            multiline: False
-            on_text: root.outputTextChanged(txt_output, txt_output.text) # ENTER triggers root.submitRequest()
+	GridLayout:
+		cols: 1
+		canvas.before:
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		TextInput:
+			id: txt_input_singleline
+			size_hint_y: None
+			height: "28dp"
+			focus: True
+			multiline: False
+			on_text_validate: root.submitRequest() # ENTER triggers root.submitRequest()
+		TextInput:
+			id: txt_input_multiline
+			text: "Audio - ET L'UNIVERS DISPARAÎTRA La nature   \nillusoire de notre réalité et le pouvoir \ntranscendant du véritable pardon \n+ commentaires de Gary Renard"
+			size_hint_y: None
+			height: (len(txt_input_multiline._lines)+1) * txt_input_multiline.line_height
