@@ -12,6 +12,9 @@ class TextInputTextSize(BoxLayout):
         textInputTxt = self.textInputSingleLine.text
         self.textInputMultiline.text += '\n' + textInputTxt
 
+    def printTextInputValue(self):
+        print(self.textInputMultiline.text)
+        
 class TextInputTextSizeApp(App):
     def build(self):
         return TextInputTextSize()

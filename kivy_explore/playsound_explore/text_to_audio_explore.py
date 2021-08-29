@@ -34,7 +34,7 @@ def increase_speed(mp3FileName):
 	y, sr = sf.read("text.wav")
 
 	# Play back at 3X speed
-	y_stretch = pyrb.time_stretch(y, sr, 3)
+	y_stretch = pyrb.time_stretch(y, sr, 1.8)
 	sf.write("analyzed_filepathX105.wav", y_stretch, sr, format='wav')
 	
 	sound = AudioSegment.from_wav("analyzed_filepathX105.wav")

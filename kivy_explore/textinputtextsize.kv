@@ -27,3 +27,4 @@
 			text: "Audio - ET L'UNIVERS DISPARAÎTRA La nature   \nillusoire de notre réalité et le pouvoir \ntranscendant du véritable pardon \n+ commentaires de Gary Renard"
 			size_hint_y: None
 			height: (len(txt_input_multiline._lines)+1) * txt_input_multiline.line_height
+			on_text: root.printTextInputValue() # on_text_validate usable only if multiline is False !
