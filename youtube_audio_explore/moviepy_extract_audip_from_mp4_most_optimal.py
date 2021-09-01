@@ -1,5 +1,4 @@
 import time, glob, os
-import moviepy.editor
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_audio
 from playsound import playsound
 
@@ -10,7 +9,7 @@ DIR_SEP = '\\'
 testDirName = 'audible_mobizen'
 targetAudioDir = AUDIO_DIR + DIR_SEP + testDirName
 sourceName = "Audible Et l'Uunivers disparaîtra"
-#sourceName = "Short low video quality"
+sourceName = "Short low video quality"
 sourceVideoFileName = sourceName + ".mp4"
 sourceVideoFilePath = targetAudioDir + DIR_SEP + sourceVideoFileName
 
