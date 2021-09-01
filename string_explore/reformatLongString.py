@@ -1,12 +1,19 @@
-#import os.path.SEP
-SEP = '/'
+from os.path import sep
 
 MAX_LENGTH = 10
 MAX_LENGTH = 15
-MAX_LENGTH = 20
+MAX_LENGTH = 22
 
-SEPARATORS = [SEP, ' ', ',', '.', ':']
-MESSAGE = "c:/temp/testing/audio books/Et l'Univers disparaîtra: avec mes commentaires"
+SEPARATORS = [sep, ' ', ',', '.', ':']
+
+if sep == '\\':
+	# on Windows
+	MESSAGE = "c:\\temp\\testing\\audiobooks\\Et l'Univers disparaîtra: avec mes commentaires"
+else:
+	# on Android
+	MESSAGE = "c:/temp/testing/audiobooks/Et l'Univers disparaîtra: avec mes commentaires"
+	
+#MESSAGE = "c:/temp/testing/audiobooks/Et l'Univers disparaîtra: avec mes commentaires"
 #MESSAGE = "c:/temp/testing/audio books/Et"
 #MESSAGE = "c:/temp/testing/myAudiobooks/Et"
 
@@ -20,24 +27,41 @@ def reformatString(sourceStr, maxLength):
 	for c in sourceStr:
 		if c in SEPARATORS:
 			previousSepIndex = currIndex
-			print('previousSepIndex ', previousSepIndex)
+#			print('previousSepIndex ', previousSepIndex)
 		
 		currIndex += 1
 		currSplitLength += 1
-		print(currSplitLength)
+#		print(currSplitLength)
 			
-		if currSplitLength >= maxLength - 1:
+#		if c != ' ':
+		if currSplitLength >= maxLength:
 			splitEndIndex = previousSepIndex + 1
 			splitStr = sourceStr[previousSplitIndex:splitEndIndex]
-			formattedStr += splitStr + '\n'
-			print('splitStr', splitStr, ' ', len(splitStr))
-			previousSplitIndex = splitEndIndex
-			currSplitLength = 1
 			
+			if splitStr == '':
+				continue
+				
+			formattedStr += splitStr + '\n'
+#			print('splitStr', splitStr, ' ', len(splitStr))
+			previousSplitIndex = splitEndIndex
+			currSplitLength = currIndex - splitEndIndex
+		# else:
+		# 	if currSplitLength > maxLength:
+		# 		splitEndIndex = previousSepIndex + 1
+		# 		splitStr = sourceStr[previousSplitIndex:splitEndIndex]
+		# 		formattedStr += splitStr + '\n'
+		# 		print('splitStr', splitStr, ' ', len(splitStr))
+		# 		previousSplitIndex = splitEndIndex
+		# 		currSplitLength = currIndex - splitEndIndex - 1
+
 	formattedStr += sourceStr[previousSplitIndex:]
 	
 	return formattedStr
 	
 formattedMessage = reformatString(MESSAGE, MAX_LENGTH)
 print('MAX_LENGTH ', MAX_LENGTH)
-print(formattedMessage)
+formattedMessageLines = formattedMessage.split('\n')
+
+for line in formattedMessageLines:
+	line = line.strip()
+	print(line, ' ', len(line))
