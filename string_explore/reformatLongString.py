@@ -3,10 +3,12 @@ SEP = '/'
 
 MAX_LENGTH = 10
 MAX_LENGTH = 15
-MAX_LENGTH = 10
+MAX_LENGTH = 20
 
 SEPARATORS = [SEP, ' ', ',', '.', ':']
-MESSAGE = "c:/temp/testing/audiobooks/Et l'Univers disparaîtra: avec mes commentaires"
+MESSAGE = "c:/temp/testing/audio books/Et l'Univers disparaîtra: avec mes commentaires"
+#MESSAGE = "c:/temp/testing/audio books/Et"
+#MESSAGE = "c:/temp/testing/myAudiobooks/Et"
 
 def reformatString(sourceStr, maxLength):
 	previousSepIndex = 0
@@ -26,8 +28,9 @@ def reformatString(sourceStr, maxLength):
 			
 		if currSplitLength >= maxLength - 1:
 			splitEndIndex = previousSepIndex + 1
-			formattedStr += sourceStr[previousSplitIndex:splitEndIndex] + '\n'
-			print(formattedStr)
+			splitStr = sourceStr[previousSplitIndex:splitEndIndex]
+			formattedStr += splitStr + '\n'
+			print('splitStr', splitStr, ' ', len(splitStr))
 			previousSplitIndex = splitEndIndex
 			currSplitLength = 1
 			
@@ -36,5 +39,5 @@ def reformatString(sourceStr, maxLength):
 	return formattedStr
 	
 formattedMessage = reformatString(MESSAGE, MAX_LENGTH)
-print(MAX_LENGTH)
+print('MAX_LENGTH ', MAX_LENGTH)
 print(formattedMessage)
