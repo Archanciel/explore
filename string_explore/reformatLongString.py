@@ -2,13 +2,13 @@ from os.path import sep
 
 MAX_LENGTH = 10
 MAX_LENGTH = 15
-MAX_LENGTH = 22
+MAX_LENGTH = 10
 
-SEPARATORS = [sep, ' ', ',', '.', ':']
+SEPARATORS = [sep, ' ', ',', '.', ':', '-', '_']
 
 if sep == '\\':
 	# on Windows
-	MESSAGE = "c:\\temp\\testing\\audiobooks\\Et l'Univers disparaîtra: avec mes commentaires"
+	MESSAGE = "c:\\temp\\testing\\audiobooks\\Et l'Univers disparaîtra-t-il: avec mes commentaires"
 else:
 	# on Android
 	MESSAGE = "c:/temp/testing/audiobooks/Et l'Univers disparaîtra: avec mes commentaires"
@@ -19,6 +19,7 @@ else:
 
 def reformatString(sourceStr, maxLength):
 	previousSepIndex = 0
+	previousSepChar = ''
 	currIndex = 0
 	currSplitLength = 0
 	formattedStr = ''
@@ -27,32 +28,37 @@ def reformatString(sourceStr, maxLength):
 	for c in sourceStr:
 		if c in SEPARATORS:
 			previousSepIndex = currIndex
+			previousSepChar = c
 #			print('previousSepIndex ', previousSepIndex)
 		
 		currIndex += 1
 		currSplitLength += 1
 #		print(currSplitLength)
 			
-#		if c != ' ':
-		if currSplitLength >= maxLength:
-			splitEndIndex = previousSepIndex + 1
-			splitStr = sourceStr[previousSplitIndex:splitEndIndex]
-			
-			if splitStr == '':
-				continue
+		if previousSepChar != ' ':
+			if currSplitLength >= maxLength - 1:
+				splitEndIndex = previousSepIndex + 1
+				splitStr = sourceStr[previousSplitIndex:splitEndIndex]
 				
-			formattedStr += splitStr + '\n'
-#			print('splitStr', splitStr, ' ', len(splitStr))
-			previousSplitIndex = splitEndIndex
-			currSplitLength = currIndex - splitEndIndex
-		# else:
-		# 	if currSplitLength > maxLength:
-		# 		splitEndIndex = previousSepIndex + 1
-		# 		splitStr = sourceStr[previousSplitIndex:splitEndIndex]
-		# 		formattedStr += splitStr + '\n'
-		# 		print('splitStr', splitStr, ' ', len(splitStr))
-		# 		previousSplitIndex = splitEndIndex
-		# 		currSplitLength = currIndex - splitEndIndex - 1
+				if splitStr == '':
+					continue
+					
+				formattedStr += splitStr + '\n'
+#				print('splitStr', splitStr, ' ', len(splitStr))
+				previousSplitIndex = splitEndIndex
+				currSplitLength = currIndex - splitEndIndex
+		else:
+			if currSplitLength > maxLength:
+				splitEndIndex = previousSepIndex + 1
+				splitStr = sourceStr[previousSplitIndex:splitEndIndex]
+				
+				if splitStr == '':
+					continue
+				
+				formattedStr += splitStr + '\n'
+#				print('splitStr', splitStr, ' ', len(splitStr))
+				previousSplitIndex = splitEndIndex
+				currSplitLength = currIndex - splitEndIndex - 1
 
 	formattedStr += sourceStr[previousSplitIndex:]
 	
