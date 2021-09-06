@@ -13,6 +13,8 @@ class MainWindow(Screen):
 	def __init__(self, **kw):
 		super().__init__(**kw)
 		
+		self.windowManager = None
+		
 		# WARNING: accessing MainWindow fields defined in kv file
 		# in the __init__ ctor is no longer possible when using
 		# ScreenManager. Here's the solution:
@@ -20,7 +22,7 @@ class MainWindow(Screen):
 		Clock.schedule_once(self._finish_init)
 
 	def _finish_init(self, dt):
-		self.password.text = 'loo'
+		self.password.text += ' password'
 
 	def printClipboard(self, clipboardContent):
 		print('Clipboard content\n')
@@ -32,7 +34,7 @@ class MainWindow(Screen):
 		
 	def doMainWork(self):
 		print('MainWindow.doMainWork()')
-		
+
 
 class SecondWindow(Screen):
 	def doSecondWork(self):
@@ -47,20 +49,21 @@ class MyMainApp(App):
 	def build(self):
 		Builder.load_file("mainwindow.kv")
 		Builder.load_file("secondwindow.kv")
-		kv = Builder.load_file("windowmanager.kv")
-		
-		self.mainWindow = MainWindow()
-		
+		self.windowManager = Builder.load_file("windowmanager.kv")
+
 		# WARNING: in order for WindowManager to work, its kv file must
 		# be returned by the app build() method !
-		return kv
+		return self.windowManager
 
 	def on_start(self):
 		print("Executing MyMainApp.on_start()")
 		
 		clipboardContent = Clipboard.paste()
-
-		self.mainWindow.printClipboard(clipboardContent)
+		
+		mainWindow = self.windowManager.get_screen('main')
+		mainWindow.password.text = 'Hello'
+		
+		mainWindow.printClipboard(clipboardContent)
 
 if __name__ == "__main__":
 	MyMainApp().run()

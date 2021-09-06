@@ -1,11 +1,16 @@
 <SecondWindow>:
 	name: "second"
+	secondButton: second_button
 
-	Button:
-		text: "Go Back"
-		on_release:
-			app.root.current = "main"
-			root.manager.transition.direction = "right"
-		Button:
-			text: 'Do second work'
-			on_press: root.doSecondWork()
+    BoxLayout:
+		orientation: "vertical"
+
+        Button:
+            text: "Go Back ..."
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+        Button:
+            id: second_button
+            text: 'Do second work'
+            on_press: root.doSecondWork()

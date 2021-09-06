@@ -52,17 +52,18 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 		
 		if not self.selected and not is_selected:
 			# case when adding a new list item
-			logging.info('simply return {}'.format(index))
-			return
+			logging.info('apply_selection: simply return {}'.format(index))
 		elif self.selected and not is_selected:
 			# toggling from selected to unselected
-			logging.info('handling deselection {}'.format(index))
+			logging.info('apply_selection: handling deselection {}'.format(index))
 			self.selected = False
 			#rv.parent.parent.recycleViewSelectItem(index, is_selected)
 		else:
 			# toggling from unselected to selected
 			self.selected = not self.selected
-			logging.info('handling selection {}'.format(index))
+			logging.info('apply_selection:handling selection {}'.format(index))
+			
+		logging.info('apply_selection: {}'.format(rv.data[index]['text']))
 
 class LoadDialog(FloatLayout):
 	text_path_load = ObjectProperty(None)
