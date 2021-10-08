@@ -16,7 +16,7 @@
 			TextInput:
 				id: txt_input
 				focus: True
-				multiline: True
+				multiline: False # if set to True, on_text_validate() is not executed !
 				text: 'hello world'
 				on_text_validate: root.submitRequest() # ENTER triggers root.submitRequest()
 
