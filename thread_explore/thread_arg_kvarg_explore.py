@@ -18,8 +18,12 @@ def start_with_callback(func, args=None, kwargs=None):
 	
 	t = threading.Thread(target=_callback, args=args, kwargs=kwargs)
 	t.setName('Bus Callback ' + t.getName())
+	t.daemon = True
 	t.start()
 	
 	return t
 
 start_with_callback(func=my_func, kwargs={'name': 'Jean-Pierre', 'age': 60})
+time.sleep(6)   # necessary, otherwise, since the daemon thread property is
+				# set to True, the program will end and suppress the thread
+				# before it starts working !
