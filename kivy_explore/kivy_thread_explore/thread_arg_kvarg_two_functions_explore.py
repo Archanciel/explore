@@ -2,8 +2,8 @@ import threading, time
 
 def myFunc(name='', age=0):
 	for i in range(5):
-		print('My name is {}. I am {} years old'.format(name, age))
 		time.sleep(1)
+		print('My name is {}. I am {} years old'.format(name, age))
 
 
 def myEndFunc(name='', age=0):
