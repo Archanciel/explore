@@ -1,0 +1,66 @@
+#: import ScrollEffect kivy.effects.scroll.ScrollEffect
+
+<ScrollableMarkupLabel>:
+	textInput: txt_input
+	textOutput: ro_output_Label
+	scroller: scrlv_out
+
+	orientation: 'vertical'
+	BoxLayout:
+		orientation: 'vertical'
+		BoxLayout:
+			orientation: 'vertical'
+			pos_hint: { 'top': 1}
+			size_hint_y: None
+			height: '28dp'
+			TextInput:
+				id: txt_input
+				focus: True
+				multiline: False
+				text: 'hello world'
+				on_text_validate: root.submitRequest() # ENTER triggers root.submitRequest()
+
+		BoxLayout:
+			id: content_box
+			orientation: "vertical"
+			content: ro_output_Label
+
+			ScrollView:
+				id: scrlv_out
+				canvas.before:
+					Color:
+						rgb: [0,0,0]
+					Rectangle:
+						pos: self.pos
+						size: self.size
+				effect_cls: "ScrollEffect" #prevents overscrolling
+				#scroll_y: 0 # forces scrolling to bottom after adding text. Works only on TextInput, not on Label !!!
+		        do_scroll_x: False # limiting to vertical scrolling
+
+				Label:
+					id: ro_output_Label
+					size_hint_y: None
+					height: self.texture_size[1]
+		#			size_hint: (1, None)
+		#			height: max(self.minimum_height, scrlv_out.height) #required to enable scrolling when output starts to grow
+					text_size: (self.width-20), None
+					line_height: 0.9
+					background_color: 0,0,0,0
+					foreground_color: 1,1,1,1
+					valign: "top"
+					markup: True
+
+			BoxLayout:
+				orientation: 'horizontal'
+				size_hint_y: None
+				height: '28dp'
+				Button:
+					id: add_multiple_lines
+					text: "Add lines"
+					on_press: root.addMultipleLines()
+				Button:
+					id: clear_button
+					text: "Clear all"
+					on_press: root.clearAll()
+
+
