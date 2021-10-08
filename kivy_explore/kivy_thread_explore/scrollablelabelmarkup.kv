@@ -1,9 +1,11 @@
 #: import ScrollEffect kivy.effects.scroll.ScrollEffect
 
-<ScrollableMarkupLabel>:
+<ScrollableMarkupLabelGUI>:
 	textInput: txt_input
 	textOutput: ro_output_Label
 	scroller: scrlv_out
+	addLinesButton: add_multiple_lines_button
+	clearButton: clear_button
 
 	orientation: 'vertical'
 	BoxLayout:
@@ -55,7 +57,7 @@
 				size_hint_y: None
 				height: '28dp'
 				Button:
-					id: add_multiple_lines
+					id: add_multiple_lines_button
 					text: "Add lines"
 					on_press: root.addMultipleLines()
 				Button:

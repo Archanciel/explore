@@ -2,6 +2,8 @@ import threading, time
 
 class SepThreadExec:
 	def __init__(self, callerGUI, func, endFunc, funcArgs=None, endFuncArgs=None):
+		self.callerGUI = callerGUI
+		
 		if endFuncArgs is None:
 			endFuncArgs = ()
 		if funcArgs is None:
@@ -18,6 +20,7 @@ class SepThreadExec:
 		self.t.daemon = True
 		
 	def start(self):
+		self.callerGUI.displayMsg(self.t.getName() + ' started ...')
 		self.t.start()
 
 if __name__ == "__main__":

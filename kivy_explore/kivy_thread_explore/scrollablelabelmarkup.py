@@ -5,8 +5,9 @@ from kivy.config import Config
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 
+from septhreadexec import SepThreadExec
 
-class ScrollableMarkupLabel(BoxLayout):
+class ScrollableMarkupLabelGUI(BoxLayout):
 	textInput = ObjectProperty()
 	scroller = ObjectProperty()
 	textOutput = ObjectProperty()
@@ -33,24 +34,51 @@ class ScrollableMarkupLabel(BoxLayout):
 		self.textOutput.width = width_calc
 
 	def clearAll(self):
+		"""
+		Called when clearButton is pressed.
+		"""
 		self.currentLineNb = -1
 		self.textInput.text = ''
 		self.textOutput.text = ''
 		self.textInput.focus = True
 
 	def addMultipleLines(self):
+		"""
+		Called when addLinesButton is pressed.
+		"""
+		self.disableButtons()
+		
+		sepThreadExec = SepThreadExec(callerGUI=self,
+		                              func=self.addLinesLoop,
+		                              endFunc=self.enableButtons)
+		sepThreadExec.start()
+	
+	def addLinesLoop(self):
+		self.disableButtons()
+		
 		resultStr = 'aaa'
 		
 		for i in range(5):
 			if len(self.textOutput.text) == 0:
 				self.textOutput.text = resultStr + ' ' + str(i)
 			else:
-				self.textOutput.text = self.textOutput.text + '\n' +  resultStr + ' ' + str(i)
-				
-			time.sleep(1)
+				self.textOutput.text = self.textOutput.text + '\n' + resultStr + ' ' + str(i)
 			
-			# self.outputResultScrollView.scroll_to(100000)
-			# self.resultOutput.cursor = (10000,0)
+			time.sleep(1)
+
+	def enableButtons(self):
+		self.addLinesButton.disabled = False
+		self.clearButton.disabled = False
+
+	def disableButtons(self):
+		self.addLinesButton.disabled = True
+		self.clearButton.disabled = True
+
+	def displayMsg(self, msgStr):
+		if len(self.textOutput.text) == 0:
+			self.textOutput.text = msgStr
+		else:
+			self.textOutput.text = self.textOutput.text + '\n' + msgStr
 
 
 class ScrollableLabelMarkupApp(App):
@@ -59,7 +87,7 @@ class ScrollableLabelMarkupApp(App):
 		Config.set('graphics', 'height', '300')
 		Config.write()
 
-		self.gui = ScrollableMarkupLabel()
+		self.gui = ScrollableMarkupLabelGUI()
   
 		return self.gui
 
