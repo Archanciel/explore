@@ -1,20 +1,21 @@
 import threading, time
 
-def my_func(name='', age=0):
+def myFunc(name='', age=0):
 	print('My name is {}. I am {} years old'.format(name, age))
 
 
-def my_end_func(name='', age=0):
-	print('MY FURNAME WAS {}. I was {} years old'.format(name.upper(), age))
+def myEndFunc(name='', age=0):
+	print('MY SURNAME WAS {}. I was {} years old'.format(name.upper(), age))
 
 
-def start_with_callback(func, endFunc, args=None, kwargs=None):
+def startWithCallback(func, endFunc, endFuncArgs=None, kwargs=None):
 	"""Start 'func' in a new thread T, then start self (and return T)."""
-	if args is None:
-		args = ()
+	if endFuncArgs is None:
+		endFuncArgs = ()
 	if kwargs is None:
 		kwargs = {}
-	args = (func, endFunc) + args
+		
+	args = (func, endFunc) + endFuncArgs
 	
 	def _callback(func, endFunc, *a, **kw):
 		for i in range(5):
@@ -24,13 +25,14 @@ def start_with_callback(func, endFunc, args=None, kwargs=None):
 		endFunc(*a)
 	
 	t = threading.Thread(target=_callback, args=args, kwargs=kwargs)
-	t.setName('Bus Callback ' + t.getName())
+	t.setName('Exec thread ' + t.getName())
 	t.daemon = True
 	t.start()
 	
 	return t
 
-start_with_callback(func=my_func, endFunc=my_end_func, args=('paulo le scientifique', 14), kwargs={'name': 'Jean-Pierre', 'age': 60})
+thread = startWithCallback(func=myFunc, endFunc=myEndFunc, endFuncArgs=('paulo le scientifique', 14), kwargs={'name': 'Jean-Pierre', 'age': 60})
+print(thread.getName(), 'started ...')
 time.sleep(6)   # necessary, otherwise, since the daemon thread property is
 				# set to True, the program will end and suppress the thread
 				# before it starts working !
