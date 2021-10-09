@@ -1,14 +1,18 @@
-import os, re
+import os, re, time
 import youtube_dl
 from pytube import Playlist
 
+def callable_hook(response):
+	if response['status'] == 'finished':
+		print('callable_hook info: downloaded bytes {}.'.format(response["total_bytes"]))
+	
 if os.name == 'posix':
 	targetAudioDir = '/storage/emulated/0/Download/Audiobooks/test_youtube_dl'
 	ydl_opts = {
 		'outtmpl': targetAudioDir + '/%(title)s.mp3',
 		'format': 'bestaudio/best',
 		#'format': 'worstaudio/worst',
-		'quiet': False
+		'quiet': True
 	}
 else:
 	targetAudioDir = 'D:\\Users\\Jean-Pierre\\Downloads\\Audiobooks\\test\\test_youtube_dl'
@@ -21,7 +25,8 @@ else:
 							'preferredcodec': 'mp3',
 							'preferredquality': '96',
 						}],
-	'quiet': False
+		"progress_hooks": [callable_hook],
+		'quiet': True
 	}
 
 playlistUrl = 'https://www.youtube.com/playlist?list=PLzwWSJNcZTMSFWGrRGKOypqN29MlyuQvn'
@@ -35,12 +40,16 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 		for videoUrl in playlistObject.video_urls:
 			meta = ydl.extract_info(videoUrl, download=False)
 			videoTitle = meta['title']
+			start_time = time.time()
 			ydl.download([videoUrl])
-			print('{} audio track downloaded'.format(videoTitle))
+			print('{} audio track downloaded. Size: {}, download time: {}'.format(videoTitle, meta['filesize'], time.time() - start_time))
 	else:
 		# downloading single video
 		meta = ydl.extract_info(singlevideoUrl, download=False)
 		videoTitle = meta['title']
+		print('file size: {}'.format(meta['filesize']))
+		start_time = time.time()
 		ydl.download([singlevideoUrl]) # not playable by kivy SoundLoader
-		print('{} audio track downloaded'.format(videoTitle))
+		print('download time: {}'.format(time.time() - start_time))
+	#	print('{} audio track downloaded. Video size: {}'.format(videoTitle, fileSize))
 
