@@ -4,7 +4,7 @@ from pytube import Playlist
 
 def callable_hook(response):
 	if response['status'] == 'finished':
-		print('callable_hook info: downloaded bytes {}.'.format(response["total_bytes"]))
+		print('callable_hook() info: downloaded bytes {}.'.format(response["total_bytes"]))
 	
 if os.name == 'posix':
 	targetAudioDir = '/storage/emulated/0/Download/Audiobooks/test_youtube_dl'
