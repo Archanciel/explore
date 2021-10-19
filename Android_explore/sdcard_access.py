@@ -5,20 +5,18 @@ import os
 
 SD_CARD_DIR_TABLET = '/storage/0000-0000'
 SD_CARD_DIR_SMARTPHONE = '/storage/9016-4EF8'
+SMARTPHONE_INTERNAL_STORAGE = '/storage/emulated/0'
 
 
 configFilePathName = SD_CARD_DIR_TABLET
+configFilePathName = SMARTPHONE_INTERNAL_STORAGE
 
-def getFileOrDirNamesInSpCard():
-	if os.path.isdir(SD_CARD_DIR_TABLET):
-		sdCardRoot = SD_CARD_DIR_TABLET
-	elif os.path.isdir(SD_CARD_DIR_SMARTPHONE):
-		sdCardRoot = SD_CARD_DIR_SMARTPHONE
+def getFileOrDirNamesInSpCard(configFilePathName):
+	if os.path.isdir(configFilePathName):	
+		print(configFilePathName)
 	
-	print(sdCardRoot)
-	
-	return [f for f in listdir(sdCardRoot)]
+		return [f for f in listdir(configFilePathName)]
 
 
-print(getFileOrDirNamesInSpCard())
+print(getFileOrDirNamesInSpCard(configFilePathName))
 
