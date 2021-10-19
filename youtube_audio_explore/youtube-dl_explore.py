@@ -2,9 +2,20 @@ import os, re, time
 import youtube_dl
 from pytube import Playlist
 
-def callable_hook(response):
-	if response['status'] == 'finished':
-		print('callable_hook() info: downloaded bytes {}.'.format(response["total_bytes"]))
+PRINT_SECONDS = 1
+
+class DownloadInfoPrinter:
+	def __init__(self):
+		self.lstPrintTime = time.time()
+	
+	def callable_hook(self, response):
+		if response['status'] == 'downloading':
+			now = time.time()
+			if now - self.lstPrintTime >= PRINT_SECONDS:
+				print('download bytes {}: {} %. Speed: {}'.format(response["downloaded_bytes"], response["_percent_str"], response["_speed_str"]))
+				self.lstPrintTime = now
+		elif response['status'] == 'finished':
+			print('total download bytes {}. Now, converting to mp3 ...'.format(response["total_bytes"]))
 	
 if os.name == 'posix':
 	targetAudioDir = '/storage/emulated/0/Download/Audiobooks/test_youtube_dl'
@@ -25,18 +36,20 @@ else:
 							'preferredcodec': 'mp3',
 							'preferredquality': '96',
 						}],
-		"progress_hooks": [callable_hook],
+		"progress_hooks": [DownloadInfoPrinter().callable_hook],
 		'quiet': True
 	}
 
-playlistUrl = 'https://www.youtube.com/playlist?list=PLzwWSJNcZTMSFWGrRGKOypqN29MlyuQvn'
+#playlistUrl = 'https://www.youtube.com/playlist?list=PLzwWSJNcZTMSFWGrRGKOypqN29MlyuQvn'
+playlistUrl = 'https://youtube.com/playlist?list=PLzwWSJNcZTMTA4XDsubBsSfTCVLxqy1jG'
 playlistObject = Playlist(playlistUrl)
 playlistObject._video_regex = re.compile(r"\"singleVideoUrl\":\"(/watch\?v=[\w-]*)")
-singlevideoUrl = 'https://youtu.be/Eqy6M6qLWGw'
-downloadPlaylist = True
+singlevideoUrl = 'https://youtu.be/mere5xyUe6A'
+downloadPlaylist = False
 
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 	if downloadPlaylist:
+		# downloading playlist
 		for videoUrl in playlistObject.video_urls:
 			meta = ydl.extract_info(videoUrl, download=False)
 			videoTitle = meta['title']
@@ -47,9 +60,8 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 		# downloading single video
 		meta = ydl.extract_info(singlevideoUrl, download=False)
 		videoTitle = meta['title']
-		print('file size: {}'.format(meta['filesize']))
 		start_time = time.time()
 		ydl.download([singlevideoUrl]) # not playable by kivy SoundLoader
-		print('download time: {}'.format(time.time() - start_time))
-	#	print('{} audio track downloaded. Video size: {}'.format(videoTitle, fileSize))
+		print('{} audio track downloaded. Size: {}, download time: {}'.format(videoTitle, meta['filesize'],
+		                                                                      time.time() - start_time))
 
