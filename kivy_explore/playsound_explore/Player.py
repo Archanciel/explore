@@ -20,7 +20,7 @@ class ChooseFile(FloatLayout):
 POSITION_SECONDS_CHANGE = 1
 
 if os.name == 'posix':
-	AUDIO_DIR = '/storage/emulated/0/Download/Audiobooks'
+	AUDIO_DIR = '/storage/9016-4EF8/Audio/Various'
 else:
 	AUDIO_DIR = 'D:\\Users\\Jean-Pierre\\Downloads\\Audiobooks'
 

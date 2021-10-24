@@ -1,4 +1,7 @@
+from datetime import datetime
 import os, re, time
+import sys
+
 import youtube_dl
 from pytube import Playlist
 
@@ -59,9 +62,22 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 	else:
 		# downloading single video
 		meta = ydl.extract_info(singlevideoUrl, download=False)
+		
+		for key in meta:
+			if key == 'formats':
+				continue
+			if key == 'thumbnails':
+				continue
+			if key == 'automatic_captions':
+				continue
+
+			print('{}: {}'.format(key, meta[key]))
+			
 		videoTitle = meta['title']
+		uploadDate = meta['upload_date']
+		formatedUploadDate = datetime.strptime(uploadDate, '%Y%m%d').strftime('%Y-%m-%d')
 		start_time = time.time()
 		ydl.download([singlevideoUrl]) # not playable by kivy SoundLoader
-		print('{} audio track downloaded. Size: {}, download time: {}'.format(videoTitle, meta['filesize'],
+		print('{} {} audio track downloaded. Size: {}, download time: {}'.format(videoTitle, formatedUploadDate, meta['filesize'],
 		                                                                      time.time() - start_time))
 

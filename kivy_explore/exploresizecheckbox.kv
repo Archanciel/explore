@@ -20,6 +20,7 @@
 								size: self.size
 					CheckBox:
 						size_hint_x: 0.1
+						active: True
 						#size_hint_max_x: 10
 						on_press: root.toggleCheckbox(self.active)
 				Label:
@@ -27,17 +28,17 @@
 					text: 'This is the main label'
 				BoxLayout:
 					size_hint_y: None
-					#Label:
 					TextInput:
-						text: 'Hello world in Label in BoxLayout bott'
+						text: 'Hello world in Label in BoxLayout bottom'
 						font_size: '15sp'
 						size_hint_x: 0.9
 						size_hint_y: 1 # required so the chkbx is centered vertically !!
 						height: dp(25)
-						multiline: False
+						multiline: True
 						readonly: False
 					CheckBox:
 						size_hint_x: 0.1
+						active: True
 						on_press: root.toggleCheckbox(self.active)
 		BoxLayout:
 			orientation: 'vertical'
@@ -49,15 +50,16 @@
 					#size_hint_y: 0.023 # tablet
 					#size_hint_y: 0.035 # smartphone
 					size_hint_y: 0.08 # Windows
-                    TextInput:
-                        text: 'Hello world in TextInput in GridLayout'
-                        font_size: '15sp'
-                        multiline: False
-                        readonly: False
-                    CheckBox:
-                        #size_hint_x: 0.17 # smartphone
-                        size_hint_x: 0.08 # tablet, Windows
-                        on_press: root.toggleCheckbox(self.active)
+					TextInput:
+						text: 'Hello world in TextInput in GridLayout'
+						font_size: '15sp'
+						multiline: False
+						readonly: False
+					CheckBox:
+						#size_hint_x: 0.17 # smartphone
+						size_hint_x: 0.08 # tablet, Windows
+						active: True
+						on_press: root.toggleCheckbox(self.active)
 				Label:
 					size_hint_y: 1
 					text: 'This is the main label'
@@ -76,4 +78,5 @@
 						CheckBox:
 							#size_hint_x: 0.17 # smartphone
 							size_hint_x: 0.08 # tablet, Windows
+							active: True
 							on_press: root.toggleCheckbox(self.active)
