@@ -12,6 +12,7 @@ class YdlDownloadInfoExtractor:
 		self.lstExtractTime = time.time()
 	
 	def ydlCallableHook(self, response):
+		print(response['status'])
 		if response['status'] == 'downloading':
 			now = time.time()
 			if now - self.lstExtractTime >= PRINT_SECONDS:
