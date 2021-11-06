@@ -1,18 +1,18 @@
 from datetime import datetime
 import os, re, time
-import sys
 
 import youtube_dl
 from pytube import Playlist
 
 PRINT_SECONDS = 1
+PRINT_YDL_META = False
 
 class YdlDownloadInfoExtractor:
 	def __init__(self):
 		self.lstExtractTime = time.time()
 	
 	def ydlCallableHook(self, response):
-		print(response['status'])
+		#print(response['status'])
 		if response['status'] == 'downloading':
 			now = time.time()
 			if now - self.lstExtractTime >= PRINT_SECONDS:
@@ -71,8 +71,8 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 				continue
 			if key == 'automatic_captions':
 				continue
-
-			print('{}: {}'.format(key, meta[key]))
+			if PRINT_YDL_META:
+				print('{}: {}'.format(key, meta[key]))
 			
 		videoTitle = meta['title']
 		uploadDate = meta['upload_date']
