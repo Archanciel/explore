@@ -1,5 +1,5 @@
 import ctypes
-import time, threading, os
+import time, threading, os, sys
 import youtube_dl
 
 PRINT_SECOND_INTERVAL = 1
@@ -27,7 +27,8 @@ class YdlDownloadInfoExtractor:
 			print('total download bytes {}. Now, converting to mp3 ...'.format(response["total_bytes"]))
 
 if os.name == 'posix':
-	targetAudioDir = '/storage/emulated/0/Download/Audiobooks/test_youtube_dl'
+	SLEEP_TIME = 10
+	targetAudioDir = '/storage/emulated/0/Download/Audiobooks/test_youtube_dl' # on tablet
 	ydl_opts = {
 		'outtmpl': targetAudioDir + '/%(title)s.mp3',
 		'format': 'bestaudio/best',
@@ -36,6 +37,7 @@ if os.name == 'posix':
 		'quiet': True
 	}
 else:
+	SLEEP_TIME = 6
 	targetAudioDir = 'C:\\Users\\Jean-Pierre\\Downloads\\Audio\\test\\test_youtube_dl'
 	ydl_opts = {
 		'outtmpl': targetAudioDir + '\\%(title)s.%(ext)s',
@@ -78,29 +80,40 @@ class StoppableThread(threading.Thread):
 	def getThreadId(self):
 		# returns id of the respective thread
 		if hasattr(self, '_thread_id'):
-			print('aaa')
 			return self._thread_id
 		
 		for id, thread in threading._active.items():
 			if thread is self:
-				print('bbb')
 				return id
 			
 	def stop(self):
-		threadId = self.getThreadId()
-		res = ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId,
-														 ctypes.py_object(SystemExit))
-		if res > 1:
-			ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, 0)
-			print('Exception raise failure')
+		if os.name == 'posix':		
+			raise Exception
+		else:
+			# not working on Android !
+			threadId = self.getThreadId()
+			res = ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId,
+															 ctypes.py_object(SystemExit))
+			if res > 1:
+				ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, 0)
+				print('Exception raise failure')
 
 
 if __name__ == "__main__":
 	t = StoppableThread(target=youtubeDownloadVideoOnNewThread, args=())
 	t.start()
-	time.sleep(6)
+	time.sleep(SLEEP_TIME)
 	print('stopping youtube_dl download')
-	t.stop()
+	
+	if os.name == 'posix':
+		try:
+			t.stop()
+			t.join()
+		except:
+			sys.exit(0)
+	else:
+		t.stop()
+						
 	t.join()
 	print('main program will finish in 2 seconds ...')
 	time.sleep(2)
