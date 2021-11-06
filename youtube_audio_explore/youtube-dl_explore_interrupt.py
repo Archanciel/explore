@@ -1,5 +1,5 @@
 import ctypes
-import time, threading
+import time, threading, os
 import youtube_dl
 
 PRINT_SECOND_INTERVAL = 1
@@ -26,19 +26,29 @@ class YdlDownloadInfoExtractor:
 		elif response['status'] == 'finished':
 			print('total download bytes {}. Now, converting to mp3 ...'.format(response["total_bytes"]))
 
-targetAudioDir = 'C:\\Users\\Jean-Pierre\\Downloads\\Audio\\test\\test_youtube_dl'
-
-ydl_opts = {
-	'outtmpl': targetAudioDir + '\\%(title)s.%(ext)s',
-	'format': 'worstaudio/worst',
-	'postprocessors': [{
-						'key': 'FFmpegExtractAudio',
-						'preferredcodec': 'mp3',
-						'preferredquality': '96',
-					}],
-	"progress_hooks": [YdlDownloadInfoExtractor().ydlCallableHook],
-	'quiet': True
-}
+if os.name == 'posix':
+	targetAudioDir = '/storage/emulated/0/Download/Audiobooks/test_youtube_dl'
+	ydl_opts = {
+		'outtmpl': targetAudioDir + '/%(title)s.mp3',
+		'format': 'bestaudio/best',
+		#'format': 'worstaudio/worst',
+		"progress_hooks": [YdlDownloadInfoExtractor().ydlCallableHook],
+		'quiet': True
+	}
+else:
+	targetAudioDir = 'C:\\Users\\Jean-Pierre\\Downloads\\Audio\\test\\test_youtube_dl'
+	ydl_opts = {
+		'outtmpl': targetAudioDir + '\\%(title)s.%(ext)s',
+		#'format': 'bestaudio/best',
+		'format': 'worstaudio/worst',
+		'postprocessors': [{
+							'key': 'FFmpegExtractAudio',
+							'preferredcodec': 'mp3',
+							'preferredquality': '96',
+						}],
+		"progress_hooks": [YdlDownloadInfoExtractor().ydlCallableHook],
+		'quiet': True
+	}
 
 videoUrl = 'https://youtu.be/mere5xyUe6A'
 
@@ -53,8 +63,8 @@ def youtubeDownloadVideoOnNewThread():
 		start_time = time.time()
 		ydl.download([videoUrl]) # not playable by kivy SoundLoader
 		print('{} audio track downloaded. Size: {}, download time: {}'.format(videoTitle,
-		                                                                      meta['filesize'],
-		                                                                      time.time() - start_time))
+																			  meta['filesize'],
+																			  time.time() - start_time))
 
 class StoppableThread(threading.Thread):
 	"""
@@ -68,16 +78,18 @@ class StoppableThread(threading.Thread):
 	def getThreadId(self):
 		# returns id of the respective thread
 		if hasattr(self, '_thread_id'):
+			print('aaa')
 			return self._thread_id
 		
 		for id, thread in threading._active.items():
 			if thread is self:
+				print('bbb')
 				return id
 			
 	def stop(self):
 		threadId = self.getThreadId()
 		res = ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId,
-		                                                 ctypes.py_object(SystemExit))
+														 ctypes.py_object(SystemExit))
 		if res > 1:
 			ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, 0)
 			print('Exception raise failure')
