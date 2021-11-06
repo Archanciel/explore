@@ -23,27 +23,35 @@ class SepThreadExec:
 		self.callerGUI.displayMsg(self.t.getName() + ' started ...')
 		self.t.start()
 
-if __name__ == "__main__":
-	def myFunc(name='', age=0):
+class GUIStub:
+	def __init__(self):
+		self.stop = False
+		
+	def displayMsg(self, msg):
+		print('GUIStub' + ' ' + msg)
+		
+	def myFunc(self, name='', age=0):
 		for i in range(5):
-			time.sleep(1)
-			print('My name is {}. I am {} years old'.format(name, age))
-	
+			if not self.stop:
+				time.sleep(1)
+				print('My name is {}. I am {} years old'.format(name, age))
+			else:
+				print('stopping ...')
+				break
+			
+if __name__ == "__main__":
 	def myEndFunc(name='', age=0):
 		print('MY SURNAME WAS {}. I was {} years old'.format(name.upper(), age))
 	
-	class GUIStub:
-		def __init__(self):
-			self.stop = False
+	gui = GUIStub()
 		
-		def displayMsg(self, msg):
-			print('GUIStub' + ' ' + msg)
-	
-	ste = SepThreadExec(callerGUI=GUIStub(),
-	              func=myFunc,
+	ste = SepThreadExec(callerGUI=gui,
+	              func=gui.myFunc,
 	              endFunc=myEndFunc,
 	              funcArgs={'name': 'Jean-Pierre', 'age': 60},
 	              endFuncArgs=('paulo le scientifique', 14))
 	
 	ste.start()
-	time.sleep(6)
+	time.sleep(3)
+	gui.stop = True
+	time.sleep(3)

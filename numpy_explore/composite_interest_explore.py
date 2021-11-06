@@ -10,4 +10,4 @@ class CompositeInterest:
 		return math.ceil(dayNumber)
 		
 if __name__ == '__main__':
-    print(CompositeInterest.computeDayNumber(800, 10.5, 0.1, 4.5, 110))
+	print(CompositeInterest.computeDayNumber(800, 10.5, 0.1, 4.5, 110))

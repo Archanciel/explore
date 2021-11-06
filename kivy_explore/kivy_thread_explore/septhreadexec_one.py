@@ -22,6 +22,13 @@ class SepThreadExec:
 	def start(self):
 		self.callerGUI.displayMsg(self.t.getName() + ' started ...')
 		self.t.start()
+		
+class GUIStub:
+	def __init__(self):
+		self.stop = False
+		
+	def displayMsg(self, msg):
+		print('GUIStub' + ' ' + msg)
 
 if __name__ == "__main__":
 	def myFunc(name='', age=0):
@@ -31,14 +38,7 @@ if __name__ == "__main__":
 	
 	def myEndFunc(name='', age=0):
 		print('MY SURNAME WAS {}. I was {} years old'.format(name.upper(), age))
-	
-	class GUIStub:
-		def __init__(self):
-			self.stop = False
 		
-		def displayMsg(self, msg):
-			print('GUIStub' + ' ' + msg)
-	
 	ste = SepThreadExec(callerGUI=GUIStub(),
 	              func=myFunc,
 	              endFunc=myEndFunc,
