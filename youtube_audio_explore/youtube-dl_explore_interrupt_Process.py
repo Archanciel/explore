@@ -1,4 +1,4 @@
-# Works on Windows, not on Android.
+# Works on Windows and on Android.
 #
 # https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
 
