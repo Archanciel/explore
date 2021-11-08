@@ -4,7 +4,11 @@ import threading, time
 from multiprocessing import Process
 
 class SepThreadExec:
-	def __init__(self, callerGUI, func, endFunc, funcArgs=None, endFuncArgs=None):
+	def __init__(self, callerGUI,
+	             func,
+	             endFunc=None,
+	             funcArgs=None,
+	             endFuncArgs=None):
 		self.callerGUI = callerGUI
 		self.endFunc = endFunc
 		self.endFuncArgs = endFuncArgs
@@ -22,7 +26,9 @@ class SepThreadExec:
 	
 	def _callback(self, func, endFunc, *a, **kw):
 		func(**kw)
-		endFunc(*a)
+
+		if endFunc is not None:
+			endFunc(*a)
 	
 	def start(self):
 		self.callerGUI.displayMsg('Process started ...')
@@ -32,7 +38,9 @@ class SepThreadExec:
 		self.p.terminate()
 	
 	def stopWithEndFunc(self):
-		self.endFunc(*self.endFuncArgs)
+		if self.endFunc is not None:
+			self.endFunc(*self.endFuncArgs)
+
 		self.p.terminate()
 
 
