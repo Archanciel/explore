@@ -1,3 +1,5 @@
+# Works on Windows and on Android
+
 import threading, time
 from multiprocessing import Process
 

@@ -1,3 +1,5 @@
+# Works on Windows and on Android
+
 import threading, time
 from multiprocessing import Process
 
@@ -50,5 +52,5 @@ if __name__ == "__main__":
 	
 	ste.start()
 	time.sleep(3)
-	#ste.stop()
+	ste.stop()
 	time.sleep(3)
