@@ -1,5 +1,10 @@
+# Works on Windows, not on Android.
+#
+# https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
+
+from multiprocessing import Process
 import ctypes
-import time, threading, os, sys
+import time, threading, os, shutil
 import youtube_dl
 
 PRINT_SECOND_INTERVAL = 1
@@ -68,7 +73,7 @@ def youtubeDownloadVideoOnNewThread():
 																			  meta['filesize'],
 																			  time.time() - start_time))
 
-class StoppableThread(threading.Thread):
+class StoppableThread(Process):
 	"""
 	Class inheriting from threading.Thread and adding the possibility
 	to stop the thread.
@@ -87,33 +92,25 @@ class StoppableThread(threading.Thread):
 				return id
 			
 	def stop(self):
-		if os.name == 'posix':		
-			raise Exception
-		else:
-			# not working on Android !
-			threadId = self.getThreadId()
-			res = ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId,
-															 ctypes.py_object(SystemExit))
-			if res > 1:
-				ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, 0)
-				print('Exception raise failure')
+		# not working on Android !
+		threadId = self.getThreadId()
+		res = ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId,
+														 ctypes.py_object(SystemExit))
+		if res > 1:
+			ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, 0)
+			print('Exception raise failure')
 
 
 if __name__ == "__main__":
-	t = StoppableThread(target=youtubeDownloadVideoOnNewThread, args=())
+	# deleting downloadDir (dir and content)
+	if os.path.exists(targetAudioDir):
+		shutil.rmtree(targetAudioDir)
+	
+	t = Process(target=youtubeDownloadVideoOnNewThread, args=())
 	t.start()
 	time.sleep(SLEEP_TIME)
 	print('stopping youtube_dl download')
 	
-	if os.name == 'posix':
-		try:
-			t.stop()
-			t.join()
-		except:
-			sys.exit(0)
-	else:
-		t.stop()
-						
-	t.join()
+	t.terminate()
 	print('main program will finish in 2 seconds ...')
 	time.sleep(2)
