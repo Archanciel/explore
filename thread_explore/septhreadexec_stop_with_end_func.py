@@ -45,8 +45,8 @@ class GUIStub:
 			time.sleep(1)
 			print('{}: My name is {}. I am {} years old'.format(i + 1, name, age))
 
-def myEndFunc(name='', age=0):
-	print('MY SURNAME WAS {}. I was {} years old'.format(name.upper(), age))
+	def myEndFunc(self, name='', age=0):
+		print('MY SURNAME WAS {}. I was {} years old'.format(name.upper(), age))
 
 if __name__ == "__main__":
 	
@@ -54,7 +54,7 @@ if __name__ == "__main__":
 	
 	ste = SepThreadExec(callerGUI=gui,
 	                    func=gui.myFunc,
-	                    endFunc=myEndFunc,
+	                    endFunc=gui.myEndFunc,
 	                    funcArgs={'name': 'Jean-Pierre', 'age': 60},
 	                    endFuncArgs=('paulo le scientifique', 14))
 	
