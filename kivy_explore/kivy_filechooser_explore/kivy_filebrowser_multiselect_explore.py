@@ -21,7 +21,7 @@ class Screen1(Screen):
 		self.ids.select_file.path = path
 		
 	def selected(self, fileNameLst):
-		# displaying seleted file name as a label
+		# displaying selected file path name as a label
 
 		fileNameLines = ''
 		
