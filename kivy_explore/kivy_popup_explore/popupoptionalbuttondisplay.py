@@ -14,7 +14,7 @@ class ConfirmPopup(GridLayout):
 		self.register_event_type('on_answer')
 		self.displayOptionalButton = displayOptionalButton
 		super(ConfirmPopup, self).__init__(**kwargs)
-	
+
 	def on_answer(self, *args):
 		pass
 
@@ -39,7 +39,7 @@ class KivyGUI(BoxLayout):
 		elif platform == 'win':
 			popupSize = (200, 150)
 		
-		confirmPopup = ConfirmPopup(displayOptionalButton=False, text=confirmPopupMsg)
+		confirmPopup = ConfirmPopup(displayOptionalButton=True, text=confirmPopupMsg)
 		confirmPopup.bind(on_answer=self._on_answer)
 		self.popup = Popup(title=confirmPopupTitle,
 		                   content=confirmPopup,

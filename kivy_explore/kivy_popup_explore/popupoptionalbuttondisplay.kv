@@ -1,7 +1,7 @@
 # .kv file implementation of the code
 
-<KivyCustomClassButtons>:
-#    textInOutGUI: input
+<KivyGUI>:
+    textInOutGUI: input
 	BoxLayout:
 		orientation: 'vertical'
 		pos: self.pos
@@ -23,6 +23,7 @@
 			on_text: root.processInputText()
 
 <ConfirmPopup>:
+    id: confirm_popup
 	cols:1
 	Label:
 		text: root.text
