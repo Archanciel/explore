@@ -74,11 +74,11 @@ class KivyGUI(BoxLayout):
 		self.popup.open()
 
 # Create the app class
-class PopupOptionalButtonDisplay(App):
+class PopupOptionalButtonDisplayApp(App):
 	# Building text input
 	def build(self):
 		return KivyGUI()
 		
 # Run the App which will create the Kivy GUI
 if __name__ == "__main__":
-	PopupOptionalButtonDisplay().run()
+	PopupOptionalButtonDisplayApp().run()
