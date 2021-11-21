@@ -18,7 +18,7 @@ class AsynchWorker:
 			
 		title = 'Please answer'
 		msg = 'Restart AsynchWorker ?'
-		popup = self.textInOutGUI.createConfirmPopup(title, msg)
+		popup = self.textInOutGUI.createConfirmPopupOptButton(title, msg)
 		popup.open()
 
 class ConfirmPopup(GridLayout):

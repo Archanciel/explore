@@ -13,7 +13,10 @@
 			height: "28dp"
 			Button:
 				text: 'Open ConfirmPopup with optional button'
-				on_release: root.openConfirmPopup()
+				on_release: root.openConfirmPopupOptButton()
+			Button:
+				text: 'Open ConfirmPopup no optional button'
+				on_release: root.openConfirmPopupNoOptButton()
 
 		# Defining text input in .kv
 		# And giving it the look . pos and features
