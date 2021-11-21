@@ -7,13 +7,13 @@ from kivy.properties import StringProperty
 from kivy.utils import platform
 from kivy.uix.boxlayout import BoxLayout
 
-class ConfirmPopup(GridLayout):
+class ConfirmPopupGUIParam(GridLayout):
 	text = StringProperty()
 	
 	def __init__(self, gui, displayOptionalButton, **kwargs):
 		self.displayOptionalButton = displayOptionalButton
 		self.gui = gui
-		super(ConfirmPopup, self).__init__(**kwargs)
+		super(ConfirmPopupGUIParam, self).__init__(**kwargs)
 	
 	def handleAnswer(self, answer):
 		self.gui.handleAnswer(answer)
@@ -40,7 +40,7 @@ class KivyGUI(BoxLayout):
 		elif platform == 'win':
 			popupSize = (200, 150)
 		
-		confirmPopup = ConfirmPopup(gui=self, displayOptionalButton=True, text=confirmPopupMsg)
+		confirmPopup = ConfirmPopupGUIParam(gui=self, displayOptionalButton=True, text=confirmPopupMsg)
 		self.popup = Popup(title=confirmPopupTitle,
 		                   content=confirmPopup,
 		                   size_hint=(None, None),

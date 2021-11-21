@@ -7,7 +7,7 @@ from kivy.properties import StringProperty
 from kivy.utils import platform
 from kivy.uix.boxlayout import BoxLayout
 
-class ConfirmPopup(GridLayout):
+class ConfirmPopupRegEvent(GridLayout):
 	"""
 	The advantage of using register_event_type is that the same class can be
 	instantiated with binding 'on_answer' to different methods.
@@ -17,7 +17,7 @@ class ConfirmPopup(GridLayout):
 	def __init__(self, displayOptionalButton, **kwargs):
 		self.register_event_type('on_answer')
 		self.displayOptionalButton = displayOptionalButton
-		super(ConfirmPopup, self).__init__(**kwargs)
+		super(ConfirmPopupRegEvent, self).__init__(**kwargs)
 
 	def on_answer(self, *args):
 		pass
@@ -43,7 +43,7 @@ class KivyGUI(BoxLayout):
 		elif platform == 'win':
 			popupSize = (200, 150)
 		
-		confirmPopup = ConfirmPopup(displayOptionalButton=True, text=confirmPopupMsg)
+		confirmPopup = ConfirmPopupRegEvent(displayOptionalButton=True, text=confirmPopupMsg)
 		confirmPopup.bind(on_answer=self._on_answer_optButton)
 		self.popup = Popup(title=confirmPopupTitle,
 		                   content=confirmPopup,
@@ -71,7 +71,7 @@ class KivyGUI(BoxLayout):
 		elif platform == 'win':
 			popupSize = (200, 150)
 		
-		confirmPopup = ConfirmPopup(displayOptionalButton=False, text=confirmPopupMsg)
+		confirmPopup = ConfirmPopupRegEvent(displayOptionalButton=False, text=confirmPopupMsg)
 		confirmPopup.bind(on_answer=self._on_answer_noOptButton)
 		self.popup = Popup(title=confirmPopupTitle,
 		                   content=confirmPopup,
