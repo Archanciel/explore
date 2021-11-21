@@ -8,6 +8,11 @@ from kivy.utils import platform
 from kivy.uix.boxlayout import BoxLayout
 
 class ConfirmPopupGUIParam(GridLayout):
+	"""
+	This class is less useful than the ConfirmPopupRegEvent class. The advantage of
+	using register_event_type instead of the gui parameter is that the same class can
+	be instantiated with binding 'on_answer' to different methods.
+	"""
 	text = StringProperty()
 	
 	def __init__(self, gui, displayOptionalButton, **kwargs):
