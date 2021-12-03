@@ -1,14 +1,29 @@
-# Works on Windows and on Android
-
 import threading, time
-from multiprocessing import Process
+
 
 class SepThreadExec:
-	def __init__(self, callerGUI,
+	"""
+	This class executes on a separate thread the passed func. If the passed
+	endFunc is not None, it will be executed on the same separated thread
+	after the passed func is terminated.
+	"""
+	
+	def __init__(self,
+	             callerGUI,
 	             func,
 	             endFunc=None,
 	             funcArgs=None,
 	             endFuncArgs=None):
+		"""
+		Ctor.
+
+		:param callerGUI:   GUI class which instantiate the class
+		:param func:        function executed on the separated thread
+		:param endFunc:     optional function executed on the separated thread
+							once the func is executed
+		:param funcArgs:    parm name: value dic. Ex: {'age': 25, 'name': 'Joe'}
+		:param endFuncArgs: parm name: value dic. Ex: {'age': 25, 'name': 'Joe'}
+		"""
 		self.callerGUI = callerGUI
 		
 		if endFuncArgs is None:
@@ -18,45 +33,36 @@ class SepThreadExec:
 		
 		args = (func, endFunc) + endFuncArgs
 		
-		self.p = Process(target=self._callback, args=args, kwargs=funcArgs)
-		self.p.daemon = True
-	
-	def _callback(self, func, endFunc, *a, **kw):
-		func(**kw)
-
-		if endFunc is not None:
-			endFunc(*a)
+		def _callback(func, endFunc, *a, **kw):
+			func(**kw)
+			
+			if endFunc is not None:
+				endFunc(*a)
+		
+		self.t = threading.Thread(target=_callback, args=args, kwargs=funcArgs)
+		self.t.setName('Exec thread ' + self.t.getName())
+		self.t.daemon = True
 	
 	def start(self):
-		self.callerGUI.displayMsg('Process started ...')
-		self.p.start()
-		
-	def stop(self):
-		self.p.terminate()
+		self.t.start()
 
-class GUIStub:
-	def displayMsg(self, msg):
-		print('GUIStub' + ' ' + msg)
-		
-	def myFunc(self, name='', age=0):
-		for i in range(5):
-			time.sleep(1)
-			print('{}: My name is {}. I am {} years old'.format(i + 1, name, age))
-
-def myEndFunc(name='', age=0):
-	print('MY SURNAME WAS {}. I was {} years old'.format(name.upper(), age))
 
 if __name__ == "__main__":
+	def myFunc(name='', age=0):
+		for i in range(5):
+			time.sleep(1)
+			print('My name is {}. I am {} years old'.format(name, age))
 	
-	gui = GUIStub()
 	
-	ste = SepThreadExec(callerGUI=gui,
-	                    func=gui.myFunc,
+	def myEndFunc(name='', age=0):
+		print('MY SURNAME WAS {}. I was {} years old'.format(name.upper(), age))
+	
+	
+	ste = SepThreadExec(callerGUI=None,
+	                    func=myFunc,
 	                    endFunc=myEndFunc,
 	                    funcArgs={'name': 'Jean-Pierre', 'age': 60},
 	                    endFuncArgs=('paulo le scientifique', 14))
 	
 	ste.start()
-	time.sleep(3)
-	ste.stop()
-	time.sleep(3)
+	time.sleep(6)
