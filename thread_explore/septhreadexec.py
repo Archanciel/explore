@@ -48,19 +48,20 @@ class SepThreadExec:
 
 
 if __name__ == "__main__":
-	def myFunc(name='', age=0):
-		for i in range(5):
-			time.sleep(1)
-			print('My name is {}. I am {} years old'.format(name, age))
+	class GuiStub:
+		def myFunc(self, name='', age=0):
+			for i in range(5):
+				time.sleep(1)
+				print('My name is {}. I am {} years old'.format(name, age))
+		
+		def myEndFunc(self, name='', age=0):
+			print('MY SURNAME WAS {}. I was {} years old'.format(name.upper(), age))
 	
 	
-	def myEndFunc(name='', age=0):
-		print('MY SURNAME WAS {}. I was {} years old'.format(name.upper(), age))
-	
-	
-	ste = SepThreadExec(callerGUI=None,
-	                    func=myFunc,
-	                    endFunc=myEndFunc,
+	guiStub = GuiStub()
+	ste = SepThreadExec(callerGUI=guiStub,
+	                    func=guiStub.myFunc,
+	                    endFunc=guiStub.myEndFunc,
 	                    funcArgs={'name': 'Jean-Pierre', 'age': 60},
 	                    endFuncArgs=('paulo le scientifique', 14))
 	
