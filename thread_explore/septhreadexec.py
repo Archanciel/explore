@@ -36,7 +36,7 @@ class SepThreadExec:
 		def _callback(func, endFunc, *a, **kw):
 			"""
 			WARNING:    def _callback(func, endFunc, **a, **kw): causes error
-						'multiple **parameters are not allowed
+						'multiple **parameters are not allowed.
 					
 			:param func:
 			:param endFunc:
