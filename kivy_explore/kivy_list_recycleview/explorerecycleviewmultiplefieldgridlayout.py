@@ -45,6 +45,10 @@ class MultiFieldLine(RecycleDataViewBehavior, GridLayout):
   
 		if is_selected:
 			print(rv.data[index])
+	
+	def toggleCheckbox(self, chkbox, isChecked):
+		import logging
+		logging.info('toggleCheckbox in item {}: {}'.format(chkbox.parent.index, isChecked))
 
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,

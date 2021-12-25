@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivy.lang import Builder
 from kivy.properties import BooleanProperty
 from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.boxlayout import BoxLayout
@@ -45,6 +46,10 @@ class MultiFieldLine(RecycleDataViewBehavior, BoxLayout):
   
 		if is_selected:
 			self.appGUI.outputSelectedData(rv.data[index])
+	
+	def toggleCheckbox(self, chkbox, isChecked):
+		import logging
+		logging.info('toggleCheckbox in item {}: {}'.format(chkbox.parent.index, isChecked))
 
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
@@ -63,8 +68,11 @@ class AppGUI(GridLayout):
 	def outputSelectedData(self, data):
 		print(data)
 
+
 class ExploreRecycleViewMultipleFieldBoxLayoutApp(App):
 	def build(self):
+#		Builder.load_file('explorerecycleviewmultiplefieldboxlayout.kv')
+
 		return AppGUI()
 
 

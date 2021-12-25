@@ -1,6 +1,5 @@
-<MultiFieldLine>: # inherit from RecycleDataViewBehavior and GridLayout
-	cols: 4
-	rows: 1
+<MultiFieldLine>: # inherit from RecycleDataViewBehavior and BoxLayout
+	orientation: 'horizontal'
 	label_1: ''
 	label_2: ''
 	label_3: ''
@@ -26,6 +25,8 @@
 	CheckBox:
 	    size_hint_x: 0.1
 		active: root.checkbox_1
+		on_press: root.toggleCheckbox(self, self.active)
+
 <AppGUI>: # inherit from GridLayout
 	rv: rv_id
 	cols:  1

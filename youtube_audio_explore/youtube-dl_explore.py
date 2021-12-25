@@ -49,6 +49,7 @@ playlistUrl = 'https://youtube.com/playlist?list=PLzwWSJNcZTMTA4XDsubBsSfTCVLxqy
 playlistObject = Playlist(playlistUrl)
 playlistObject._video_regex = re.compile(r"\"singleVideoUrl\":\"(/watch\?v=[\w-]*)")
 singlevideoUrl = 'https://youtu.be/mere5xyUe6A'
+singlevideoUrl = 'https://youtu.be/XbqFZMIidZI'
 downloadPlaylist = False
 
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
