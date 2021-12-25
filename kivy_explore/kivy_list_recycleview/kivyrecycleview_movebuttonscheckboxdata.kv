@@ -52,7 +52,7 @@
 			id: recycleView_list
 			scroll_y: 0 # forces scrolling to list bottom after adding an entry
 			effect_cls: "ScrollEffect" # prevents overscrolling
-			viewclass: 'SelectableLabel'
+			viewclass: 'SelectableMultiFieldsItem'
 
 			SelectableRecycleBoxLayout:
 				default_size: None, dp(15) # height of list line
@@ -64,7 +64,7 @@
 				multiselect: False
 				touch_multiselect: False
 
-<SelectableLabel>:
+<SelectableMultiFieldsItem>:
 	cols: 2
 	rows: 1
 	text: ''

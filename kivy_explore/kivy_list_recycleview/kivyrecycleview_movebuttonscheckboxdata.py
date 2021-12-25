@@ -17,7 +17,7 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 	# required to authorise unselecting a selected item
 	touch_deselect_last = BooleanProperty(True)
 
-class SelectableLabel(RecycleDataViewBehavior, GridLayout):
+class SelectableMultiFieldsItem(RecycleDataViewBehavior, GridLayout):
 	''' Add selection support to the Label '''
 	index = None
 	selected = BooleanProperty(False)
@@ -32,12 +32,12 @@ class SelectableLabel(RecycleDataViewBehavior, GridLayout):
 		
 		self.index = index
 
-		return super(SelectableLabel, self).refresh_view_attrs(
+		return super(SelectableMultiFieldsItem, self).refresh_view_attrs(
 			rv, index, data)
 
 	def on_touch_down(self, touch):
 		''' Add selection on touch down '''
-		if super(SelectableLabel, self).on_touch_down(touch):
+		if super(SelectableMultiFieldsItem, self).on_touch_down(touch):
 			return True
 		if self.collide_point(*touch.pos) and self.selectable:
 			# since the item was touched down to select or unselect it,
