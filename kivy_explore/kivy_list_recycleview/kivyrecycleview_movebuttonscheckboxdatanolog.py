@@ -34,12 +34,7 @@ class SelectableMultiFieldsItem(RecycleDataViewBehavior, GridLayout):
 		''' Catch and handle the view changes '''
 		
 		# storing reference on the recycle view
-
-		self.logRvDataValues('on refresh self.rv', self.rv)
-
 		self.rv = rv
-
-		self.logRvDataValues('on refresh rv', rv)
 		
 		self.index = index
 
@@ -76,8 +71,6 @@ class SelectableMultiFieldsItem(RecycleDataViewBehavior, GridLayout):
 				self.selected = True  # <<------
 	
 		selItemIndexes = self.rv.parent.parent.getSelectItemIndexes()
-
-		self.logRvDataValues('apply_selection', self.rv.parent.parent.recycleViewList)
 		
 		if not self.selected and not is_selected:
 			# case when adding a new list item
@@ -96,24 +89,14 @@ class SelectableMultiFieldsItem(RecycleDataViewBehavior, GridLayout):
 		selectableMultiFieldsItem = chkbox.parent
 		recycleView = selectableMultiFieldsItem.parent.parent
 		recycleView.data[selectableMultiFieldsItem.index]['toDownload'] = isChecked
-		# gui = recycleView.parent.parent
-		# gui.data[selectableMultiFieldsItem.index]['toDownload'] = isChecked
 
 		logging.info('toggleCheckbox in item {}: {}'.format(selectableMultiFieldsItem.index, isChecked))
 
-#		self.logGuiRvDataValues(gui, recycleView)
-		self.logRvDataValues('after chkb toggle', recycleView)
-
-	def logRvDataValues(self, msg, recycleView):
-		if recycleView is not None:
-			logging.info('recycleView.data ' + msg)
-			for item_rv in recycleView.data:
-				logging.info(str(item_rv))
-	
-	def logGuiRvDataValues(self, gui, recycleView):
-		logging.info('recycleView.data\tgui.data')
-		for item_rv, item_gui in zip(recycleView.data, gui.data):
-			logging.info(str(item_rv) + '\t' + str(item_gui))
+	def getCheckboxStatus(self, chkbox):
+		selectableMultiFieldsItem = chkbox.parent
+		recycleView = selectableMultiFieldsItem.parent.parent
+		
+		return recycleView.data[selectableMultiFieldsItem.index]['toDownload']
 
 
 class KivyRecycleView(BoxLayout):
@@ -178,19 +161,10 @@ class KivyRecycleView(BoxLayout):
 		return -1
 		
 	def moveItemInList(self, list, oldIndex, newIndex):
-		self.logRvDataValues('recycleView.data before', list)
-		
 		movedItem = list.pop(oldIndex)
 		list.insert(newIndex, movedItem)
 		list[oldIndex]['selected'] = False
 		list[newIndex]['selected'] = True
-
-		self.logRvDataValues('recycleView.data after', list)
-
-	def logRvDataValues(self, msg, data):
-		logging.info(msg)
-		for item_rv in data:
-			logging.info(str(item_rv))
 
 	def manageStateOfMoveButtons(self):
 		if self.getSelectedItem() == -1:
