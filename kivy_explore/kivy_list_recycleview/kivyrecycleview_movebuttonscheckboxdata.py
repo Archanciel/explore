@@ -23,7 +23,6 @@ class SelectableMultiFieldsItem(RecycleDataViewBehavior, GridLayout):
 	index = None
 	selected = BooleanProperty(False)
 	selectable = BooleanProperty(True)
-	recycleViewList = None
 
 	def __init__(self):
 		
@@ -53,12 +52,13 @@ class SelectableMultiFieldsItem(RecycleDataViewBehavior, GridLayout):
 		if self.collide_point(*touch.pos) and self.selectable:
 			# since the item was touched down to select or unselect it,
 			# we are no longer in the state of moving up or down the item
-			self.rv.parent.parent.wasMoveButtonPressed = False
+			kivyRecycleViewGUI = self.rv.parent.parent
+			kivyRecycleViewGUI.wasMoveButtonPressed = False
 			
 			result = self.parent.select_with_touch(self.index, touch)
 			
-			self.rv.parent.parent.recycleViewList.data[self.index]['selected'] = self.selected
-			self.rv.parent.parent.manageStateOfMoveButtons()
+			kivyRecycleViewGUI.recycleViewList.data[self.index]['selected'] = self.selected
+			kivyRecycleViewGUI.manageStateOfMoveButtons()
 			
 			return result
 		else: # only for debug
@@ -74,10 +74,12 @@ class SelectableMultiFieldsItem(RecycleDataViewBehavior, GridLayout):
 			elif not rv.parent.parent.getSelectedItem() == -1:  # <<------
 				is_selected = False  # <<------
 				self.selected = True  # <<------
-	
-		selItemIndexes = self.rv.parent.parent.getSelectItemIndexes()
 
-		self.logRvDataValues('apply_selection', self.rv.parent.parent.recycleViewList)
+		# next instruction fixes incomprehensible problem of setting chkbox
+		# to active on other items when moving an item where the chkbox is
+		# active !
+		self.ids.chkbox_id.active = self.rv.parent.parent.recycleViewList.data[index]['toDownload']
+		self.logRvDataValues('apply_selection on index {}, is selected {}, chkbox value {}'.format(index, is_selected, self.ids.chkbox_id.active), self.rv.parent.parent.recycleViewList)
 		
 		if not self.selected and not is_selected:
 			# case when adding a new list item
@@ -95,13 +97,13 @@ class SelectableMultiFieldsItem(RecycleDataViewBehavior, GridLayout):
 	def toggleCheckbox(self, chkbox, isChecked):
 		selectableMultiFieldsItem = chkbox.parent
 		recycleView = selectableMultiFieldsItem.parent.parent
+		self.logRvDataValues('before chkb toggle', recycleView)
 		recycleView.data[selectableMultiFieldsItem.index]['toDownload'] = isChecked
 		# gui = recycleView.parent.parent
 		# gui.data[selectableMultiFieldsItem.index]['toDownload'] = isChecked
 
 		logging.info('toggleCheckbox in item {}: {}'.format(selectableMultiFieldsItem.index, isChecked))
 
-#		self.logGuiRvDataValues(gui, recycleView)
 		self.logRvDataValues('after chkb toggle', recycleView)
 
 	def logRvDataValues(self, msg, recycleView):
@@ -116,9 +118,9 @@ class SelectableMultiFieldsItem(RecycleDataViewBehavior, GridLayout):
 			logging.info(str(item_rv) + '\t' + str(item_gui))
 
 
-class KivyRecycleView(BoxLayout):
+class KivyRecycleViewGUI(BoxLayout):
 	def __init__(self, **kwargs):
-		super(KivyRecycleView, self).__init__(**kwargs)
+		super(KivyRecycleViewGUI, self).__init__(**kwargs)
 		self.wasMoveButtonPressed = False
 		
 		self.data = [{'title': 'title one', 'toDownload': False},
@@ -188,7 +190,7 @@ class KivyRecycleView(BoxLayout):
 		self.logRvDataValues('recycleView.data after', list)
 
 	def logRvDataValues(self, msg, data):
-		logging.info(msg)
+		logging.info('recycleView.data ' + msg)
 		for item_rv in data:
 			logging.info(str(item_rv))
 
@@ -215,7 +217,7 @@ class KivyRecycleView_moveButtonsCheckboxDataApp(App):
 	def build(self): # implicitely looks for a kv file of name kivyrecycleview.kv which is
 					 # class name without App, in lowercases
 
-		return KivyRecycleView()
+		return KivyRecycleViewGUI()
 
 if __name__ == '__main__':
 	dbApp = KivyRecycleView_moveButtonsCheckboxDataApp()

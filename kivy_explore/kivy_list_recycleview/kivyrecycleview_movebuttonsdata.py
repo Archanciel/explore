@@ -78,9 +78,9 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 			self.selected = not self.selected
 			self.rv.parent.parent.recycleViewList.data[index]['selected'] = self.selected
 
-class KivyRecycleView(BoxLayout):
+class KivyRecycleViewGUI(BoxLayout):
 	def __init__(self, **kwargs):
-		super(KivyRecycleView, self).__init__(**kwargs)
+		super(KivyRecycleViewGUI, self).__init__(**kwargs)
 		self.wasMoveButtonPressed = False
 
 		# setting RecycleView list item height from config
@@ -162,7 +162,7 @@ class KivyRecycleView_moveButtonsDataApp(App):
 	def build(self): # implicitely looks for a kv file of name kivyrecycleview.kv which is
 					 # class name without App, in lowercases
 
-		return KivyRecycleView()
+		return KivyRecycleViewGUI()
 
 if __name__ == '__main__':
 	dbApp = KivyRecycleView_moveButtonsDataApp()

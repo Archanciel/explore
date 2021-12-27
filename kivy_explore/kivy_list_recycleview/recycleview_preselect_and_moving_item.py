@@ -289,6 +289,8 @@ class KivyPlayer(BoxLayout):
 		
 		# specify pre-selected node by its index in the data
 		self.ids.controller.selected_nodes = [0]
+		
+		self.ids.controller.unselectItem()
 
 	def ensureLowercase(self):
 		'''
