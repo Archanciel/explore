@@ -71,7 +71,6 @@
 	cols: 2
 	rows: 1
 	text: ''
-	toDownload: False
 
 	# add selection background
 	canvas.before:
@@ -87,7 +86,7 @@
 	    size_hint_x: 0.9
 		text: root.text
 	CheckBox:
-	    id: chkbox_id
+	    id: download_chkbox
 	    size_hint_x: 0.1
-		active: root.toDownload
+		active: False
 		on_press: root.toggleCheckbox(self, self.active)

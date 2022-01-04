@@ -57,7 +57,7 @@ class SelectableMultiFieldsItem(RecycleDataViewBehavior, GridLayout):
 			
 			result = self.parent.select_with_touch(self.index, touch)
 			
-			kivyRecycleViewGUI.recycleViewList.data[self.index]['selected'] = self.selected
+			self.rv.data[self.index]['selected'] = self.selected
 			kivyRecycleViewGUI.manageStateOfMoveButtons()
 			
 			return result
@@ -78,21 +78,21 @@ class SelectableMultiFieldsItem(RecycleDataViewBehavior, GridLayout):
 		# next instruction fixes incomprehensible problem of setting chkbox
 		# to active on other items when moving an item where the chkbox is
 		# active !
-		self.ids.chkbox_id.active = self.rv.parent.parent.recycleViewList.data[index]['toDownload']
-		self.logRvDataValues('apply_selection on index {}, is selected {}, chkbox value {}'.format(index, is_selected, self.ids.chkbox_id.active), self.rv.parent.parent.recycleViewList)
+		self.ids.download_chkbox.active = self.rv.data[index]['toDownload']
+		self.logRvDataValues('apply_selection on index {}, is selected {}, chkbox value {}'.format(index, is_selected, self.ids.download_chkbox.active), self.rv.parent.parent.recycleViewList)
 		
 		if not self.selected and not is_selected:
 			# case when adding a new list item
-			self.rv.parent.parent.recycleViewList.data[index]['selected'] = self.selected
+			self.rv.data[index]['selected'] = self.selected
 			return
 		elif self.selected and not is_selected:
 			# toggling from selected to unselected
 			self.selected = False
-			self.rv.parent.parent.recycleViewList.data[index]['selected'] = self.selected
+			self.rv.data[index]['selected'] = self.selected
 		else:
 			# toggling from unselected to selected
 			self.selected = not self.selected
-			self.rv.parent.parent.recycleViewList.data[index]['selected'] = self.selected
+			self.rv.data[index]['selected'] = self.selected
 	
 	def toggleCheckbox(self, chkbox, isChecked):
 		selectableMultiFieldsItem = chkbox.parent
